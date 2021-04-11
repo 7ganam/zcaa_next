@@ -1,0 +1,34 @@
+.about_header{
+    font-family: Philosopher;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 125.5%;
+    /* or 60px */
+    text-transform: uppercase;
+    /* primary400 */
+    color: #0091AC;
+}
+
+.mission_vison_text{
+    max-height: 395px;
+    overflow: auto;
+    margin-top: 20px;
+    /* font-family: Roboto; */
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 151%;
+    color: #828282;
+}
+
+
+
+@include media-breakpoint-up(sm) {  }
+@include media-breakpoint-up(md) {
+     .mission_vison_text{
+    max-height:auto;
+} }
+@include media-breakpoint-up(lg) { }
+@include media-breakpoint-up(xl) { }
+@include media-breakpoint-up(xxl) {  }

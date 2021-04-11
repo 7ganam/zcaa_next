@@ -1,0 +1,84 @@
+import React from 'react'
+import NewsCardComponent from "./NewsCardComponent/NewsCardComponent"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Col, Row } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'next/link';
+import { Card, CardHeader, CardBody, CardTitle, } from 'reactstrap';
+
+
+
+const render_news_cards = (news_posts) => {
+
+
+    let cards_view = news_posts.map((post, index) => {
+        const blocks = post.EditorData.blocks;
+        let thumbnailimage = process.env.REACT_APP_BACKEND_URL + '/logo.png'
+        for (const index in blocks) {
+
+            if (blocks[index].type === 'imageTool') {
+                thumbnailimage = blocks[index].data.file.url
+                break
+            }
+            else if (blocks[index].type === 'image') {
+                thumbnailimage = blocks[index].data.url
+                break
+
+            }
+        }
+        const Title = post.meta_values[0].Title;
+        const Date = post.meta_values[0].Date;
+        const thumbnail_text = post.meta_values[0].thumbnail_text;
+
+
+        return (
+            <Col key={post._id} xs="9" md="4" className="mt-5" >
+                <NewsCardComponent img={thumbnailimage}
+                    title={Title}
+                    body_text={thumbnail_text}
+                    Date={Date}
+                    post_id={post._id}
+                />
+            </Col>
+        )
+    })
+    return (cards_view)
+}
+
+
+function News_section(props) {
+    return (
+
+        <Container id="featured_news_container" className="" style={{ marginTop: "10px" }}>
+
+            <Row>
+                <Col xs="12" className="" >
+                    <div
+                        style={{
+                            textAlign: "left",
+                            marginTop: "50px",
+                            borderTopStyle: 'solid',
+                            borderTopWidth: "0.5px",
+                            borderTopColor: " #C5BCBC"
+                        }} className={"section_title"}
+                    >
+                        featured news
+        </div>
+                </Col>
+
+            </Row>
+            <Row className="justify-content-center">
+                {
+                    props.news_state.NewsFetchedSuccessfully &&
+                    render_news_cards(props.news_state.News)
+                }
+            </Row>
+        </Container>
+
+
+
+    )
+}
+
+export default News_section

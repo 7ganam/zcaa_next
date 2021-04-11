@@ -1,65 +1,94 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import styles from '../components/home/home.module.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function Home() {
+import React from 'react'
+import { Container, Col, Row } from 'reactstrap';
+// import zewail_image from '/home/assets/zewail_image3.png'
+// import grads from '../public/home/assets/grads3.png'
+
+import MapComponent from "../components/home/MapComponent/MapComponent"
+import { Card, CardHeader, CardBody, CardTitle, } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'next/link';
+
+
+import useSWR from 'swr'
+import dynamic from 'next/dynamic'
+
+
+import About_section from '../components/home/About_section/About_section'
+import News_section from '../components/home/News_section/News_section'
+import Welcome_section from '../components/home/Welcom_section/Welcom_section'
+// import Map_section from '../components/home/Map_section/Map_section'
+
+const Map_section = dynamic(() => import('../components/home/Map_section/Map_section'), {
+  ssr: false
+})
+
+
+export default function Home(props) {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+    <div className={`p-0 ${styles.home_page}`}>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+      <About_section />
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+      <News_section {...props} />
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+      <Welcome_section />
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+      <Map_section />
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
+
   )
+}
+
+
+export async function getServerSideProps(context) {
+
+  console.log(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/news_posts')
+  let data;
+  let error;
+  const fetchCourses = async () => {
+    console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
+    return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/news_posts')
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong');
+          error = 'Something went wrong';
+        }
+      })
+      .then((responseJson) => {
+        data = responseJson;
+
+      })
+      .catch((error) => {
+        console.log(error)
+        error = (error || "something went wrong")
+      });
+  }
+
+  await fetchCourses();
+
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: {
+      news_state: {
+        NewsFetchedSuccessfully: !error,
+        News: data
+      }
+
+    }, // will be passed to the page component as props
+  }
 }
