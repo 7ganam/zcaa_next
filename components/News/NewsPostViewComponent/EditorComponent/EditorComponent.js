@@ -1,7 +1,7 @@
 import EditorJs from 'react-editor-js';
 import { EDITOR_JS_TOOLS } from './editorJsTools'
 import React, { Component, Fragment } from 'react'
-import "./EditorComponent.css"
+// import "./EditorComponent.css"
 
 export default class EditorComponent extends Component {
     constructor(props) {

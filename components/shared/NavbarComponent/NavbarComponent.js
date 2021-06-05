@@ -1,5 +1,5 @@
 import { useContext } from "react";
-// import { LoginContext } from "../../../contexts/loginContext"
+import { LoginContext } from "../../../contexts/loginContext"
 import React, { useState } from 'react';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink, Container } from 'reactstrap';
 // import { Link } from "react-router-dom";
@@ -8,10 +8,10 @@ import styles from "./NavbarComponent.module.css"
 const NavbarComponent = (props) => {
 
     const [isOpen, setIsOpen] = useState(false);
-    // const { login, IsLoggedIn, Token, ToggleLoginModal, logout } = useContext(LoginContext);
+    const { login, IsLoggedIn, Token, ToggleLoginModal, logout } = useContext(LoginContext);
 
-    let Token = false;
-    let IsLoggedIn = false;
+    // let Token = false;
+    // let IsLoggedIn = false;
 
 
 
@@ -29,14 +29,15 @@ const NavbarComponent = (props) => {
 
                     </div>
                     <div style={{ margin: "0px 20px", color: 'white', fontWeight: "bold", display: "flex", alignItems: "center" }}>
-                        {/* <Link to="/ADMIN/CREATEPOST"> */}
-                        <div >CREATE NEW POST</div>
-                        {/* </Link> */}
+                        <Link href="/ADMIN/CREATEPOST">
+                            <a style={{ color: 'white' }}> <div >CREATE NEW POST</div></a>
+
+                        </Link>
                     </div>
                     <div style={{ color: 'white', fontWeight: "bold", display: "flex", alignItems: "center" }}>
-                        {/* <Link to="/NEWS"> */}
-                        <div >DELETE POSTS</div>
-                        {/* </Link> */}
+                        <Link href="/NEWS">
+                            <a style={{ color: 'white' }}><div >DELETE POSTS</div></a>
+                        </Link>
                     </div>
                 </Container>
             }
@@ -76,12 +77,12 @@ const NavbarComponent = (props) => {
                                     {!IsLoggedIn &&
                                         <>
                                             <NavItem className={styles.nav_item} style={{ borderRightStyle: "solid", borderRightWidth: ".5px", borderRightColor: "grey" }}>
-                                                {/* <Link to="/LOGIN"> */}
-                                                <NavLink className={styles.nav_link}>apply for membership</NavLink>
-                                                {/* </Link> */}
+                                                <Link href="/APPLICATION">
+                                                    <a><NavLink className={styles.nav_link}>apply for membership</NavLink></a>
+                                                </Link>
                                             </NavItem>
                                             <NavItem className={styles.nav_item}
-                                                // onClick={ToggleLoginModal}
+                                                onClick={ToggleLoginModal}
                                                 style={{ cursor: 'pointer' }}>
                                                 <NavLink className={styles.nav_link}>Login</NavLink>
                                             </NavItem>
@@ -90,7 +91,7 @@ const NavbarComponent = (props) => {
                                     {IsLoggedIn &&
                                         <>
                                             <NavItem className={styles.nav_item}
-                                                // onClick={logout} 
+                                                onClick={logout}
                                                 style={{ cursor: 'pointer', borderRightStyle: "solid", borderRightWidth: ".5px", borderRightColor: "grey" }}>
                                                 <NavLink className={styles.nav_link}>Logout</NavLink>
                                             </NavItem>

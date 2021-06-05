@@ -1,3 +1,10 @@
+#network_div{
+    background-image: -webkit-linear-gradient(bottom left,#26adcb,rgb(191 233 241));
+
+
+}
+
+
 #network_card{
 
 background: #FFFFFF;
@@ -6,9 +13,10 @@ border-radius: 7px;
 min-height: 54px;
 display: flex;
     justify-content: center;
+    
     align-items: center;
-    bottom: 25px;
-left: 17px;
+    bottom: 125px;
+/* left: 17px; */
 max-width: 90%;
 
 

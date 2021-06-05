@@ -1,9 +1,16 @@
 import React from 'react'
-import EditorComponent from "./EditorComponent/EditorComponent"
+// import EditorComponent from "./EditorComponent/EditorComponent"
 import ReactLoading from 'react-loading';
 import { Container, Row, Col } from 'reactstrap';
 import moment from 'moment';
-import "./NewsPostViewComponent.css"
+// import "./NewsPostViewComponent.css"
+import styles from "./NewsPostViewComponent.module.css"
+
+import dynamic from 'next/dynamic'
+const EditorComponent = dynamic(() => import("./EditorComponent/EditorComponent"), {
+    ssr: false
+})
+
 
 function NewsPostViewComponent(props) {
     console.log("post ports", props)
@@ -23,7 +30,7 @@ function NewsPostViewComponent(props) {
                     <Container>
                         <Row className="justify-content-start" style={{}}>
                             <Col md={12} style={{ margin: "50px 0px", }}>
-                                <div id="Post_title" style={{ width: "100%", letterSpacing: '2px' }}>
+                                <div id={styles.Post_title} style={{ width: "100%", letterSpacing: '2px' }}>
                                     {props.news_state.News[0].meta_values[0].Title}
                                 </div>
                             </Col>

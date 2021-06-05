@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import "./GooglebtnComponent.css"
-import zc_logo from '../zc_logo.png'
-import google_logo from './google_logo.png'
+// import zc_logo from '../zc_logo.png'
+// import google_logo from './google_logo.png'
 import { Alert } from 'reactstrap';
+
 
 
 const CLIENT_ID = '1050309843237-hjb6hmp0ku18p9oblkk5fshpvp7g0v87.apps.googleusercontent.com';
@@ -33,13 +33,6 @@ class GooglebtnComponent extends Component {
         if (response.accessToken && response.profileObj.email.endsWith('@zewailcity.edu.eg')) {
             this.props.onclick(response)
             this.setState({ show_alert: false });
-            // var xhr = new XMLHttpRequest();
-            // xhr.open('POST', 'http://localhost:5000');
-            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            // xhr.onload = function () {
-            //     console.log('Signed in as: ' + xhr.responseText);
-            // };
-            // xhr.send('idtoken=' + response.tokenObj.id_token)
             this.setState(state => ({
                 isLogined: true,
                 accessToken: response.accessToken
@@ -78,8 +71,13 @@ class GooglebtnComponent extends Component {
                                     <div style={{ display: "flex", alignItems: "center" }}>
                                         <span style={{ marginLeft: "10px" }}>verfiy with google</span>
                                         <div style={{ flexGrow: "1" }}></div>
-                                        <img style={{ width: "30px", height: "auto", opacity: "1", justifySelf: "end", marginRight: "7px" }} src={google_logo} alt="logo" />
-                                        <img style={{ width: "30px", height: "auto", opacity: "1", justifySelf: "end" }} src={zc_logo} alt="logo" />
+                                        <img
+                                            style={{ width: "30px", height: "auto", opacity: "1", justifySelf: "end", marginRight: "7px" }} src={`./google_logo.png`} alt="logo"
+                                        />
+                                        <img
+
+                                            style={{ width: "30px", height: "auto", opacity: "1", justifySelf: "end" }} src={"./zc_logo.png"} alt="logo"
+                                        />
                                     </div>
                                 </button>
                             )}

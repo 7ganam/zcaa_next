@@ -24,16 +24,17 @@ const NewsCardComponent = (props) => {
                             {props.body_text}
                         </div>
                     </CardText>
-                    {/* <Link to={`/NEWS/${props.post_id}`} > */}
-                    <div className="d-flex" >
-                        <div style={{ position: "absolute", bottom: "10px", right: "20px" }}>
-                            <div className="zcaa_link" style={{ marginLeft: "auto" }}>
-                                read more
+
+                    {/* <Link href={`/NEWS/${props.post_id}`} >
+                        <div className="d-flex" >
+                            <div style={{ position: "absolute", bottom: "10px", right: "20px" }}>
+                                <div className="zcaa_link" style={{ marginLeft: "auto" }}>
+                                    read more
                                 <FontAwesomeIcon icon={faLongArrowAltRight} className="ml-1 pt-1" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {/* </Link> */}
+                    </Link> */}
                 </CardBody>
             </Card>
         </div>

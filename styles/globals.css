@@ -1,6 +1,17 @@
 
 @import "Network_diagramComponent.css";
 @import "NewsCardComponenet.css";
+@import "LoginComponent.css";
+@import "FormComponent.css";
+@import "CollapsingEntityCardComponent.css";
+@import "date-picker.css";
+@import 'GooglebtnComponent.css';
+@import 'AdminComponent.css';
+@import 'News_form.css';
+@import 'EditorComponent.css';
+
+
+
 
 
 html,
@@ -41,6 +52,22 @@ body {
   font-display: swap;
 }
 
+
+@font-face {
+  font-family: "Mulish";
+  src: url("/fonts/Mulish/Mulish-VariableFont_wght.ttf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cairo";
+  src: url("/fonts/Cairo/Cairo-Regular.ttf");
+  font-style: medium;
+  font-weight: 500;
+  font-display: swap;
+}
 
 
 
@@ -162,4 +189,29 @@ a {
 ::-webkit-scrollbar-thumb {
   background: #26ADCB;
   border-radius: 10px;
+}
+
+
+
+.codex-editor__redactor{
+  padding:20px !important;
+  margin:0 !important;
+  min-height: 500px;
+ 
+  /* border: 1px solid #BDD7DB; */
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px 4px rgb(0 0 0 / 25%);
+  border-radius: 4px;
+}
+
+#side_div{
+  background: #FFFFFF;
+  margin-bottom: 20px;
+  /* primary200 */
+  padding: 20px;
+  /* border: 1px solid #BDD7DB; */
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+
 }

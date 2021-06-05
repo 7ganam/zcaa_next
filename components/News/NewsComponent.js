@@ -38,8 +38,6 @@ export default class NewsComponent extends Component {
                         :
                         <Row>
                             <Col id="categories_col" md={3}>
-
-
                                 <div
                                     style={{
                                         textAlign: "left",

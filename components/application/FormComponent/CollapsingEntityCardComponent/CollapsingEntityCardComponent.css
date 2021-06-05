@@ -1,0 +1,146 @@
+
+.box_header{
+min-height: 107.56px;
+/* primary0 */
+background: #DFEAEC;
+border: 2px solid rgba(225, 225, 225, 0.12);
+/* border: 2px solid #26adcbc4; */
+box-sizing: border-box;
+border-radius: 0px;
+flex-direction: column;
+}
+
+.header_forms{
+    width: 100%;
+}
+
+.header_buttons{
+    /* height: 100%; */
+    width: 100%;
+    justify-self: end;
+
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+    flex-direction: row-reverse;
+}
+
+.header_addinfo_button{
+    /* height: 100%; */
+    width: 100%;
+    background-color: #26ADCB; 
+    justify-self: end;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+    flex-direction: column-reverse;
+    margin-bottom: 12px;
+    margin-right: 9px;
+
+}
+
+.header_delete_button{
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #a9a9a9; ;
+    margin-bottom: 12px;
+    margin-left: 9px;
+
+
+}
+
+
+.card_body_labels{
+    display: flex;
+    /* align-items: center;
+    justify-content: center; */
+    width: 100%;
+    text-align:start;
+    font-family: Mulish;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 15px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(0, 88, 104, 0.47);
+    justify-content: flex-start;
+}
+
+
+.react-datepicker-wrapper{
+    width: 100%;
+}
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .card_body_labels{
+        align-items: center;
+        justify-content: flex-end;
+        text-align: right;
+
+    }
+
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .header_delete_button{
+        display:none;
+    }
+
+    .header_addinfo_button{
+        height: 100%;
+        width: 100%;
+        flex-direction: column;
+        margin-bottom: 0px;
+        margin-right: 0px;
+
+    }
+
+
+    .header_addinfo_button:hover{
+        box-shadow: 0 0 8px 0 rgba(0,0,0,0.5);
+    }
+    .header_addinfo_button:active{
+        position: relative;
+        /* top: 4px; */
+        box-shadow: inset 0 3px 5px 0 rgba(0,0,0,0.2);
+        outline: 0;
+    }
+    .header_addinfo_button:focus{
+        outline: 0;
+    }
+
+    .add_info_icon{
+        position: relative;
+        top: 10px;
+    }
+    .add_info_text{
+        position: relative;
+        top: 7px;
+    }
+
+    .header_buttons{
+        /* height: 100%; */
+        width: 20%;
+        flex-direction: column;
+    }
+    .box_header{
+        flex-direction: row;
+        }
+
+
+}
+
+/* // Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {}

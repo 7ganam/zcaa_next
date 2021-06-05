@@ -1,0 +1,41 @@
+#login_card{
+    margin-top: 0px ;
+
+    min-height: 460px;
+    min-width: 100%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center ;
+    border: 1px solid #BDD7DB;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 11px;
+    flex-direction: column;
+    background-color: white;
+}
+
+.font1{
+    font-family: Cairo;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 125.5%;
+    color: #BDD7DB;
+}
+.font2{
+    font-family: Cairo;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 125.5%;
+    /* or 30px */
+       
+    color: rgba(0, 145, 172, 0.73);
+    
+}
+
+#login_disclimare{
+    margin-top: 10px;
+    text-align: center;
+    width: 80%;
+}

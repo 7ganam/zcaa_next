@@ -48,7 +48,7 @@ export default function Home(props) {
 }
 
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
 
   console.log(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/news_posts')
   let data;
@@ -89,6 +89,10 @@ export async function getServerSideProps(context) {
         News: data
       }
 
-    }, // will be passed to the page component as props
+    },
+    // Next.js will attempt to re-generate the page:
+    // - When a request comes in
+    // - At most once every 10 seconds
+    revalidate: 10, // In seconds
   }
 }

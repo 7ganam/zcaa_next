@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Modal, ModalBody } from 'reactstrap';
 import { Container } from 'reactstrap'
-import zc_logo from './zc_logo.png'
+// import zc_logo from './zc_logo.png'
 import GooglebtnComponent from './GooglebtnComponent/GooglebtnComponent'
 
 import { useContext } from "react";
@@ -45,6 +45,8 @@ function LoginModalComponenet() {
             if (response_json_content.message === "success") {
                 setFetch_success(true)
                 console.log({ response_json_content })
+                console.log("test")
+
                 login(response_json_content.user, response_json_content.token, response_json_content.expirateion_date_string, true)
                 toggle();
             }
@@ -68,7 +70,7 @@ function LoginModalComponenet() {
                             {
                                 <Container fluid style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "0px" }}>
                                     <div id="login_card" style={{}}>
-                                        <img style={{ width: "200px", height: "auto", opacity: "0.5", marginTop: "50px" }} src={zc_logo} alt="logo" />
+                                        <img style={{ width: "150px", height: "auto", opacity: "0.5", marginTop: "70px" }} src={"/logo.png"} alt="logo" />
                                         <div id="login_disclimare" >
                                             <span className="font1">Use your </span>
                                             <span className="font2">zewailcity email </span>
@@ -76,8 +78,6 @@ function LoginModalComponenet() {
                                         </div>
                                         <div style={{ marginTop: "10px" }}>
                                             <GooglebtnComponent onclick={submit_applicant} />
-
-
                                             {Fetch_error ?
                                                 <Alert color="danger" className="mt-3" style={{ width: "100%" }}>
                                                     {Error_message}

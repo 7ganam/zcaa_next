@@ -4,12 +4,14 @@ import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
 // import { Link } from "react-router-dom";
+import Link from 'next/link'
+
 import { Button } from 'reactstrap';
 import { Alert } from 'reactstrap';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import { useContext } from "react";
-// import { LoginContext } from "../../../../contexts/loginContext"
+import { LoginContext } from "../../../contexts/loginContext"
 
 function NewsCardComponenet(props) {
 
@@ -19,8 +21,7 @@ function NewsCardComponenet(props) {
 
     const [modal, setModal] = useState(false);
 
-    // const { Token } = useContext(LoginContext);
-    let Token = false;
+    const { Token } = useContext(LoginContext);
     const toggle = () => setModal(!modal);
 
 
@@ -125,15 +126,17 @@ function NewsCardComponenet(props) {
 
                             </div>
                             <div className="d-flex ">
-                                {/* <Link to={`/NEWS/${props.post._id}`} style={{ marginBottom: "15px" }}> */}
-                                <button className="read_more_btn" style={{ width: "100%", height: "35px" }}>
-                                    <div className="zcaa_link" style={{ marginLeft: "auto" }}>
-                                        read more
-                            <FontAwesomeIcon icon={faLongArrowAltRight} className="ml-1 pt-1" />
-                                    </div>
-                                </button>
+                                <Link href={`/NEWS/${props.post._id}`} style={{ marginBottom: "15px" }}>
+                                    <a>
+                                        <button className="read_more_btn" style={{ width: "100%", height: "35px" }}>
+                                            <div className="zcaa_link" style={{ marginLeft: "auto" }}>
+                                                read more
+                                            <FontAwesomeIcon icon={faLongArrowAltRight} className="ml-1 pt-1" />
+                                            </div>
+                                        </button>
+                                    </a>
 
-                                {/* </Link> */}
+                                </Link>
                             </div>
 
                         </div>

@@ -14,6 +14,9 @@ max-width: 90%;
 
 }
 
+#network_div{
+    background-image: linear-gradient(to top right, #26ADCB, rgb(191 233 241));
+}
 
 
 #network_card_text{
