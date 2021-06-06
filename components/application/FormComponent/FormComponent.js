@@ -79,6 +79,14 @@ const FormComponent = (props) => {
 
 
 
+
+
+
+
+
+
+
+
     const submit_applicant = async (google_data) => {
         try {
             toggle();
@@ -114,6 +122,14 @@ const FormComponent = (props) => {
             console.log(err);
         }
     };
+
+
+
+
+
+
+
+
 
 
     const formRef = useRef();

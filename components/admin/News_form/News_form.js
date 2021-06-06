@@ -28,6 +28,15 @@ export default function News_form() {
 
     const { login, IsLoggedIn, Token, ToggleLoginModal, logout } = useContext(LoginContext);
 
+
+
+
+
+
+
+
+
+
     const news_post_submit_handler = async data => {
         try {
             setSending_data(true)
@@ -62,6 +71,17 @@ export default function News_form() {
         }
 
     };
+
+
+
+
+
+
+
+
+
+
+
 
     const formik = useFormik({
         initialValues: {

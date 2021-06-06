@@ -20,6 +20,11 @@ function LoginModalComponenet() {
     const [Error_message, setError_message] = useState(null);
     const toggle = ToggleLoginModal;
 
+
+
+
+
+
     const submit_applicant = async (google_data) => {
         try {
             // toggle();
@@ -27,7 +32,10 @@ function LoginModalComponenet() {
             let id_token = google_data.tokenObj.id_token
             const body_data = { google_data }
             console.log('google_data', google_data)
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
+            const response = await fetch(
+                //     `
+                // ${process.env.NEXT_PUBLIC_BACKEND_URL}
+                `api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -58,6 +66,18 @@ function LoginModalComponenet() {
             console.log(err);
         }
     };
+
+
+
+
+
+
+
+
+
+
+
+
     return (
         <div>
             <div id="google_modal" >
