@@ -1,6 +1,6 @@
 // components/contactus-form.component.js
 import { useContext } from "react";
-// import { LoginContext } from "../../../../contexts/loginContext"
+import { LoginContext } from "../../../contexts/loginContext"
 
 import React, { useState, useCallback, useRef } from 'react'
 import { Formik, Field, Form, FieldArray, ErrorMessage } from 'formik';
@@ -59,10 +59,8 @@ const SignupSchema = Yup.object().shape({
 
 const FormComponent = (props) => {
 
-    // const { login, IsLoggedIn, Token } = useContext(LoginContext);
+    const { login, IsLoggedIn, Token } = useContext(LoginContext);
 
-    let IsLoggedIn = false;
-    let Token = false;
     // http states
     const [Response_json_content, setResponse_json_content] = useState({});
     const [Fetch_success, setFetch_success] = useState(false);
@@ -95,7 +93,9 @@ const FormComponent = (props) => {
             let form_state = formRef.current.values;
             let id_token = google_data.tokenObj.id_token
             const body_data = { form_state, google_data }
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/signup`, {
+            const response = await fetch(
+                // ${process.env.REACT_APP_BACKEND_URL}
+                `/api/auth/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -489,7 +489,7 @@ const FormComponent = (props) => {
                                                             }} className="form_section_title"
                                                         >
                                                             career info
-                                    </div>
+                                                         </div>
                                                     </Col>
                                                 </Row>
                                                 <Row className="justify-content-end ">

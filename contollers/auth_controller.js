@@ -169,6 +169,7 @@ const login_user = async (req, res) => {
             console.log(`dev_err`, dev_err)
             res.status(500).json({ success: false, message: 'Loggin in failed, please try again later.' })
 
+
             // return next(prod_error)
         }
 
@@ -193,4 +194,108 @@ const login_user = async (req, res) => {
 
 
 
-export { verify_google_user, verify_google_user_with_form, login_user }
+
+
+
+const register_user = async (req, res) => {
+
+    // add the json object to the database
+    console.log(2)
+    let user_search_result;
+    // -------------------- LOOK DATABASE FOR THE USER ------------------------
+    try {
+        user_search_result = await Users.find({ zc_email: req.user.zc_email })
+
+    }
+    catch (dev_err) {
+        console.log(`dev_err`, dev_err)
+        res.status(500).json({ success: false, message: 'Loggin in failed, please try again later.' })
+    };
+
+
+    console.log(3)
+
+
+    if (user_search_result.length < 1 || user_search_result == undefined) { // case no user found registerd already // if the user didn't sign before register it and return succes message
+
+        // CREATE THE USER----------------------
+        let created_user;
+        try {
+            created_user = await Users.create(req.user)
+        }
+        catch (dev_err) {
+            console.log(`dev_err`, dev_err)
+            res.status(500).json({ success: false, message: 'Loggin in failed, please try again later.' })
+        };
+
+        console.log("created_user", created_user)
+
+
+        // GENERATE TOKEN----------------------
+        let token;
+        let expiration_time_in_hours = 10000;//TODO: make the token expiration in the front end  ... i will leave this huge number as is now
+        let expiration_date = new Date(new Date().getTime() + expiration_time_in_hours * 60 * 60 * 1000);
+        let expirateion_date_string = expiration_date.toISOString();
+        try {
+            token = jwt.sign(
+                { user: created_user },
+                TOKEN_SECRET_KEY,
+                { expiresIn: expiration_time_in_hours + 'h' }
+            );
+        } catch (dev_err) {
+
+            console.log(`dev_err`, dev_err)
+            res.status(500).json({ success: false, message: 'Loggin in failed, please try again later.' })
+            // return next(prod_error)
+        }
+
+        // SEND TOKEN AND USER RESPONSE----------------------
+        res
+            .status(201)
+            .json({
+                message: 'success',
+                expirateion_date_string: expirateion_date_string,
+                user: created_user,
+                token: token
+            });
+    }
+    else { // case we found user already applied before
+
+        console.log(4)
+
+
+        // GENERATE TOKEN----------------------
+        let token;
+        let expiration_time_in_hours = 100;//TODO: make the token expiration in the front end  ... i will leave this huge number as is now
+        let expiration_date = new Date(new Date().getTime() + expiration_time_in_hours * 60 * 60 * 1000);
+        let expirateion_date_string = expiration_date.toISOString();
+
+        try {
+            token = jwt.sign(
+                { user: user_search_result },
+                TOKEN_SECRET_KEY,
+                { expiresIn: expiration_time_in_hours + 'h' }
+            );
+        } catch (dev_err) {
+            console.log(`dev_err`, dev_err)
+            res.status(500).json({ success: false, message: 'Loggin in failed, please try again later.' })
+            // return next(prod_error)
+        }
+
+        // SEND TOKEN AND USER RESPONSE----------------------
+        console.log(5)
+
+        res
+            .status(201)
+            .json({
+                message: 'already_applied_before',
+                expirateion_date_string: expirateion_date_string,
+                user: user_search_result[0],
+                token: token
+            });
+    }
+
+}
+
+
+export { verify_google_user, verify_google_user_with_form, login_user, register_user }
