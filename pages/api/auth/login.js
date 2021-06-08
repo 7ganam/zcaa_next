@@ -1,8 +1,7 @@
 
-import dbConnect from '../../../utils/dbConnect'
-import Pet from '../../../models/users'
+
+const { dbConnect } = require('../../../utils/dbConnect')
 var _ = require('lodash');
-const { OAuth2Client } = require('google-auth-library');
 
 
 import { verify_google_user, verify_google_user_with_form, login_user } from '../../../contollers/auth_controller'

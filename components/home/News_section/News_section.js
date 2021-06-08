@@ -13,20 +13,30 @@ const render_news_cards = (news_posts) => {
 
 
     let cards_view = news_posts.map((post, index) => {
-        const blocks = post.EditorData.blocks;
-        let thumbnailimage = process.env.REACT_APP_BACKEND_URL + '/logo.png'
-        for (const index in blocks) {
 
-            if (blocks[index].type === 'imageTool') {
-                thumbnailimage = blocks[index].data.file.url
-                break
-            }
-            else if (blocks[index].type === 'image') {
-                thumbnailimage = blocks[index].data.url
-                break
+        if (!post.EditorData) {
+            return
+        }
 
+        let thumbnailimage = process.env.NEXT_PUBLIC_BACKEND_URL + '/logo.png'
+
+        if (post.EditorData && post.EditorData.blocks) {
+            const blocks = post.EditorData.blocks;
+            for (const index in blocks) {
+
+                if (blocks[index].type === 'imageTool') {
+                    thumbnailimage = blocks[index].data.file.url
+                    break
+                }
+                else if (blocks[index].type === 'image') {
+                    thumbnailimage = blocks[index].data.url
+                    break
+
+
+                }
             }
         }
+
         const Title = post.meta_values[0].Title;
         const Date = post.meta_values[0].Date;
         const thumbnail_text = post.meta_values[0].thumbnail_text;
@@ -70,8 +80,8 @@ function News_section(props) {
             </Row>
             <Row className="justify-content-center">
                 {
-                    props.news_state.NewsFetchedSuccessfully &&
-                    render_news_cards(props.news_state.News)
+                    props.news &&
+                    render_news_cards(props.news)
                 }
             </Row>
         </Container>

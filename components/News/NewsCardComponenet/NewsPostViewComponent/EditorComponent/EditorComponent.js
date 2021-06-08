@@ -24,11 +24,12 @@ export default class EditorComponent extends Component {
 
 
     render() {
+        console.log(`this.props.post`, this.props.post)
         return (
             <Fragment>
                 <div>
                     <EditorJs className="editorjs"
-                        data={this.props.post[0].EditorData}
+                        data={this.props.post.EditorData}
                         readOnly={true}
                         instanceRef={instance => this.editorInstance = instance}
                         autofocus={true}

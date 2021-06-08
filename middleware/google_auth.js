@@ -97,7 +97,6 @@ const verify_google_email_and_form = (req, res, next) => { // verifies the email
 const verify_google_email = (req, res, next) => { // verifies the email used to log in is a zc email and adds the user object to req
   console.log(1)
   // console.log(req.body)
-  const { OAuth2Client } = require('google-auth-library');
   const client = new OAuth2Client(process.env.OAUTH2ClIENT);
   async function verify() {
     const use_google_oauth = false // google cloud verification takes a long time suddenly .. they might have a problem on their servers .. disaple it for development and rely on client side verification.

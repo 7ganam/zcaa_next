@@ -42,8 +42,8 @@ export const EDITOR_JS_TOOLS = {
     config: {
       endpoints: {
 
-        byFile: process.env.REACT_APP_BACKEND_URL + '/api/news/image_upload', // Your backend file uploader endpoint
-        byUrl: process.env.REACT_APP_BACKEND_URL + '/api/news/image_upload2', // Your endpoint that provides uploading by Url
+        byFile: process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/image_upload', // Your backend file uploader endpoint
+        byUrl: process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/image_upload2', // Your endpoint that provides uploading by Url
       }
     }
   }

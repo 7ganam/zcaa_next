@@ -151,7 +151,6 @@ export default function Network_diagramComponent(props) {
 
         });
 
-        console.log("rendered")
         draw_glope()
         return function cleanup() {
 

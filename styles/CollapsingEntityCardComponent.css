@@ -1,4 +1,11 @@
 
+
+.card-body{
+    overflow: hidden;
+}
+
+
+
 .box_header{
 min-height: 107.56px;
 /* primary0 */
@@ -9,6 +16,8 @@ box-sizing: border-box;
 border-radius: 0px;
 flex-direction: column;
 }
+
+
 
 .header_forms{
     width: 100%;

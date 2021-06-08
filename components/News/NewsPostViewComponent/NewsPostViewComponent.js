@@ -13,12 +13,11 @@ const EditorComponent = dynamic(() => import("./EditorComponent/EditorComponent"
 
 
 function NewsPostViewComponent(props) {
-    console.log("post ports", props)
-    // console.log("News", props.news_state.News[0])
+
 
     return (
         <div>
-            { props.news_state.News.length === 0 ?
+            { props.post.length === 0 ?
 
                 <div style={{ height: "600px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <div style={{ marginTop: "px", position: "relative", top: "-10%" }}>
@@ -31,7 +30,7 @@ function NewsPostViewComponent(props) {
                         <Row className="justify-content-start" style={{}}>
                             <Col md={12} style={{ margin: "50px 0px", }}>
                                 <div id={styles.Post_title} style={{ width: "100%", letterSpacing: '2px' }}>
-                                    {props.news_state.News[0].meta_values[0].Title}
+                                    {props.post.meta_values[0].Title}
                                 </div>
                             </Col>
                             <Col md={2} style={{ position: "" }}>
@@ -42,12 +41,12 @@ function NewsPostViewComponent(props) {
                                     </div>
                                     <div>
                                         <span>date: </span>
-                                        <span style={{ fontSize: "20px", color: "#0091AC" }}> {moment(props.news_state.News[0].meta_values[0].Date).format('DD/MM/YYYY')} </span>
+                                        <span style={{ fontSize: "20px", color: "#0091AC" }}> {moment(props.post.meta_values[0].Date).format('DD/MM/YYYY')} </span>
                                     </div>
                                 </div>
                             </Col>
                             <Col md={8} lg={7} style={{ marginBottom: "40px ", }}>
-                                <EditorComponent post={props.news_state.News} />
+                                <EditorComponent post={props.post} />
                             </Col>
                         </Row>
                     </Container>

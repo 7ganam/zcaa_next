@@ -43,7 +43,9 @@ export default function News_form() {
             // -----  sending the json data ----- 
 
 
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/news/new_post`, {
+            const response = await fetch(
+                // ${process.env.NEXT_PUBLIC_BACKEND_URL}
+                `/api/news/new_post`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

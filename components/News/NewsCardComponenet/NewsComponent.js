@@ -15,7 +15,6 @@ export default class NewsComponent extends Component {
         super(props);
         // console.log('news_state', this.props.news_state.News[0])
         this.render_news = this.render_news.bind(this);
-        console.log(`newsprops`, props)
     }
 
     render_news() {

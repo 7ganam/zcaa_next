@@ -3,15 +3,15 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NewsPostViewComponent from '../../components/News/NewsPostViewComponent/NewsPostViewComponent'
 
+const { fetch_all_news, fetch_news_post_by_id } = require('../../contollers/news_controller')
 
 function news_post_view(props) {
-    console.log(`newsprops`, props)
 
     return (
         <>
             {
-                props && props.news_state ?
-                    <NewsPostViewComponent {...props} />
+                props && props.post ?
+                    <NewsPostViewComponent post={JSON.parse(props.post)} />
                     :
                     <div></div>
             }
@@ -35,37 +35,22 @@ export async function getStaticPaths() {
 
     let data;
     let error;
-    const fetchNews = async () => {
-        console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
-        return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/news_posts')
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Something went wrong');
-                    error = 'Something went wrong';
-                }
-            })
-            .then((responseJson) => {
-                data = responseJson;
 
-            })
-            .catch((error) => {
-                console.log(error)
-                error = (error || "something went wrong")
-            });
+    try {
+        data = await fetch_all_news();
+    } catch (dev_error) {
+        console.log(error)
+        error = (error || "something went wrong")
     }
 
-    await fetchNews();
 
     if (!data) {
         return {
             notFound: true,
         }
     }
-
     const paths = data.map((post) => ({
-        params: { post_id: post._id },
+        params: { post_id: post._id.toString() },
     }))
 
     return {
@@ -85,48 +70,29 @@ export async function getStaticPaths() {
 
 
 export async function getStaticProps({ params }) {
-    console.log(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/news_posts')
+    // console.log(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/news_posts')
     let data;
     let error;
-    const fetchNews = async () => {
-        console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
-        return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/news_posts')
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Something went wrong');
-                    error = 'Something went wrong';
-                }
-            })
-            .then((responseJson) => {
-                data = responseJson;
+    let post
+    try {
+        post = await fetch_news_post_by_id(params.post_id)
+    } catch (dev_error) {
+        console.log(`dev_error`, error)
+        return {
+            notFound: true,
+        }
 
-            })
-            .catch((error) => {
-                console.log(error)
-                error = (error || "something went wrong")
-            });
     }
 
-    await fetchNews();
-
-    if (!data) {
+    if (!post) {
         return {
             notFound: true,
         }
     }
 
-    console.log(`params.post_id`, params.post_id)
-    const post = data.filter((post) => (post._id === params.post_id))
-    console.log(`.post`, post)
-
     return {
         props: {
-            news_state: {
-                NewsFetchedSuccessfully: !error,
-                News: post
-            }
+            post: JSON.stringify(post)
         }, // will be passed to the page component as props
     }
 }

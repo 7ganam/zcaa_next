@@ -89,12 +89,12 @@ const FormComponent = (props) => {
         try {
             toggle();
             setSending_data(true)
-            //post data as formdata to the back end ... form data will set the content type automatically to multipart ... use multer & body-parser in back end to deal with it
+
             let form_state = formRef.current.values;
             let id_token = google_data.tokenObj.id_token
             const body_data = { form_state, google_data }
             const response = await fetch(
-                // ${process.env.REACT_APP_BACKEND_URL}
+                // ${process.env.NEXT_PUBLIC_BACKEND_URL}
                 `/api/auth/signup`, {
                 method: 'POST',
                 headers: {

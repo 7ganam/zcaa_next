@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-
+// import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const universities_schema = new Schema({
@@ -167,5 +167,6 @@ const User = new Schema({
     });
 
 
-export default mongoose.models.User || mongoose.model('User', User)
+// export default mongoose.models.User || mongoose.model('User', User)
 
+module.exports = { Users: mongoose.models.User || mongoose.model('User', User) }

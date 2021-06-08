@@ -72,11 +72,11 @@ class GooglebtnComponent extends Component {
                                         <span style={{ marginLeft: "10px" }}>verfiy with google</span>
                                         <div style={{ flexGrow: "1" }}></div>
                                         <img
-                                            style={{ width: "30px", height: "auto", opacity: "1", justifySelf: "end", marginRight: "7px" }} src={`./google_logo.png`} alt="logo"
+                                            style={{ width: "30px", height: "auto", opacity: "1", justifySelf: "end", marginRight: "7px" }} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/google_logo.png`} alt="logo"
                                         />
                                         <img
 
-                                            style={{ width: "30px", height: "auto", opacity: "1", justifySelf: "end" }} src={"./zc_logo.png"} alt="logo"
+                                            style={{ width: "30px", height: "auto", opacity: "1", justifySelf: "end" }} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/zc_logo.png`} alt="logo"
                                         />
                                     </div>
                                 </button>

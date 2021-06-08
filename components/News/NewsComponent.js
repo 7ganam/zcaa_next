@@ -9,17 +9,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./NewsComponent.module.css"
 
 
+import dbConnect from '../../utils/dbConnect'
+import NewsPosts from '../../models/newsPosts'
+
+var _ = require('lodash');
+
+
 export default class NewsComponent extends Component {
     constructor(props) {
         super(props);
-        // console.log('news_state', this.props.news_state.News[0])
         this.render_news = this.render_news.bind(this);
-        console.log(`newsprops`, props)
     }
 
     render_news() {
-        let posts = this.props.news_state.News.map
-            ((post, index) => <NewsCardComponenet post={post} />)
+        let posts = this.props.news.map
+            ((post, index) => <NewsCardComponenet key={post._id} post={post} />)
 
         return (posts)
     }
@@ -29,7 +33,7 @@ export default class NewsComponent extends Component {
             <div className={styles.news_wrapper}>
                 <img style={{ width: "100%", height: "auto", position: "absolute", top: 0, zIndex: "-2" }} src={'/about/bg2.png'} id="c" alt="oval" />
                 <Container>
-                    {Object.keys(this.props.news_state.News).length === 0 ?
+                    {Object.keys(this.props.news).length === 0 ?
                         <Row style={{ height: "600px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                             <div style={{ marginTop: "px", position: "relative", top: "-10%" }}>
                                 <ReactLoading type={"spin"} color={"#00D2F9"} width={"10vw"} />

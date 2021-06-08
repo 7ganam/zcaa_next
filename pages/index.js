@@ -3,19 +3,11 @@ import styles from '../components/home/home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React from 'react'
-import { Container, Col, Row } from 'reactstrap';
-// import zewail_image from '/home/assets/zewail_image3.png'
-// import grads from '../public/home/assets/grads3.png'
-
-import MapComponent from "../components/home/MapComponent/MapComponent"
-import { Card, CardHeader, CardBody, CardTitle, } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'next/link';
 
 
-import useSWR from 'swr'
 import dynamic from 'next/dynamic'
+const { fetch_all_news } = require('../contollers/news_controller')
+
 
 
 import About_section from '../components/home/About_section/About_section'
@@ -35,7 +27,7 @@ export default function Home(props) {
 
       <About_section />
 
-      <News_section {...props} />
+      <News_section news={JSON.parse(props.news)} />
 
       <Welcome_section />
 
@@ -50,31 +42,17 @@ export default function Home(props) {
 
 export async function getStaticProps(context) {
 
-  console.log(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/news_posts')
   let data;
   let error;
-  const fetchCourses = async () => {
-    console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
-    return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/news/news_posts')
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Something went wrong');
-          error = 'Something went wrong';
-        }
-      })
-      .then((responseJson) => {
-        data = responseJson;
 
-      })
-      .catch((error) => {
-        console.log(error)
-        error = (error || "something went wrong")
-      });
+  try {
+    data = await fetch_all_news()
   }
-
-  await fetchCourses();
+  catch (dev_error) {
+    console.log(`error fetching`, dev_error)
+    throw new Error('Something went wrong');
+    error = 'Something went wrong';
+  }
 
   if (!data) {
     return {
@@ -82,17 +60,15 @@ export async function getStaticProps(context) {
     }
   }
 
+  let news_string = JSON.stringify(data)
+
   return {
     props: {
-      news_state: {
-        NewsFetchedSuccessfully: !error,
-        News: data
-      }
+
+      news: news_string
+
 
     },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every 10 seconds
     revalidate: 10, // In seconds
   }
 }

@@ -1,49 +1,50 @@
-import mongoose from 'mongoose'
-const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client(process.env.OAUTH2ClIENT);
-var _ = require('lodash');
+if (typeof window === 'undefined') {// make sure this runs only on server side 
 
 
-const MONGODB_URI = process.env.MONGODB_URI
+    var _ = require('lodash');
+    const mongoose = require('mongoose')
 
-if (!MONGODB_URI) {
-    throw new Error(
-        'Please define the MONGODB_URI environment variable inside .env.local'
-    )
-}
+    const MONGODB_URI = process.env.MONGODB_URI
 
-/**
- * Global is used here to maintain a cached connection across hot reloads
- * in development. This prevents connections growing exponentially
- * during API Route usage.
- */
-let cached = global.mongoose
+    if (!MONGODB_URI) {
+        throw new Error(
+            'Please define the MONGODB_URI environment variable inside .env.local'
+        )
+    }
 
-if (!cached) {
-    cached = global.mongoose = { conn: null, promise: null }
-}
+    /**
+     * Global is used here to maintain a cached connection across hot reloads
+     * in development. This prevents connections growing exponentially
+     * during API Route usage.
+     */
+    let cached = global.mongoose
 
-async function dbConnect() {
-    if (cached.conn) {
+    if (!cached) {
+        cached = global.mongoose = { conn: null, promise: null }
+    }
+
+    async function dbConnect() {
+        if (cached.conn) {
+            return cached.conn
+        }
+
+        if (!cached.promise) {
+            const opts = {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                bufferCommands: false,
+                bufferMaxEntries: 0,
+                useFindAndModify: false,
+                useCreateIndex: true,
+            }
+
+            cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+                return mongoose
+            })
+        }
+        cached.conn = await cached.promise
         return cached.conn
     }
 
-    if (!cached.promise) {
-        const opts = {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            bufferCommands: false,
-            bufferMaxEntries: 0,
-            useFindAndModify: false,
-            useCreateIndex: true,
-        }
-
-        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-            return mongoose
-        })
-    }
-    cached.conn = await cached.promise
-    return cached.conn
+    module.exports = { dbConnect }
 }
-
-export default dbConnect
