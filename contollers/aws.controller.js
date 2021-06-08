@@ -10,7 +10,6 @@ exports.doUpload = (req, res) => {
 	params.Key = req.file.originalname;
 	params.Body = req.file.buffer;
 
-	console.log(`params`, params)
 
 	s3Client.upload(params, (err, data) => {
 		if (err) {
@@ -23,7 +22,6 @@ exports.doUpload = (req, res) => {
 				});
 		}
 
-		console.log(data)
 
 		res.json(
 			{

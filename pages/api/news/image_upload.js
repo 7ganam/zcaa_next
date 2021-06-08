@@ -2,18 +2,12 @@
 import { create_post } from '../../../contollers/news_controller'
 var _ = require('lodash');
 
-// let upload = require('../../../config/multer.config.js');
+let upload = require('../../../config/multer.config.js');
 const awsWorker = require('../../../contollers/aws.controller.js');
 
 const multer = require('multer');
-var storage = multer.memoryStorage()
-var upload = multer({ storage: storage });
-// const upload = multer({
-//     storage: multer.diskStorage({
-//         destination: '../../../public/uploads',
-//         filename: (req, file, cb) => cb(null, file.originalname),
-//     }),
-// });
+
+
 
 
 export default async function handler(req, res) {
@@ -32,17 +26,14 @@ export default async function handler(req, res) {
         case 'POST':
             try {
 
-                upload.single("image")(req, {}, err => {
+                upload.single("image")(req, {}, (err) => {
                     // do error handling here
                     if (err) {
                         console.log(`err`, err)
-                        throw new Error('database failed to connect');
-
-
+                        throw new Error('multer failed to parse the file');
                     }
                     awsWorker.doUpload(req, res)
                 })
-                // res.status(200).send({})
 
 
             } catch (error) {
