@@ -7,14 +7,11 @@ if (typeof window === 'undefined') {// make sure this runs only on server side
 
 
     const entity_schema = new Schema({
-
         name: {
             type: String,
             required: true,
             // unique: true
         },
-
-
 
     });
 
