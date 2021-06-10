@@ -16,13 +16,23 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import * as Yup from 'yup';
 import TextError from "./TextError"
-// import zc_logo from '../zc_logo.png'
-// import logo_shadowed from '../logo_shadowed.png'
 import { Modal, ModalBody } from 'reactstrap';
 import GooglebtnComponent from './GooglebtnComponent/GooglebtnComponent'
 import ReactLoading from 'react-loading';
 
 import DateView from 'react-datepicker'
+
+
+
+import CreatableSelect from 'react-select/creatable';
+
+
+
+
+
+import { useEffect } from 'react';
+import { useHttpClient } from "../../../hooks/http-hook"
+
 
 
 
@@ -37,7 +47,7 @@ const SignupSchema = Yup.object().shape({
         .max(50, 'Too Long!')
         .required('Required'),
     email: Yup.string().email('Invalid email'),
-    exp_field: Yup.string().required('Required'),
+    // exp_field: Yup.string().required('Required'),
     phone: Yup.number("must be a number").positive("positive numbers only ").integer("integers only"),
     birth_date: Yup.string().required('Required'),
     address: Yup.string().required('Required'),
@@ -57,6 +67,13 @@ const SignupSchema = Yup.object().shape({
 });
 
 
+
+
+
+
+
+
+
 const FormComponent = (props) => {
 
     const { login, IsLoggedIn, Token } = useContext(LoginContext);
@@ -68,7 +85,6 @@ const FormComponent = (props) => {
     const [Fetch_error, setFetch_error] = useState(false);
     const [Error_message, setError_message] = useState(null);
 
-
     // google modal states
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
@@ -78,9 +94,34 @@ const FormComponent = (props) => {
 
 
 
+    const { isLoading: Exp_fieldsIsLoading, error: Exp_fieldsError, sendRequest: sendExp_fieldsRequest, clearError } = useHttpClient();
+    const [LoadedExp_fields, setLoadedExp_fields] = useState([]);
+    const fetch_Exp_fields = useCallback(
+        async () => {
+            try {
+
+                const responseData = await sendExp_fieldsRequest(
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/experienceField`
+                );
+
+                let maped_ids_to_values = responseData.map((exp_field) => { exp_field.value = exp_field._id; return (exp_field) })
+                setLoadedExp_fields(maped_ids_to_values);
+                console.log('setLoadedExp_fields', maped_ids_to_values)
+            } catch (err) {
+                console.log({ err })
+            }
+
+
+        },
+        [sendExp_fieldsRequest],
+    );
 
 
 
+
+    useEffect(() => {
+        fetch_Exp_fields();
+    }, []);
 
 
 
@@ -131,6 +172,44 @@ const FormComponent = (props) => {
 
 
 
+    const options = [
+        { value: '60c1100c3d49565cd10570fb', label: 'software engineering' },
+        { value: '60c10f7b3d49565cd10570fa', label: 'model based design' },
+        { value: '60c110283d49565cd10570fc', label: 'computational biology' },
+    ]
+
+
+
+
+    const handleChange = (newValue, actionMeta) => {
+        console.group('Value Changed');
+        console.log(newValue);
+        console.log(`action: ${actionMeta.action}`);
+        console.groupEnd();
+    };
+    const handleInputChange = (inputValue, actionMeta) => {
+        console.group('Input Changed');
+        console.log(inputValue);
+        console.log(`action: ${actionMeta.action}`);
+        console.groupEnd();
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const formRef = useRef();
 
@@ -150,7 +229,7 @@ const FormComponent = (props) => {
             {(formik_object) => {
                 // the dispaly sequence as follows : if success state is true show the sucess component 
                 // else if the data is being sent show the loading component 
-                // else show the forom component ... which contains the google modal.
+                // else show the form component ... which contains the google modal.
                 return (
                     <Container>
                         {
@@ -408,7 +487,11 @@ const FormComponent = (props) => {
                                                 <Row className="justify-content-end">
                                                     <Col lg="8">
                                                         <div className="form-group" style={{ width: "100%" }}>
-                                                            <label htmlFor="zc_id" className="form_text">Your ZC ID </label>
+                                                            <label htmlFor="zc_id" className="form_text">Your ZC ID
+                                                            <span style={{ color: "rgb(173, 227, 237)", fontWeight: "bolder", fontSize: "11" }}>{"  [Note, ID is available in grad certificate]"}</span>
+
+                                                            </label>
+
                                                             <Field name="zc_id" className="form-control in_field" type="text" />
                                                             <ErrorMessage name='zc_id' component={TextError} />
 
@@ -496,19 +579,44 @@ const FormComponent = (props) => {
                                                     <Col lg="8">
                                                         <div className="form-group" style={{ width: "100%" }}>
                                                             <label htmlFor="exp_field" className="form_text">field of experience </label>
-                                                            <Field name="exp_field" as="select" className="form-control in_field"
-                                                                onClick={() => console.log(formik_object.errors)}
-                                                            >
-                                                                <option value="">Select field of experience</option>
-                                                                <option value="software engineering">software engineering</option>
-                                                                <option value="model based design">model based design</option>
-                                                                <option value="computational biology">computational biology</option>
-                                                                <option value="other">other</option>
-                                                            </Field>
+                                                            {LoadedExp_fields && LoadedExp_fields.length > 0 ?
+                                                                <Field name="exp_field" as="select" className="form-control in_field"  >
+                                                                    {({ form, field }) => {
+                                                                        const { setFieldValue } = form
+                                                                        const { value } = field
+                                                                        return (
+
+                                                                            <CreatableSelect
+                                                                                id='exp_field'
+                                                                                {...field}
+                                                                                isClearable
+                                                                                isMulti
+                                                                                onChange={
+                                                                                    (newValue, actionMeta) => {
+                                                                                        setFieldValue(`exp_field`, newValue)
+                                                                                        console.log(`formRef.current.values`, formRef.current.values)
+                                                                                    }}
+                                                                                options={LoadedExp_fields}
+
+                                                                            />
+                                                                        )
+                                                                    }}
+
+                                                                </Field>
+                                                                :
+                                                                <div id="loading_spinner" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40px" }} >
+                                                                    <div style={{ marginTop: "" }}>
+                                                                        <ReactLoading type={"spin"} color={"#00D2F9"} width={"40px"} />
+                                                                    </div>
+                                                                </div>
+                                                            }
                                                             <ErrorMessage name='exp_field' component={TextError} />
                                                         </div>
                                                     </Col>
                                                 </Row>
+
+
+
                                                 {formik_object.values.exp_field === "other" &&
                                                     <Row className="justify-content-end ">
                                                         <Col lg="8">

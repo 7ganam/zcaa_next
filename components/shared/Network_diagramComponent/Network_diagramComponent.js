@@ -167,13 +167,15 @@ function Network_diagramComponent(props) {
             <img style={{ width: "auto", height: "200px", position: 'absolute', filter: 'drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.25)) ' }} src={'/logo.png'} id="c" alt="oval" />
             <div id="network_card" style={{ position: "absolute" }}>
                 <div id="network_card_div">
-                    <div id="network_card_text">connecting alumini around the world</div>
+                    <div id="network_card_text">connecting alumini</div>
                     <div id="globe_wrapper">
                         <canvas id='rotatingGlobe' width='400' height='400'
                             style={{ width: '40px', height: '40px', cursor: 'move' }}
                         >
                         </canvas>
                     </div>
+                    <div id="network_card_text">around the world</div>
+
                 </div>
             </div>
         </div>

@@ -30,10 +30,11 @@ export default async function handler(req, res) {
             try {
 
                 console.log(`post`)
-                await verify_google_user_with_form(req, res, true)
+                await verify_google_user_with_form(req, res, false)
                 await register_user(req, res)
 
             } catch (error) {
+                console.log(`error`, error)
                 res.status(400).json({ success: false })
             }
             break

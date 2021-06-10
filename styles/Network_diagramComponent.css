@@ -60,7 +60,7 @@ margin-top:  15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px;
+    margin: 0px;
     position: relative;
     top: 3px;
 }
@@ -78,7 +78,7 @@ margin-top:  15px;
     }
     #network_card_text{
 
-    margin: auto  5px  auto  15px;
+    margin: auto  15px  auto  15px;
 
     
     

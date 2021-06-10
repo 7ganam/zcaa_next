@@ -105,14 +105,6 @@ const User = new Schema({
         type: String,
         // required: true
     },
-    exp_field: {
-        type: String,
-        // required: true
-    },
-    new_exp_field: {
-        type: String,
-        // required: true
-    },
     residency: {
         type: residency_schema,
         // required: true
@@ -159,7 +151,11 @@ const User = new Schema({
     admin: {
         type: Boolean,
         default: false
-    }
+    },
+    experience_field:
+        [{ type: mongoose.Schema.Types.ObjectId, ref: 'ExperiencField' }]
+
+
 
 },
     {

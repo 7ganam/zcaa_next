@@ -1,5 +1,6 @@
 const { dbConnect } = require('../utils/dbConnect');
 const { Users } = require('../models/users');
+const { fetch_field_or_create_new_one, register_experience_fields } = require('../contollers/experienceField_controller')
 
 
 var _ = require('lodash');
@@ -105,6 +106,17 @@ async function verify_google_user_with_form(req, res, should_use_google_oauth) {
     }
 
 
+
+    //--------------------- check if fields of experience new or they already exists in the db --------------------------
+    let created_exp_field
+    try {
+        created_exp_field = await register_experience_fields(req.body.form_state.exp_field)
+    } catch (error) {
+        console.log(`error`, error)
+        res.status(500).json({ success: false })
+    }
+
+
     // ------ attach user to the request -------
     req.user = {
         g_userid: userid,
@@ -115,7 +127,7 @@ async function verify_google_user_with_form(req, res, should_use_google_oauth) {
         first_name: req.body.form_state.first_name,
         last_name: req.body.form_state.last_name,
         email: req.body.form_state.email,
-        exp_field: req.body.form_state.exp_field,
+        experience_field: created_exp_field,
         new_exp_field: req.body.form_state.new_exp_field,
         residency: req.body.form_state.residency,
         birth_date: req.body.form_state.birth_date,
