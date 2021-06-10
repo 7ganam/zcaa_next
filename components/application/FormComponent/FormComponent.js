@@ -7,7 +7,7 @@ import { Formik, Field, Form, FieldArray, ErrorMessage } from 'formik';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'reactstrap'
 // import './FormComponent.css'
-import CollapsingCardComponent from './CollapsingUniCardComponent/CollapsingUniCardComponent'
+import CollapsingUniCardComponent from './CollapsingUniCardComponent/CollapsingUniCardComponent'
 import CollapsingEntityCardComponent from './CollapsingEntityCardComponent/CollapsingEntityCardComponent'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -36,7 +36,7 @@ import { useHttpClient } from "../../../hooks/http-hook"
 
 
 
-
+// const SignupSchema = Yup.object().shape({})
 const SignupSchema = Yup.object().shape({
     first_name: Yup.string()
         .min(2, 'Too Short!')
@@ -50,7 +50,7 @@ const SignupSchema = Yup.object().shape({
     // exp_field: Yup.string().required('Required'),
     phone: Yup.number("must be a number").positive("positive numbers only ").integer("integers only"),
     birth_date: Yup.string().required('Required'),
-    address: Yup.string().required('Required'),
+    // address: Yup.string().required('Required'),
     zc_id: Yup.number("must be a number").min(201300000, '201300000 min').required('Required'),
     grad_year: Yup.number("must be a number").min(2018, '2018 min').required('Required'),
     major: Yup.string().required('Required'),
@@ -59,10 +59,15 @@ const SignupSchema = Yup.object().shape({
         region: Yup.string().min(2, 'error'),
         // Rest of your amenities object properties
     }),
-    new_exp_field: Yup.string().when("exp_field", {
-        is: (val) => val == "other",
-        then: Yup.string().required("Required")
-    })
+    exp_field: Yup.array()
+        .min(1, 'Pick at least 1 field')
+        .max(3, 'Pick  max 3 fields')
+        .of(
+            Yup.object().shape({
+                label: Yup.string().required(),
+                value: Yup.string().required(),
+            })
+        ),
 
 });
 
@@ -116,11 +121,70 @@ const FormComponent = (props) => {
         [sendExp_fieldsRequest],
     );
 
+    const { isLoading: UniesIsLoading, error: UniesError, sendRequest: sendUniesRequest, clearError: clearUniesError } = useHttpClient();
+    const [LoadedUnies, setLoadedUnies] = useState([]);
+    const fetch_Unies = useCallback(
+        async () => {
+            try {
+
+                const responseData = await sendUniesRequest(
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/university`
+                );
+
+                let maped_ids_to_values = responseData.map((uni) => {
+                    uni.value = uni._id;
+                    uni.label = uni.name;
+                    return (uni)
+                }
+                )
+                setLoadedUnies(maped_ids_to_values);
+                console.log('setLoadedUnies', maped_ids_to_values)
+            } catch (err) {
+                console.log({ err })
+            }
+
+
+        },
+        [sendUniesRequest],
+    );
+
+
+
+
+    const { isLoading: EntitiesIsLoading, error: EntitiesError, sendRequest: sendEntitiesRequest, clearError: clearEntitiesError } = useHttpClient();
+    const [LoadedEntities, setLoadedEntities] = useState([]);
+    const fetch_Entities = useCallback(
+        async () => {
+            try {
+
+                const responseData = await sendEntitiesRequest(
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/entity`
+                );
+
+                let maped_ids_to_values = responseData.map((uni) => {
+                    uni.value = uni._id;
+                    uni.label = uni.name;
+                    return (uni)
+                }
+                )
+                setLoadedEntities(maped_ids_to_values);
+                console.log('setLoadedEntities', maped_ids_to_values)
+            } catch (err) {
+                console.log({ err })
+            }
+
+
+        },
+        [sendEntitiesRequest],
+    );
+
 
 
 
     useEffect(() => {
         fetch_Exp_fields();
+        fetch_Unies();
+        fetch_Entities()
     }, []);
 
 
@@ -172,32 +236,6 @@ const FormComponent = (props) => {
 
 
 
-    const options = [
-        { value: '60c1100c3d49565cd10570fb', label: 'software engineering' },
-        { value: '60c10f7b3d49565cd10570fa', label: 'model based design' },
-        { value: '60c110283d49565cd10570fc', label: 'computational biology' },
-    ]
-
-
-
-
-    const handleChange = (newValue, actionMeta) => {
-        console.group('Value Changed');
-        console.log(newValue);
-        console.log(`action: ${actionMeta.action}`);
-        console.groupEnd();
-    };
-    const handleInputChange = (inputValue, actionMeta) => {
-        console.group('Input Changed');
-        console.log(inputValue);
-        console.log(`action: ${actionMeta.action}`);
-        console.groupEnd();
-    };
-
-
-
-
-
 
 
 
@@ -220,7 +258,7 @@ const FormComponent = (props) => {
             innerRef={formRef}
             initialValues={{
                 birth_date: '',
-                first_name: '', last_name: '', email: '', exp_field: '', new_exp_field: '', residency: { country: "", region: "" }, content: '', phone: '', address: '', zc_id: '', grad_year: '', major: '', minor: '', other_undergraduate_data: '', universities: ['', ''], entities: ['', '']
+                first_name: '', last_name: '', email: '', exp_field: [], residency: { country: "", region: "" }, content: '', phone: '', address: '', zc_id: '', grad_year: '', major: '', minor: '', other_undergraduate_data: '', universities: ['', ''], entities: [{}, {}]
             }}
             onSubmit={
                 (values) => { toggle() } // just show the google modal on submit ... it will call the submit function when google authenticate
@@ -258,12 +296,12 @@ const FormComponent = (props) => {
                                                         lineHeight: '125.5%', textAlign: 'center', textTransform: 'uppercase',
                                                         color: '#BDD7DB', fontFamily: "Cairo", fontStyle: 'normal', fontWeight: 'bold',
                                                     }}>
-                                                        <div style={{ color: "rgb(173, 227, 237)", marginTop: "30px", }}>
+                                                        <div style={{ color: "gray", marginTop: "30px", }}>
                                                             Welocme
-                                                    </div>
+                                                        </div>
                                                         <div>
                                                             to the family
-                                                    </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </Container>}
@@ -325,7 +363,7 @@ const FormComponent = (props) => {
                                                             }} className="form_section_title"
                                                         >
                                                             Personal info
-                                                         </div>
+                                                        </div>
                                                     </Col>
                                                 </Row>
                                                 <Row className="justify-content-end">
@@ -351,7 +389,7 @@ const FormComponent = (props) => {
                                                     <Col lg="8">
                                                         <div className="form-group" style={{ width: "100%" }}>
                                                             <label htmlFor="email" className="form_text" style={{ letterSpacing: '0.2em' }}>prefered email for communication
-                                                             <span style={{ color: "rgb(173, 227, 237)", fontWeight: "bolder", fontSize: "11" }}>{" (Optional)"}</span>
+                                                                <span style={{ color: "gray", fontWeight: "bolder", fontSize: "11" }}>{" (Optional)"}</span>
                                                             </label>
                                                             <Field name="email" className="form-control in_field " type="email" />
                                                             <ErrorMessage name='email' component={TextError} />
@@ -363,7 +401,7 @@ const FormComponent = (props) => {
                                                     <Col lg="8">
                                                         <label className="form_text">
                                                             Birth date
-                                                         </label>
+                                                        </label>
                                                     </Col>
 
                                                 </Row>
@@ -399,7 +437,7 @@ const FormComponent = (props) => {
                                                     <Col lg="8">
                                                         <div className="form-group" style={{ width: "100%" }}>
                                                             <label htmlFor="phone" className="form_text">phone
-                                            <span style={{ color: "rgb(173, 227, 237)", fontWeight: "bolder", fontSize: "11" }}>{" (Optional)"}</span>
+                                                                <span style={{ color: "gray", fontWeight: "bolder", fontSize: "11" }}>{" (Optional)"}</span>
                                                             </label>
                                                             <Field name="phone" className="form-control in_field" type="text" />
                                                             <ErrorMessage name='phone' component={TextError} />
@@ -456,7 +494,7 @@ const FormComponent = (props) => {
                                                         </div>
                                                     </Col>
                                                 </Row>
-                                                <Row className="justify-content-end ">
+                                                {/* <Row className="justify-content-end ">
                                                     <Col lg="8">
                                                         <div className="form-group" style={{ width: "100%" }}>
                                                             <label htmlFor="address" className="form_text">address </label>
@@ -464,7 +502,7 @@ const FormComponent = (props) => {
                                                             <ErrorMessage name='address' component={TextError} />
                                                         </div>
                                                     </Col>
-                                                </Row>
+                                                </Row> */}
                                             </div>
 
                                             <div id="undergrad_info_section ">
@@ -481,14 +519,14 @@ const FormComponent = (props) => {
                                                             }} className="form_section_title"
                                                         >
                                                             undergrad info
-                                    </div>
+                                                        </div>
                                                     </Col>
                                                 </Row>
                                                 <Row className="justify-content-end">
                                                     <Col lg="8">
                                                         <div className="form-group" style={{ width: "100%" }}>
                                                             <label htmlFor="zc_id" className="form_text">Your ZC ID
-                                                            <span style={{ color: "rgb(173, 227, 237)", fontWeight: "bolder", fontSize: "11" }}>{"  [Note, ID is available in grad certificate]"}</span>
+                                                                <span style={{ color: "gray", fontWeight: "bolder", fontSize: "11" }}>{"  [Note, ID is available in grad certificate]"}</span>
 
                                                             </label>
 
@@ -529,7 +567,7 @@ const FormComponent = (props) => {
                                                     <Col lg="4">
                                                         <div className="form-group" style={{ width: "100%" }}>
                                                             <label htmlFor="minor" className="form_text">minor
-                                            <span style={{ color: "rgb(173, 227, 237)", fontWeight: "bolder", fontSize: "11" }}>{" (Optional)"}</span>
+                                                                <span style={{ color: "gray", fontWeight: "bolder", fontSize: "11" }}>{" (Optional)"}</span>
                                                             </label>
                                                             <Field name="minor" as="select" className="form-control in_field">
                                                                 <option value="">Select minor</option>
@@ -550,7 +588,7 @@ const FormComponent = (props) => {
                                                     <Col lg="8">
                                                         <div className="form-group" style={{ width: "100%" }}>
                                                             <label htmlFor="other_undergraduate_data" className="form_text">Others
-                                            <span style={{ color: "rgb(173, 227, 237)", fontWeight: "bolder", fontSize: "11" }}>{" (Optional)"}</span>
+                                                                <span style={{ color: "gray", fontWeight: "bolder", fontSize: "11" }}>{" (Optional)"}</span>
                                                             </label>
                                                             <Field name="other_undergraduate_data" className="form-control in_field" type="text" />
                                                         </div>
@@ -572,14 +610,20 @@ const FormComponent = (props) => {
                                                             }} className="form_section_title"
                                                         >
                                                             career info
-                                                         </div>
+                                                        </div>
                                                     </Col>
                                                 </Row>
                                                 <Row className="justify-content-end ">
                                                     <Col lg="8">
-                                                        <div className="form-group" style={{ width: "100%" }}>
-                                                            <label htmlFor="exp_field" className="form_text">field of experience </label>
-                                                            {LoadedExp_fields && LoadedExp_fields.length > 0 ?
+                                                        {LoadedExp_fields && LoadedExp_fields.length > 0 &&
+                                                            <div className="form-group" style={{ width: "100%" }}>
+                                                                <label onClick={() => console.log(`clicked`)} htmlFor="exp_field" className="form_text">field of experience
+                                                                    <div style={{ color: "gray", fontWeight: "bolder", fontSize: "12px", letterSpacing: ".1em", textTransform: 'lowercase' }}>
+                                                                        {' If you can\'t find your choice Type it then press "ENTER" to be added to our list '}
+                                                                    </div>
+                                                                </label>
+
+
                                                                 <Field name="exp_field" as="select" className="form-control in_field"  >
                                                                     {({ form, field }) => {
                                                                         const { setFieldValue } = form
@@ -594,24 +638,26 @@ const FormComponent = (props) => {
                                                                                 onChange={
                                                                                     (newValue, actionMeta) => {
                                                                                         setFieldValue(`exp_field`, newValue)
-                                                                                        console.log(`formRef.current.values`, formRef.current.values)
+
                                                                                     }}
-                                                                                options={LoadedExp_fields}
+                                                                                options={value.length === 3 ? [] : LoadedExp_fields}
+                                                                                noOptionsMessage={() => {
+                                                                                    return value.length === 3 ? "you can select max of 3 fields of experiences" : 'No options available';
+                                                                                }}
 
                                                                             />
                                                                         )
                                                                     }}
 
                                                                 </Field>
-                                                                :
-                                                                <div id="loading_spinner" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40px" }} >
-                                                                    <div style={{ marginTop: "" }}>
-                                                                        <ReactLoading type={"spin"} color={"#00D2F9"} width={"40px"} />
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                            <ErrorMessage name='exp_field' component={TextError} />
-                                                        </div>
+                                                                <ErrorMessage name='exp_field' component={TextError} />
+                                                                <div style={{ color: 'red' }}>{formRef.current.errors.exp_field}</div>
+
+
+
+
+                                                            </div>
+                                                        }
                                                     </Col>
                                                 </Row>
 
@@ -634,9 +680,9 @@ const FormComponent = (props) => {
                                                     <Col lg="8" >
                                                         <div className=" from_group_box">
                                                             <div className="form_text3 " >Universities
-                                            <div style={{ color: "#ADE3ED", fontWeight: "bolder", fontSize: "15px", letterSpacing: ".1em" }}>{" (Optional)"}</div>
+                                                                <div style={{ color: "#ADE3ED", fontWeight: "bolder", fontSize: "15px", letterSpacing: ".1em" }}>{" (Optional)"}</div>
                                                             </div>
-                                                            <div className="form_text4 " >What universities other than ZC have you visted?</div>
+                                                            <div className="form_text4 " >What universities other than ZC have you visited?</div>
                                                             <div className="d-flex ">
                                                                 <div className="form-group mx-3  ml-lg-4 " style={{ width: "100%" }}>
                                                                     <FieldArray name='universities'>
@@ -647,9 +693,9 @@ const FormComponent = (props) => {
                                                                             return (
                                                                                 <div>
                                                                                     {universities.map((phNumber, index) => (
-                                                                                        <div className="d-flex mt-5  mt-lg-4 mx-lg-0">
+                                                                                        <div key={index} className="d-flex mt-5  mt-lg-4 mx-lg-0">
                                                                                             <div key={index} style={{ width: "100%" }}>
-                                                                                                <CollapsingCardComponent index={index} remove={remove} />
+                                                                                                <CollapsingUniCardComponent unies={LoadedUnies} index={index} remove={remove} />
                                                                                             </div>
                                                                                             <div className="form-group  my-0 d-none d-lg-flex"
                                                                                                 style={{ width: "70px", color: "grey", fontSize: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}
@@ -670,7 +716,7 @@ const FormComponent = (props) => {
                                                                                         </div>
                                                                                         <div className="plus_button_text">
                                                                                             Add more universities
-                                                                        </div>
+                                                                                        </div>
                                                                                     </div >
                                                                                 </div>
                                                                             )
@@ -702,7 +748,8 @@ const FormComponent = (props) => {
                                                                                     {entities.map((phNumber, index) => (
                                                                                         <div className="d-flex mt-4">
                                                                                             <div key={index} style={{ width: "100%" }}>
-                                                                                                <CollapsingEntityCardComponent index={index} remove={remove} />
+                                                                                                <CollapsingEntityCardComponent entities={LoadedEntities} index={index} remove={remove}
+                                                                                                    formik_object={formik_object} />
                                                                                             </div>
                                                                                             <div className="form-group  my-0 d-none d-lg-flex"
                                                                                                 style={{ width: "70px", color: "grey", fontSize: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}
@@ -718,12 +765,12 @@ const FormComponent = (props) => {
                                                                                         </div>
                                                                                     ))}
                                                                                     < div style={{ display: "flex", justifyContent: "center", fontSize: "40px", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                                                                                        <div onClick={() => push('')} type="button" class="  plus_button ">
+                                                                                        <div onClick={() => push({})} type="button" class="  plus_button ">
                                                                                             <FontAwesomeIcon icon={faPlus} />
                                                                                         </div>
                                                                                         <div className="plus_button_text">
                                                                                             Add more entities
-                                                                        </div>
+                                                                                        </div>
                                                                                     </div >
                                                                                 </div>
                                                                             )

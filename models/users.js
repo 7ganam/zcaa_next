@@ -16,14 +16,21 @@ const universities_schema = new Schema({
         type: String,
         // required: true
     },
-    uni_name: {
-        type: String,
-        // required: true
-    },
+    uni_ref: [{ type: mongoose.Schema.Types.ObjectId, ref: 'University' }]
+    ,
     visit_type: {
         type: String,
         // required: true
     },
+    country: {
+        type: String,
+        // required: true
+    },
+    region: {
+        type: String,
+        // required: true
+    },
+
 
 })
 
@@ -46,6 +53,11 @@ const entities_schema = new Schema({
         type: String,
         // required: true
     },
+    region: {
+        type: String,
+        // required: true
+    },
+
     department: {
         type: String,
         // required: true
@@ -54,10 +66,7 @@ const entities_schema = new Schema({
         type: String,
         // required: true
     },
-    entity_name: {
-        type: String,
-        // required: true
-    },
+
     job_title: {
         type: String,
         // required: true
@@ -68,6 +77,12 @@ const entities_schema = new Schema({
     },
     start_date: {
         type: String,
+        // required: true
+    },
+    entity_ref: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Entity' }]
+    ,
+    isCurrent: {
+        type: Boolean,
         // required: true
     },
 

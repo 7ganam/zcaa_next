@@ -46,6 +46,7 @@
     "react-jvectormap": "^0.0.16",
     "react-loading": "^2.0.3",
     "react-select": "^4.3.1",
+    "react-window": "^1.8.6",
     "reactstrap": "^8.9.0",
     "stream": "^0.0.2",
     "swr": "^0.5.5",

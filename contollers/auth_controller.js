@@ -1,6 +1,11 @@
 const { dbConnect } = require('../utils/dbConnect');
 const { Users } = require('../models/users');
+const { Entity } = require('../models/entity');
+
 const { fetch_field_or_create_new_one, register_experience_fields } = require('../contollers/experienceField_controller')
+const { fetch_all_unies, register_unies } = require('../contollers/university_controller')
+const { fetch_all_entities, register_entities } = require('../contollers/entity_controller')
+
 
 
 var _ = require('lodash');
@@ -21,7 +26,7 @@ async function verify_google_user(req, res, should_use_google_oauth) {
     let g_picture = ""
     let zc_email = ""
 
-    if (use_google_oauth) {
+    if (use_google_oauth) { // ------ get user data verfied from google if use_google_oauth is true ---------------
         const ticket = await client.verifyIdToken({
             idToken: req.body.google_data.tokenObj.id_token,
             audience: process.env.OAUTH2ClIENTAUDIENCE,  // Specify the CLIENT_ID of the app that accesses the backend
@@ -44,13 +49,14 @@ async function verify_google_user(req, res, should_use_google_oauth) {
         console.log(`zc_email`, zc_email)
 
     }
-    else {
+    else { //-------------- if use_google_oauth not set ... use the user data sent from the front end directly -----------------
         payload = req.body.google_data;
         userid = payload.profileObj.googleId;
         g_picture = payload.profileObj.imageUrl;
         zc_email = payload.profileObj.email;
 
     }
+
     console.log(1.1)
     req.user = {
         g_userid: userid,
@@ -60,7 +66,6 @@ async function verify_google_user(req, res, should_use_google_oauth) {
 
     }
 }
-
 
 
 
@@ -116,8 +121,35 @@ async function verify_google_user_with_form(req, res, should_use_google_oauth) {
         res.status(500).json({ success: false })
     }
 
+    //--------------------- check if unies  new or they already exists in the db --------------------------
+    let cleaned_unies = _.without(req.body.form_state.universities, undefined, null, "");
+    let cleaned_unies2 = cleaned_unies.filter(uni => uni.uni_name) // remove any empty entries
+    let created_unies
+    try {
+        created_unies = await register_unies(cleaned_unies2)
+    } catch (error) {
+        console.log(`error`, error)
+        res.status(500).json({ success: false })
+    }
 
-    // ------ attach user to the request -------
+
+    let cleaned_entities = _.without(req.body.form_state.entities, undefined, null, "");
+    let cleaned_entities2 = cleaned_entities.filter(entity => entity.entity_name) // remove any empty entries
+    let created_entities
+    try {
+        created_entities = await register_entities(cleaned_entities2)
+    } catch (error) {
+        console.log(`error`, error)
+        res.status(500).json({ success: false })
+    }
+
+
+
+
+
+
+
+    //------ attach user to the request -------
     req.user = {
         g_userid: userid,
         g_picture: g_picture,
@@ -141,13 +173,10 @@ async function verify_google_user_with_form(req, res, should_use_google_oauth) {
         major: req.body.form_state.major,
         minor: req.body.form_state.minor,
         other_undergraduate_data: req.body.form_state.other_undergraduate_data,
-        universities: _.without(req.body.form_state.universities, undefined, null, ""),
-        entities: _.without(req.body.form_state.entities, undefined, null, ""),
+        universities: created_unies,
+        entities: created_entities,
     }
 }
-
-
-
 
 
 
@@ -205,9 +234,6 @@ const login_user = async (req, res) => {
 
 
 }
-
-
-
 
 
 
@@ -310,6 +336,8 @@ const register_user = async (req, res) => {
     }
 
 }
+
+
 
 
 export { verify_google_user, verify_google_user_with_form, login_user, register_user }
