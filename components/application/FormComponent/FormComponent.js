@@ -545,8 +545,10 @@ const FormComponent = (props) => {
                                                         <Col lg="8">
                                                             <div className="form-group" style={{ width: "100%" }}>
                                                                 <label htmlFor="zc_id" className="form_text">Your ZC ID
-                                                                    <span style={{ color: "gray", fontWeight: "bolder", fontSize: "11" }}>{"  [Note, ID is available in grad certificate]"}</span>
 
+                                                                    <div style={{ color: "gray", fontWeight: "bolder", fontSize: "12px", letterSpacing: ".1em", textTransform: 'lowercase' }}>
+                                                                        {'[Note, ID is available in grad certificate]'}
+                                                                    </div>
                                                                 </label>
 
                                                                 <Field name="zc_id" className="form-control in_field" type="text" />

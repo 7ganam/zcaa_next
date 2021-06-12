@@ -1,5 +1,5 @@
 .form-control{
-    border-color: rgb(20 135 155);
+    border-color: rgb(20 135 155 / 43%) !important;
     border-width: .5px;
 }
 .modal-content{
