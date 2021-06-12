@@ -129,9 +129,9 @@ function NewsCardComponenet(props) {
                                 <Link href={`/NEWS/${props.post._id}`} style={{ marginBottom: "15px" }}>
                                     <a>
                                         <button className="read_more_btn" style={{ width: "100%", height: "35px" }}>
-                                            <div className="zcaa_link" style={{ marginLeft: "auto" }}>
+                                            <div className="zcaa_news_link" style={{ marginLeft: "auto" }}>
                                                 read more
-                                            <FontAwesomeIcon icon={faLongArrowAltRight} className="ml-1 pt-1" />
+                                                <FontAwesomeIcon icon={faLongArrowAltRight} className="ml-1 pt-1" />
                                             </div>
                                         </button>
                                     </a>
