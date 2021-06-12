@@ -21,7 +21,7 @@ export default function LoginComponent() {
         <React.Fragment>
             {
                 // gdata &&
-                <Container fluid style={{ background: "rgba(164, 223, 234, 0.15)", minHeight: "80vh" }}>
+                <Container fluid style={{ background: "rgba(164, 223, 234, 0.15)", minHeight: "80vh", padding: '0' }}>
                     <FormComponent />
                 </Container>
             }

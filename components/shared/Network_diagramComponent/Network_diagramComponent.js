@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 const draw_glope = () => {
     var globe = window.planetaryjs.planet();
     // Load our custom `autorotate` plugin; see below.
-    globe.loadPlugin(autorotate(100));
+    globe.loadPlugin(autorotate(15));
     // The `earth` plugin draws the oceans and the land; it's actually
     // a combination of several separate built-in plugins.
     // Note that we're loading a special TopoJSON file
@@ -23,7 +23,7 @@ const draw_glope = () => {
         topojson: { file: '/planetary/world-110m-withlakes.json' },
         oceans: { fill: '#CCE6EB' },
         land: { fill: '#26ADCB' },
-        borders: { stroke: 'grey' }
+        borders: { stroke: 'white' }
     }));
     // Load our custom `lakes` plugin to draw lakes; see below.
     globe.loadPlugin(lakes({
@@ -34,7 +34,7 @@ const draw_glope = () => {
     // The `zoom` and `drag` plugins enable
     // manipulating the globe with the mouse.
     globe.loadPlugin(window.planetaryjs.plugins.zoom({
-        scaleExtent: [100, 300]
+        scaleExtent: [170, 170]
     }));
     globe.loadPlugin(window.planetaryjs.plugins.drag({
         // Dragging the globe should pause the
@@ -146,11 +146,12 @@ function Network_diagramComponent(props) {
 
         const particles_number = Math.ceil(100 / 1520 * x);
 
+        if (x > 500) {
+            const jp = $("#network_div").jParticle({
+                particlesNumber: particles_number, background: 'CCE6EB', color: 'white', createLinkDist: 180, speed: 200
 
-        const jp = $("#network_div").jParticle({
-            particlesNumber: particles_number, background: 'CCE6EB', color: 'white', createLinkDist: 180, speed: 200
-
-        });
+            });
+        }
 
         draw_glope()
         return function cleanup() {
@@ -160,21 +161,22 @@ function Network_diagramComponent(props) {
     }, [])
     return (
         <div id="network_div" style={{
-            position: 'relative', height: "608px", backgroundColor: "#CCE6EB", display: "flex", justifyContent: "center",
+            position: 'relative', width: '100%', height: "608px", backgroundColor: "#CCE6EB", display: "flex", justifyContent: "center",
             display: router.pathname !== "/" ? "none" : "flex",
             alignItems: "center", boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
         }}>
-            <img style={{ width: "auto", height: "200px", position: 'absolute', filter: 'drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.25)) ' }} src={'/logo.png'} id="c" alt="oval" />
-            <div id="network_card" style={{ position: "absolute" }}>
+
+            <div id="globe_wrapper" style={{}}>
+                <canvas id='rotatingGlobe' width='400' height='400'
+                    style={{ width: '280px', height: '280px', cursor: 'move' }}
+                >
+                </canvas>
+                <img style={{ width: "auto", height: "110px", position: 'absolute', filter: 'drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.25)) ', bottom: '20px', right: "20px" }} src={'/logo.png'} id="c" alt="oval" />
+            </div>
+
+            <div id="network_card" style={{}}>
                 <div id="network_card_div">
-                    <div id="network_card_text">connecting alumini</div>
-                    <div id="globe_wrapper">
-                        <canvas id='rotatingGlobe' width='400' height='400'
-                            style={{ width: '40px', height: '40px', cursor: 'move' }}
-                        >
-                        </canvas>
-                    </div>
-                    <div id="network_card_text">around the world</div>
+                    <div id="network_card_text">connecting ZC alumini around the world</div>
 
                 </div>
             </div>

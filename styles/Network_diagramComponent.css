@@ -65,12 +65,31 @@ margin-top:  15px;
     top: 3px;
 }
 
+#network_card{
+    position: absolute;
+    bottom: 100px;
+}
+#network_card_text{
 
-@media (min-width: 576px) { 
-    
- }
+    margin: 15px  15px  15px  15px;
+        
+    }
+
+    #globe_wrapper{
+        position: absolute;
+        filter: drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.25)) ;
+        top: 100px;
+    }
+
+
 
 @media (min-width: 768px) {
+
+    #globe_wrapper{
+        position: absolute;
+        filter: drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.25)) ;
+        top: 160px;
+    }
     #network_card_div{
         display: flex;
         flex-direction: row;
@@ -79,9 +98,12 @@ margin-top:  15px;
     #network_card_text{
 
     margin: auto  15px  auto  15px;
-
-    
-    
+    font-size: 20px;
+        
+    }
+    #network_card{
+        position: absolute;
+        bottom: 100px;
     }
     
  }

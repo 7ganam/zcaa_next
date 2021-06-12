@@ -21,40 +21,7 @@
     overflow: hidden;
 }
 
- .welcome_card{
-    max-width: 450px;
-    min-height: 250px;
-    margin-top: 70px;
-    box-shadow: 0px 11px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 12px;
-    margin-bottom: 25px;
-}
 
- .welcome_card_header{
-    border-radius: 12px 12px 0px 0px;
-    height: "70px";
-    background-color: #CCE6EB;
-    line-height: 50px;
-    text-align: left;
-    font-family: Noto Sans;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 30px;
-}
-
-.welcome_card_body{
-    text-align: left;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 20px;
-    line-height: 125.5%;
-    /* or 30px */
-    letter-spacing: 0.045em;
-    /* Gray 4 */
-    color: #BDBDBD;
-    /* color: #487b85; */
-}
 
 
 
@@ -111,17 +78,7 @@
     height: auto;
 }
 
- .welcome_title{
-    text-align: center;
-    margin-top: 40px;
-    text-transform: uppercase;
-    font-family: 'Philosopher', sans-serif;
-    font-size: 50px;
-    color: hsl(0, 0%, 100%);
 
-    box-shadow: 4px 4px 0.5px 0px #000000 20% inset;
-    text-shadow: 1px 1px rgba(0, 0, 0, 0.205), -1px -1px rgb(167, 163, 163);
-  }
 
 
  .shadow_container_1{
@@ -156,10 +113,7 @@
 
     }
 
-       .welcome_title{
-        text-align: left;
-        font-size: 60px;
-      }
+
 
           .map_wrapper{
           margin-top: 100px;
