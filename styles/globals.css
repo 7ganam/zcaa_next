@@ -125,24 +125,10 @@ a {
 
 
 /* unvisited link */
-.zcaa_link:link {
+.zcaa_link {
   color: #0091AC;
 }
 
-/* visited link */
-.zcaa_link:visited {
-  color: green;
-}
-
-/* mouse over link */
-.zcaa_link:hover {
-  color: rgb(121, 121, 212);
-}
-
-/* selected link */
-.zcaa_link:active {
-  color: rgb(137, 137, 223);
-}
 
 
 #page-container {

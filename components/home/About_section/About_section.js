@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Col, Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'next/link';
+import Link from 'next/link';
 
 
 function About_section() {
@@ -14,7 +14,7 @@ function About_section() {
             <img
                 style={{ width: "100%", height: "auto", position: "absolute", top: "-500px", zIndex: "-1" }} src={"/about/bg2.png"} id="c" alt="oval" />
 
-            <Container id="aboutus_container" className={`p-0 ${styles.aboutus_container}`} >
+            <Container id="aboutus_container" className={`p-0 ${styles.aboutus_container} px-2`} >
 
                 <Row id="vision_row" className={` m-t-5 justify-content-center ${styles.vision_row}`} style={{ marginTop: "30px" }}>
 
@@ -26,14 +26,16 @@ function About_section() {
                             This vision aims to utilize the energy and spirit dr Ahmed Zewail inspired to us and ensure a well-
                             connected powerful ZC community.
                         </div>
-                        <a className="zcaa_link mt-lg-3 mt-4" style={{ marginTop: "10px", cursor: "pointer" }}>
-                            read our full vision
-                            <FontAwesomeIcon icon={faLongArrowAltRight} className="ml-1 pt-1" />
-                        </a>
+                        <Link href='/ABOUTUS#vision_header'>
+                            <a className="zcaa_link mt-lg-3 mt-4" style={{ marginTop: "10px", cursor: "pointer" }}>
+                                read our full vision
+                                <FontAwesomeIcon icon={faLongArrowAltRight} className="ml-1 pt-1" />
+                            </a>
+                        </Link>
                     </Col>
 
-                    <Col xs={{ size: 11, order: 0 }} md={{ size: 6, order: 2 }} className="d-flex">
-                        <img className={`${styles.zewail_image} mb-5 ml-md-auto ml-auto mr-auto mr-md-0`} style={{ width: "70%", height: "auto" }} src={'/home/assets/zewail_image3.png'} id="zewail_image" alt="oval" />
+                    <Col xs={{ size: 12, order: 0 }} md={{ size: 6, order: 2 }} className="d-flex">
+                        <img className={`${styles.zewail_image} mb-5 ml-md-auto ml-auto mr-auto mr-md-0`} style={{}} src={'/home/assets/zewail_image3.png'} id="zewail_image" alt="oval" />
 
                     </Col>
 
@@ -53,10 +55,12 @@ function About_section() {
                             the Alumni to keep ties with their alma mater by supporting their needs, elevating their
                             connections, and assisting their career’s development.
                         </div>
-                        <a className="zcaa_link mt-lg-3 mt-4" style={{ marginTop: "10px", cursor: "pointer" }}>
-                            read our full mission
-                            <FontAwesomeIcon icon={faLongArrowAltRight} className="ml-1 pt-1" />
-                        </a>
+                        <Link href='/ABOUTUS#mission_header'>
+                            <a className="zcaa_link mt-lg-3 mt-4" style={{ marginTop: "10px", cursor: "pointer" }}>
+                                read our full mission
+                                <FontAwesomeIcon icon={faLongArrowAltRight} className="ml-1 pt-1" />
+                            </a>
+                        </Link>
 
                     </Col>
 

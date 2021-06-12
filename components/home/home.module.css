@@ -95,10 +95,6 @@
 }
 
 
- .mission_row{
-    margin-top: 100px;
-}
-
 
 /*  Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) { 
@@ -121,11 +117,7 @@
         height:500px;
     }
 
-       .mission_row{
-        margin-top: 30px;
-    }
-    
-    
+
 }
 
  /* Large devices (desktops, 992px and up) */

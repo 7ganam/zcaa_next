@@ -1,3 +1,19 @@
+
+
+
+  .zewail_image{
+    width: 100%;
+    height: "auto"
+}
+@media (min-width: 768px) { 
+    .zewail_image{
+        width: 80%;
+        height: "auto"
+    }
+  
+}
+
+
 .mission_text{
     margin-top: 20px;
     /* font-family: Roboto; */
@@ -11,8 +27,16 @@
 
  .mission_row{
     margin-top: 100px;
+    max-width: 95vw;
+    margin: 100px auto 0 auto;
+
+
 }
 
+.vision_row{
+    max-width: 95vw;
+    margin: auto;
+}
 
 /*  Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) { 

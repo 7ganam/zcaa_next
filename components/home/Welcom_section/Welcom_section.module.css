@@ -1,5 +1,6 @@
 
 
+  
   .welcome_container{
     width: 100%;
     min-height: 570px;
@@ -91,7 +92,7 @@ top:15px;
     width: auto;
     position: absolute;
     bottom: 9px ;
-    left: 130px;
+    left: 150px;
     filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 5px 4px);
 }
 .welcome_card{
