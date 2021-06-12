@@ -21,7 +21,7 @@ const draw_glope = () => {
     // (world-110m-withlakes.json) so we can render lakes.
     globe.loadPlugin(window.planetaryjs.plugins.earth({
         topojson: { file: '/planetary/world-110m-withlakes.json' },
-        oceans: { fill: '#CCE6EB' },
+        oceans: { fill: '#edfbfd' },
         land: { fill: '#26ADCB' },
         borders: { stroke: 'white' }
     }));
