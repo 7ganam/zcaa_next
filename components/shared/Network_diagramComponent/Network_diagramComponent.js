@@ -58,10 +58,14 @@ const draw_glope = (screen_width) => {
     globe.projection.scale(175).translate([175, 175]).rotate([0, -10, 0]);
 
     // Every few hundred milliseconds, we'll draw another random ping.
-    var colors = ['red', 'yellow', 'white', 'orange', 'green', 'cyan', 'pink'];
+    // var colors = ['red', 'yellow', 'white', 'orange', 'green', 'cyan', 'pink'];
+    var colors = ['white'];
     setInterval(function () {
-        var lat = Math.random() * 170 - 85;
-        var lng = Math.random() * 360 - 180;
+        // var lat = Math.random() * 170 - 85;
+        // var lng = Math.random() * 360 - 180;
+
+        var lat = 29;
+        var lng = 31.2;
         var color = colors[Math.floor(Math.random() * colors.length)];
         globe.plugins.pings.add(lng, lat, { color: color, ttl: 2000, angle: Math.random() * 10 });
     }, 150);
