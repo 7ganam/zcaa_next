@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 
 
 
-const draw_glope = () => {
+const draw_glope = (screen_width) => {
     var globe = window.planetaryjs.planet();
     // Load our custom `autorotate` plugin; see below.
     globe.loadPlugin(autorotate(15));
@@ -33,19 +33,27 @@ const draw_glope = () => {
     globe.loadPlugin(window.planetaryjs.plugins.pings());
     // The `zoom` and `drag` plugins enable
     // manipulating the globe with the mouse.
-    globe.loadPlugin(window.planetaryjs.plugins.zoom({
-        scaleExtent: [170, 170]
-    }));
-    globe.loadPlugin(window.planetaryjs.plugins.drag({
-        // Dragging the globe should pause the
-        // automatic rotation until we release the mouse.
-        onDragStart: function () {
-            this.plugins.autorotate.pause();
-        },
-        onDragEnd: function () {
-            this.plugins.autorotate.resume();
-        }
-    }));
+
+
+
+    // globe.loadPlugin(window.planetaryjs.plugins.zoom({
+    //     scaleExtent: [170, 170]
+    // }));
+
+
+
+    if (screen_width > 500) { // allow drag only on big screens
+        globe.loadPlugin(window.planetaryjs.plugins.drag({
+            // Dragging the globe should pause the
+            // automatic rotation until we release the mouse.
+            onDragStart: function () {
+                this.plugins.autorotate.pause();
+            },
+            onDragEnd: function () {
+                this.plugins.autorotate.resume();
+            }
+        }));
+    }
     // Set up the globe's initial scale, offset, and rotation.
     globe.projection.scale(175).translate([175, 175]).rotate([0, -10, 0]);
 
@@ -153,7 +161,7 @@ function Network_diagramComponent(props) {
             });
         }
 
-        draw_glope()
+        draw_glope(x)
         return function cleanup() {
 
 
@@ -167,11 +175,11 @@ function Network_diagramComponent(props) {
         }}>
 
             <div id="globe_wrapper" style={{}}>
-                <canvas id='rotatingGlobe' width='400' height='400'
-                    style={{ width: '280px', height: '280px', cursor: 'move' }}
+                <canvas id='rotatingGlobe' width='350' height='350'
+                    style={{ width: '250px', height: '250px', cursor: 'move' }}
                 >
                 </canvas>
-                <img style={{ width: "auto", height: "110px", position: 'absolute', filter: 'drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.25)) ', bottom: '20px', right: "20px" }} src={'/logo.png'} id="c" alt="oval" />
+                <img style={{ width: "auto", height: "110px", position: 'absolute', filter: 'drop-shadow(0px 5px 4px rgba(0, 0, 0, 0.25)) ', bottom: '10px', right: "20px" }} src={'/logo.png'} id="c" alt="oval" />
             </div>
 
             <div id="network_card" style={{}}>

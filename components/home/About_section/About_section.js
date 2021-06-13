@@ -11,8 +11,8 @@ function About_section() {
     return (
 
         <Container fluid style={{ position: 'relative', padding: '0' }}>
-            <img
-                style={{ width: "100%", height: "auto", position: "absolute", top: "-500px", zIndex: "-1" }} src={"/about/bg2.png"} id="c" alt="oval" />
+            {/* <img
+                style={{ width: "100%", height: "auto", position: "absolute", top: "-200px", zIndex: "-1" }} src={"/about/bg2.png"} id="c" alt="oval" /> */}
 
             <Container id="aboutus_container" className={`p-0 ${styles.aboutus_container} px-2`} >
 
@@ -35,8 +35,13 @@ function About_section() {
                     </Col>
 
                     <Col xs={{ size: 12, order: 0 }} md={{ size: 6, order: 2 }} className="d-flex">
-                        <img className={`${styles.zewail_image} mb-5 ml-md-auto ml-auto mr-auto mr-md-0`} style={{}} src={'/home/assets/zewail_image3.png'} id="zewail_image" alt="oval" />
+                        <div className={`${styles.zewail_image_wrapper}`} style={{}}>
 
+                            <img className={`${styles.zewail_image}  ${styles.zewail_image_gold} mb-5 ml-md-auto ml-auto mr-auto mr-md-0`} style={{}} src={'/home/assets/zewail_image8.png'} id="zewail_image" alt="oval" />
+
+                            <img className={`${styles.zewail_image}  ${styles.zewail_image_fader} mb-5 ml-md-auto ml-auto mr-auto mr-md-0`} style={{}} src={'/home/assets/zewail_image9.png'} id="zewail_image" alt="oval" />
+
+                        </div>
                     </Col>
 
 
