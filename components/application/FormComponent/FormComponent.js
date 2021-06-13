@@ -703,7 +703,7 @@ const FormComponent = (props) => {
                                                                 <div className="form_text3 " >Universities
                                                                     <div style={{ color: "#ADE3ED", fontWeight: "bolder", fontSize: "15px", letterSpacing: ".1em" }}>{" (Optional)"}</div>
                                                                 </div>
-                                                                <div className="form_text4 " >What universities other than ZC have you visited?</div>
+                                                                <div className="form_text4 " >Which universities other than ZC have you visited?</div>
                                                                 <div className="d-flex ">
                                                                     <div className="form-group mx-3  ml-lg-4 " style={{ width: "100%" }}>
                                                                         <FieldArray name='universities'>
@@ -752,10 +752,10 @@ const FormComponent = (props) => {
                                                     <Row id="entities_card" className="justify-content-end" style={{ marginTop: "50px" }}>
                                                         <Col lg="8" >
                                                             <div className=" from_group_box">
-                                                                <div className="form_text3 " >{'compamies & organizations '}
+                                                                <div className="form_text3 " >{'companies & organizations '}
                                                                     <div style={{ color: "#ADE3ED", fontWeight: "bolder", fontSize: "15px", letterSpacing: ".1em" }}>{" (Optional)"}</div>
                                                                 </div>
-                                                                <div className="form_text4 " >What entites did you visit during your career?</div>
+                                                                <div className="form_text4 " >Which entites did you visit during your career?</div>
                                                                 <div className="d-flex ">
                                                                     <div className="form-group mx-3  ml-lg-4 " style={{ width: "100%" }}>
                                                                         <FieldArray name='entities'>
