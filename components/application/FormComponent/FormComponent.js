@@ -724,7 +724,7 @@ const FormComponent = (props) => {
                                                                                                     {
                                                                                                         // index > 0 &&
                                                                                                         (
-                                                                                                            <div className="trash_icon" title={`delete university ${index}`} style={{}} onClick={() => remove(index)}>
+                                                                                                            <div className="trash_icon" title={`delete university ${index + 1}`} style={{}} onClick={() => remove(index)}>
                                                                                                                 <FontAwesomeIcon icon={faTrashAlt} className="pt-1" />
                                                                                                             </div>
                                                                                                         )}
@@ -778,7 +778,7 @@ const FormComponent = (props) => {
                                                                                                     {
                                                                                                         // index > 0 &&
                                                                                                         (
-                                                                                                            <div className="trash_icon" title={`delete entity ${index}`} style={{}} onClick={() => remove(index)}>
+                                                                                                            <div className="trash_icon" title={`delete entity ${index + 1}`} style={{}} onClick={() => remove(index)}>
                                                                                                                 <FontAwesomeIcon icon={faTrashAlt} className="pt-1" />
                                                                                                             </div>
                                                                                                         )}
