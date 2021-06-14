@@ -24,7 +24,7 @@ const render_news_cards = (news_posts) => {
             const blocks = post.EditorData.blocks;
             for (const index in blocks) {
 
-                if (blocks[index].type === 'imageTool') {
+                if (blocks[index].type === 'imageTool' && blocks[index].data.file) {
                     thumbnailimage = blocks[index].data.file.url
                     break
                 }
@@ -74,7 +74,7 @@ function News_section(props) {
                         }} className={"section_title"}
                     >
                         featured news
-        </div>
+                    </div>
                 </Col>
 
             </Row>
