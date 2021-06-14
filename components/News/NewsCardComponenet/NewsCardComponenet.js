@@ -56,6 +56,7 @@ function NewsCardComponenet(props) {
     let thumbnailimage = process.env.NEXT_PUBLIC_BACKEND_URL + '/logo.png'
     for (const index in blocks) {
 
+
         if (blocks[index].type === 'imageTool' && blocks[index].data.file) {
             thumbnailimage = blocks[index].data.file.url
             break
