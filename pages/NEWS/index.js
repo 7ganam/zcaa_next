@@ -52,7 +52,7 @@ export async function getStaticProps(context) {
         }
     }
 
-    let news_string = JSON.stringify(data)
+    let news_string = JSON.stringify(data.reverse())
     return {
         props: {
             news: news_string

@@ -53,6 +53,7 @@ const render_news_cards = (news_posts) => {
             </Col>
         )
     })
+
     return (cards_view)
 }
 
@@ -81,7 +82,7 @@ function News_section(props) {
             <Row className="justify-content-center">
                 {
                     props.news &&
-                    render_news_cards(props.news)
+                    render_news_cards(props.news.reverse())
                 }
             </Row>
         </Container>
