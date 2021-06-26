@@ -11,8 +11,8 @@ function About_section() {
     return (
 
         <Container fluid style={{ position: 'relative', padding: '0' }}>
-            {/* <img
-                style={{ width: "100%", height: "auto", position: "absolute", top: "-200px", zIndex: "-1" }} src={"/about/bg2.png"} id="c" alt="oval" /> */}
+            <img
+                style={{ width: "100%", height: "auto", position: "absolute", top: "-100px", zIndex: "-1", transform: ' scaleX(-1)', opacity: '.5' }} src={"/about/bg2.png"} id="c" alt="oval" />
 
             <Container id="aboutus_container" className={`p-0 ${styles.aboutus_container} px-2`} >
 

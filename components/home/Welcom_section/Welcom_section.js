@@ -15,9 +15,11 @@ import Link from 'next/link';
 function Welcom_section() {
     return (
         <>
+
             <Container id="shadow_container_1" className={styles.shadow_container_1} fluid style={{ marginTop: "100px" }}>      </Container>
             <Container id="welcome_container" className={styles.welcome_container + " mx-0"} fluid style={{ position: 'relative' }}>
                 {/* <img id="welcome_illustration" src={welcome_illustration} alt="oval" /> */}
+
                 <div id="welcome_title" className={styles.welcome_title}>
                     Zewail city graduate ?
                 </div>
