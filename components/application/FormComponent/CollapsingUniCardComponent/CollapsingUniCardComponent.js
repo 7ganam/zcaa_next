@@ -119,7 +119,7 @@ function CollapsingUniCardComponent(props) {
                                         <Field name={`universities[${index}].visit_type`} as="select" className="form-control in_field mb-3 mb-lg-0">
                                             <option value="PHD">PHD student</option>
                                             <option value="Masters">Masters student</option>
-                                            <option value="intern">intern</option>
+                                            <option value="intern">Intern</option>
                                             <option value="Others">Others</option>
                                         </Field>
                                     </div>
