@@ -139,7 +139,7 @@ const FormComponent = (props) => {
     );
 
     const { isLoading: UniesIsLoading, error: UniesError, sendRequest: sendUniesRequest, clearError: clearUniesError } = useHttpClient();
-    const [LoadedUnies, setLoadedUnies] = useState(null);
+    const [LoadedUnies, setLoadedUnies] = useState([]);
     const fetch_Unies = useCallback(
         async () => {
             try {
@@ -166,7 +166,7 @@ const FormComponent = (props) => {
     );
 
     const { isLoading: EntitiesIsLoading, error: EntitiesError, sendRequest: sendEntitiesRequest, clearError: clearEntitiesError } = useHttpClient();
-    const [LoadedEntities, setLoadedEntities] = useState(null);
+    const [LoadedEntities, setLoadedEntities] = useState([]);
     const fetch_Entities = useCallback(
         async () => {
             try {
@@ -365,7 +365,7 @@ const FormComponent = (props) => {
                                                     </ModalFooter> */}
                                                 </Modal>
                                             </div>
-                                            {(LoadedEntities && LoadedUnies && LoadedExp_fields) ?
+                                            {(LoadedExp_fields) ?
                                                 <Form>
 
                                                     <div id="personal_info_section ">
