@@ -365,7 +365,7 @@ const FormComponent = (props) => {
                                                     </ModalFooter> */}
                                                 </Modal>
                                             </div>
-                                            {(LoadedExp_fields) ? //since only the exp-fields are required and fetched from back end .. wait for them before showning the form
+                                            {(LoadedEntities && LoadedUnies && LoadedExp_fields) ?
                                                 <Form>
 
                                                     <div id="personal_info_section ">
