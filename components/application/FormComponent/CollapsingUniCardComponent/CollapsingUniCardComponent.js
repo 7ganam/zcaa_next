@@ -120,7 +120,7 @@ function CollapsingUniCardComponent(props) {
                                             <option value="PHD">PHD student</option>
                                             <option value="Masters">Masters student</option>
                                             <option value="intern">Intern</option>
-                                            <option value="Others">Others</option>
+                                            <option value="Others">Other</option>
                                         </Field>
                                     </div>
                                 </Col>
