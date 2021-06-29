@@ -102,6 +102,8 @@ async function verify_google_user_with_form(req, res, should_use_google_oauth) {
         console.log(`zc_email`, zc_email)
     }
     else { //front_end data as is 
+        console.log(req.body)
+
         payload = req.body.google_data;
         userid = payload.profileObj.googleId;
         g_picture = payload.profileObj.imageUrl;

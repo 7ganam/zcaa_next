@@ -27,6 +27,7 @@ import CreatableSelect from 'react-select/creatable';
 import { useEffect } from 'react';
 import { useHttpClient } from "../../../hooks/http-hook"
 
+import axios from 'axios';
 
 
 
@@ -204,7 +205,44 @@ const FormComponent = (props) => {
 
 
 
+    const submit_applicant2 = async (google_data) => {
 
+
+        try {
+            toggle();
+            setSending_data(true)
+
+            let form_state = formRef.current.values;
+            let id_token = google_data.tokenObj.id_token
+            const body_data = { form_state, google_data }
+            const response = await axios.post(`/api/auth/signup`,
+                {
+                    form_state, google_data
+                }
+                , {
+                    headers: { 'Content-Type': 'application/json' }
+                }
+            );
+            console.log(response);
+
+            setSending_data(false)
+            setResponse_json_content(response.data)
+
+            if (response.data.message === "success" || response.data.message === "already_applied_before") {
+                setFetch_success(true)
+                console.log(response.data)
+
+                login(response.data.user, response.data.token, response.data.expirateion_date_string, true)
+            }
+
+        } catch (error) {
+            setSending_data(false)
+            setError_message(error.message)
+            console.log(error);
+        }
+
+
+    }
 
 
 
@@ -353,7 +391,7 @@ const FormComponent = (props) => {
                                                                         <span className="font1">to apply </span>
                                                                     </div>
                                                                     <div style={{ marginTop: "10px" }}>
-                                                                        <GooglebtnComponent onclick={submit_applicant} />
+                                                                        <GooglebtnComponent onclick={submit_applicant2} />
                                                                     </div>
                                                                 </div>
                                                             </Container>}
