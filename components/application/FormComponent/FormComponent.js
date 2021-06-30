@@ -31,13 +31,6 @@ import axios from 'axios';
 
 
 
-
-
-
-
-
-
-
 // const SignupSchema = Yup.object().shape({})
 const SignupSchema = Yup.object().shape({
     first_name: Yup.string()
@@ -203,8 +196,6 @@ const FormComponent = (props) => {
 
 
 
-
-
     const submit_applicant2 = async (google_data) => {
 
 
@@ -248,59 +239,6 @@ const FormComponent = (props) => {
 
 
 
-
-
-
-    const submit_applicant = async (google_data) => {
-        try {
-            toggle();
-            setSending_data(true)
-
-            let form_state = formRef.current.values;
-            let id_token = google_data.tokenObj.id_token
-            const body_data = { form_state, google_data }
-            const response = await fetch(
-                // ${process.env.NEXT_PUBLIC_BACKEND_URL}
-                `/api/auth/signup`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body_data)
-            });
-            const response_json_content = await response.json()
-            if (!response.ok) {
-                setFetch_error(true)
-                throw new Error(response_json_content.message || "can't fetch data ... could be a connection error or unhandled backend error");
-            }
-            setSending_data(false)
-            setResponse_json_content(response_json_content)
-
-            if (response_json_content.message === "success" || response_json_content.message === "already_applied_before") {
-                setFetch_success(true)
-                console.log(response_json_content)
-                login(response_json_content.user, response_json_content.token, response_json_content.expirateion_date_string, true)
-            }
-
-        } catch (err) {
-            setSending_data(false)
-            setError_message(err.message)
-            console.log(err);
-        }
-    };
-
-
-
-
-
-
-
-
-
-
-
-
-
     const formRef = useRef();
 
     return (
@@ -315,7 +253,7 @@ const FormComponent = (props) => {
                 innerRef={formRef}
                 initialValues={{
                     birth_date: '',
-                    first_name: '', last_name: '', email: '', exp_field: [], residency: { country: "", region: "" }, content: '', phone: '', address: '', zc_id: '', grad_year: '', major: '', minor: '', other_undergraduate_data: '', universities: ['', ''], entities: [{}, {}]
+                    first_name: '', last_name: '', email: '', exp_field: [], residency: { country: "", region: "" }, content: '', phone: '', address: '', zc_id: '', grad_year: '', major: '', minor: '', other_undergraduate_data: '', universities: [''], entities: [{}]
                 }}
                 onSubmit={
                     (values) => { toggle() } // just show the google modal on submit ... it will call the submit function when google authenticate

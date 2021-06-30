@@ -13,10 +13,25 @@ export default function AboutComponent() {
     useEffect(() => {
         setTimeout(() => {
             const fetched_members = [
-                { name: "youssef", image: "1-min.jpg", role: "active member" },
-                { name: "Hashem", image: "Hashem-min.jpg", role: "active member" },
-                { name: "Hatem", image: "DSC_0255-min.JPG", role: "active member" },
-                { name: "Ziad", image: "ziad.jpg", role: "active member" },
+                { name: "Ahmed Hashem", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Ahmed+Hashem.jpg", role: "President" },
+
+                { name: "Mahmoud Abdelhay", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Mahmoud_Radwan.jpg", role: "Vice President" },
+
+                { name: "Mohamed Askar", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/an.png", role: "Financial Vice" },
+
+                { name: "Amr Mousa ", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Amr+Mousa.jpg", role: "Membership Committee Head" },
+
+                { name: "Eslam Alaa", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Eslam+Abdelaleem.jpg", role: "Legislation Committee Head" },
+
+                {
+                    name: "Mohammed Hatem", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/DSC_0255.JPG", role: "HR Committee Head"
+                },
+
+                { name: "Mustafa Nasr", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Image+004.png", role: "Communication Committee Head" },
+
+                { name: "Toka Hussein", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Toka+Hussein.jpg", role: "Activities Committee Head" },
+
+                { name: "Mahmoud Hamamo", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/IMG_Hamamou.jpg", role: "Services Committee Head" },
             ]
             setMembers(fetched_members);
             let members_views = fetched_members.map((member, index) => {
@@ -28,8 +43,8 @@ export default function AboutComponent() {
                     card_color = "rgb(127 216 233 / 33%)"
                 }
                 return (
-                    <Col md="2" className="" >
-                        <MemberCardComponent background_color={card_color} img={`/team_members_images/${member.image}`} name={member.name} role={member.role} />
+                    <Col md="3" className="" >
+                        <MemberCardComponent background_color={card_color} img={member.image} name={member.name} role={member.role} />
                     </Col>
                 )
             })
@@ -93,7 +108,16 @@ export default function AboutComponent() {
                     </Col>
 
                 </Row>
+
+
             </Container>
+            <div style={{ width: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div style={{ marginTop: '30px' }}>
+                    <a href="./ZCAA_Constitution.pdf" download className={styels.a_demo_four} style={{ margin: 'auto' }}>
+                        Download ZCAA Constitution
+                    </a>
+                </div>
+            </div>
             <Container id="members_container" className="" style={{ marginBottom: "100px" }}>
                 <Row id="header_row">
                     <Col xs="12" className="" >
@@ -113,7 +137,7 @@ export default function AboutComponent() {
                     </Col>
                 </Row>
                 {!loading ?
-                    <Row id="members_cards_row">
+                    <Row id="members_cards_row" className=''>
                         {members_views}
                     </Row> : <p>loading...</p>
                 }

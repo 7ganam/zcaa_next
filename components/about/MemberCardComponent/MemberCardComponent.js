@@ -8,6 +8,8 @@ export default function MemberCardComponent(props) {
             justifyContent: "center",
             flexDirection: "column",
             position: "relative",
+            marginTop: '30px',
+            padding: '10px'
         }}>
 
             <img style={{
