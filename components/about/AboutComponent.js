@@ -17,7 +17,7 @@ export default function AboutComponent() {
 
                 { name: "Mahmoud Abdelhay", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Mahmoud_Radwan.jpg", role: "Vice President" },
 
-                { name: "Mohamed Askar", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/an.png", role: "Financial Vice" },
+                { name: "Mohamed Askar", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/206729424_827009477930908_3383254210265013338_n.jpg", role: "Financial Vice" },
 
                 { name: "Amr Mousa ", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Amr+Mousa.jpg", role: "Membership Committee Head" },
 
