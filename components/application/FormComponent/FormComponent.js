@@ -267,13 +267,13 @@ const FormComponent = (props) => {
                         <Container>
                             {
                                 IsLoggedIn ?
-                                    <div id="application_sucess">
+                                    <div id="application_sucess" style={{}}>
                                         <div style={{ marginBottom: "30px" }}>
                                             {
-                                                <Container fluid style={{ display: "flex", justifyContent: "center", alignItems: "center", }}>
+                                                <Container fluid style={{ display: "flex", justifyContent: "center", minHeight: '100vh', alignItems: "center", }}>
                                                     <div id="login_card" style={{ backgroundColor: "white", marginTop: "50px" }}>
 
-                                                        <div style={{ width: "20%", minWidth: "155px", position: "relative", height: "auto", marginTop: "50px" }}>
+                                                        <div style={{ width: "20%", minWidth: "155px", position: "relative", height: "auto", marginTop: "30px" }}>
                                                             <img style={{
                                                                 width: "100%", minWidth: "155px", height: "auto", marginTop: "20px", borderRadius: "50%", border: '11px solid #ADE3ED'
 
@@ -322,7 +322,7 @@ const FormComponent = (props) => {
                                                         <div style={{}}>
                                                             {!gdata && <Container fluid style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "0px" }}>
                                                                 <div id="login_card" style={{}}>
-                                                                    <img style={{ width: "200px", height: "auto", opacity: "0.5", marginTop: "50px" }} src={"/logo.png"} alt="logo" />
+                                                                    <img style={{ width: "150px", height: "auto", opacity: "0.5", marginTop: "50px" }} src={"/logo.png"} alt="logo" />
                                                                     <div id="login_disclimare" >
                                                                         <span className="font1">You need to have a </span>
                                                                         <span className="font2">zewailcity email </span>
