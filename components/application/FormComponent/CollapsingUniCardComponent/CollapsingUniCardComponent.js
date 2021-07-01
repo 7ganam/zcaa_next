@@ -59,7 +59,6 @@ function CollapsingUniCardComponent(props) {
 
 
 
-
     return (
         <div>
 

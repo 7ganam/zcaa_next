@@ -104,92 +104,111 @@ const FormComponent = (props) => {
 
 
 
+    // remap static props provided by next.js to a form suitable for react select library
+    const map_selections_to_react_select_object = (exp_fields, unies, entities) => {
+        let maped_exp_fields = exp_fields.map((exp_field) => { exp_field.value = exp_field._id; return (exp_field) })
+        let maped_unies = unies.map((uni) => {
+            uni.value = uni._id;
+            uni.label = uni.name;
+            return (uni)
+
+        })
+        let maped_entities = entities.map((entity) => {
+            entity.value = entity._id;
+            entity.label = entity.name;
+            return (entity)
+        })
+
+        return ([maped_exp_fields, maped_unies, maped_entities])
+
+    }
+    let [maped_exp_fields, maped_unies, maped_entities] = map_selections_to_react_select_object(props.exp_fields, props.unies, props.entities)
 
 
 
 
 
 
-    const { isLoading: Exp_fieldsIsLoading, error: Exp_fieldsError, sendRequest: sendExp_fieldsRequest, clearError } = useHttpClient();
-    const [LoadedExp_fields, setLoadedExp_fields] = useState([]);
-    const fetch_Exp_fields = useCallback(
-        async () => {
-            try {
+    //----------------------------- client side fetch ( replaced by server side static rendering because of a bug i couldn't find)---------------------
 
-                const responseData = await sendExp_fieldsRequest(
-                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/experienceField`
-                );
+    // const { isLoading: Exp_fieldsIsLoading, error: Exp_fieldsError, sendRequest: sendExp_fieldsRequest, clearError } = useHttpClient();
+    // const [LoadedExp_fields, setLoadedExp_fields] = useState([]);
+    // const fetch_Exp_fields = useCallback(
+    //     async () => {
+    //         try {
 
-                let maped_ids_to_values = responseData.map((exp_field) => { exp_field.value = exp_field._id; return (exp_field) })
-                setLoadedExp_fields(maped_ids_to_values);
-                console.log('setLoadedExp_fields', maped_ids_to_values)
-            } catch (err) {
-                console.log({ err })
-            }
+    //             const responseData = await sendExp_fieldsRequest(
+    //                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/experienceField`
+    //             );
 
+    //             let maped_ids_to_values = responseData.map((exp_field) => { exp_field.value = exp_field._id; return (exp_field) })
+    //             setLoadedExp_fields(maped_ids_to_values);
+    //             console.log('setLoadedExp_fields', maped_ids_to_values)
+    //         } catch (err) {
+    //             console.log({ err })
+    //         }
+    //     },
+    //     [sendExp_fieldsRequest],
+    // );
 
-        },
-        [sendExp_fieldsRequest],
-    );
+    // const { isLoading: UniesIsLoading, error: UniesError, sendRequest: sendUniesRequest, clearError: clearUniesError } = useHttpClient();
+    // const [LoadedUnies, setLoadedUnies] = useState([]);
+    // const fetch_Unies = useCallback(
+    //     async () => {
+    //         try {
 
-    const { isLoading: UniesIsLoading, error: UniesError, sendRequest: sendUniesRequest, clearError: clearUniesError } = useHttpClient();
-    const [LoadedUnies, setLoadedUnies] = useState([]);
-    const fetch_Unies = useCallback(
-        async () => {
-            try {
+    //             const responseData = await sendUniesRequest(
+    //                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/university`
+    //             );
 
-                const responseData = await sendUniesRequest(
-                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/university`
-                );
-
-                let maped_ids_to_values = responseData.map((uni) => {
-                    uni.value = uni._id;
-                    uni.label = uni.name;
-                    return (uni)
-                }
-                )
-                setLoadedUnies(maped_ids_to_values);
-                console.log('setLoadedUnies', maped_ids_to_values)
-            } catch (err) {
-                console.log({ err })
-            }
-
-
-        },
-        [sendUniesRequest],
-    );
-
-    const { isLoading: EntitiesIsLoading, error: EntitiesError, sendRequest: sendEntitiesRequest, clearError: clearEntitiesError } = useHttpClient();
-    const [LoadedEntities, setLoadedEntities] = useState([]);
-    const fetch_Entities = useCallback(
-        async () => {
-            try {
-
-                const responseData = await sendEntitiesRequest(
-                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/entity`
-                );
-
-                let maped_ids_to_values = responseData.map((uni) => {
-                    uni.value = uni._id;
-                    uni.label = uni.name;
-                    return (uni)
-                }
-                )
-                setLoadedEntities(maped_ids_to_values);
-                console.log('setLoadedEntities', maped_ids_to_values)
-            } catch (err) {
-                console.log({ err })
-            }
+    //             let maped_ids_to_values = responseData.map((uni) => {
+    //                 uni.value = uni._id;
+    //                 uni.label = uni.name;
+    //                 return (uni)
+    //             }
+    //             )
+    //             setLoadedUnies(maped_ids_to_values);
+    //             console.log('setLoadedUnies', maped_ids_to_values)
+    //         } catch (err) {
+    //             console.log({ err })
+    //         }
 
 
-        },
-        [sendEntitiesRequest],
-    );
+    //     },
+    //     [sendUniesRequest],
+    // );
+
+    // const { isLoading: EntitiesIsLoading, error: EntitiesError, sendRequest: sendEntitiesRequest, clearError: clearEntitiesError } = useHttpClient();
+    // const [LoadedEntities, setLoadedEntities] = useState([]);
+    // const fetch_Entities = useCallback(
+    //     async () => {
+    //         try {
+
+    //             const responseData = await sendEntitiesRequest(
+    //                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/entity`
+    //             );
+
+    //             let maped_ids_to_values = responseData.map((uni) => {
+    //                 uni.value = uni._id;
+    //                 uni.label = uni.name;
+    //                 return (uni)
+    //             }
+    //             )
+    //             setLoadedEntities(maped_ids_to_values);
+    //             console.log('setLoadedEntities', maped_ids_to_values)
+    //         } catch (err) {
+    //             console.log({ err })
+    //         }
+
+
+    //     },
+    //     [sendEntitiesRequest],
+    // );
 
     useEffect(() => {
-        fetch_Exp_fields();
-        fetch_Unies();
-        fetch_Entities()
+        // fetch_Exp_fields();
+        // fetch_Unies();
+        // fetch_Entities()
     }, []);
 
 
@@ -637,7 +656,7 @@ const FormComponent = (props) => {
                                                                                         setFieldValue(`exp_field`, newValue)
 
                                                                                     }}
-                                                                                options={value.length === 3 ? [] : LoadedExp_fields}
+                                                                                options={value.length === 3 ? [] : maped_exp_fields}
                                                                                 noOptionsMessage={() => {
                                                                                     return value.length === 3 ? "you can select max of 3 fields of experiences" : 'No options available';
                                                                                 }}
@@ -695,7 +714,10 @@ const FormComponent = (props) => {
                                                                                         {universities.map((phNumber, index) => (
                                                                                             <div key={index} className="d-flex mt-5  mt-lg-4 mx-lg-0">
                                                                                                 <div key={index} style={{ width: "100%" }}>
-                                                                                                    <CollapsingUniCardComponent unies={LoadedUnies} index={index} remove={remove} />
+                                                                                                    <CollapsingUniCardComponent
+                                                                                                        unies={maped_unies}
+                                                                                                        index={index} remove={remove}
+                                                                                                    />
                                                                                                 </div>
                                                                                                 <div className="form-group  my-0 d-none d-lg-flex"
                                                                                                     style={{ width: "70px", color: "grey", fontSize: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}
@@ -748,7 +770,7 @@ const FormComponent = (props) => {
                                                                                         {entities.map((phNumber, index) => (
                                                                                             <div className="d-flex mt-4">
                                                                                                 <div key={index} style={{ width: "100%" }}>
-                                                                                                    <CollapsingEntityCardComponent entities={LoadedEntities} index={index} remove={remove}
+                                                                                                    <CollapsingEntityCardComponent entities={maped_entities} index={index} remove={remove}
                                                                                                         formik_object={formik_object} />
                                                                                                 </div>
                                                                                                 <div className="form-group  my-0 d-none d-lg-flex"

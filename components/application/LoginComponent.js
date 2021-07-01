@@ -15,14 +15,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import FormComponent from './FormComponent/FormComponent'
 
 
-export default function LoginComponent() {
+export default function LoginComponent(props) {
 
     return (
         <React.Fragment>
             {
                 // gdata &&
                 <Container fluid style={{ background: "rgba(164, 223, 234, 0.15)", minHeight: "80vh", padding: '0' }}>
-                    <FormComponent />
+                    <FormComponent {...props} />
                 </Container>
             }
         </React.Fragment>
