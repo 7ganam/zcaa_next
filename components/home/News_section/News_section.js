@@ -7,7 +7,7 @@ import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'next/link';
 import { Card, CardHeader, CardBody, CardTitle, } from 'reactstrap';
 
-
+import styles from './News_section.module.css'
 
 const render_news_cards = (news_posts) => {
     console.log(`news_posts`, news_posts)

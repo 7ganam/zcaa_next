@@ -17,7 +17,7 @@ function NewsPostViewComponent(props) {
 
     return (
         <div>
-            { props.post.length === 0 ?
+            {props.post.length === 0 ?
 
                 <div style={{ height: "600px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <div style={{ marginTop: "px", position: "relative", top: "-10%" }}>
@@ -34,15 +34,31 @@ function NewsPostViewComponent(props) {
                                 </div>
                             </Col>
                             <Col md={2} style={{ position: "" }}>
-                                <div id="side_div" style={{ position: "sticky", top: '0px' }}>
-                                    <div style={{ margin: "10px 0px", }}>
-                                        <span>Category: </span>
-                                        <span style={{ fontSize: "20px", color: "#0091AC" }}> general</span>
+                                <div style={{ position: "sticky", top: '0px' }}>
+                                    <div id="side_div" >
+                                        <div style={{ margin: "10px 0px", }}>
+                                            <span>Category: </span>
+                                            <span style={{ fontSize: "20px", color: "#0091AC" }}> general</span>
+                                        </div>
+                                        <div>
+                                            <span>date: </span>
+                                            <span style={{ fontSize: "20px", color: "#0091AC" }}> {moment(props.post.meta_values[0].Date).format('DD/MM/YYYY')} </span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span>date: </span>
-                                        <span style={{ fontSize: "20px", color: "#0091AC" }}> {moment(props.post.meta_values[0].Date).format('DD/MM/YYYY')} </span>
-                                    </div>
+//TODO: turn this into generic case
+                                    {props.post.meta_values[0].Title == 'Alumni Gathering 2021 Announcement' &&
+                                        <div id="side_div side_div2" style={{ padding: "1px", marginBottom: "30px", width: "100%", display: 'flex' }} >
+                                            <div style={{ width: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                <div style={{ width: "100%", display: 'flex', }}>
+                                                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZj88Z8qxjdZWXbRk1CtbnOXaPCAaIt_UCA90I9z1YFASk1A/viewform" className={styles.a_demo_four} style={{ margin: 'auto' }}>
+                                                        register now
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+
                                 </div>
                             </Col>
                             <Col md={8} lg={7} style={{ marginBottom: "40px ", }}>
