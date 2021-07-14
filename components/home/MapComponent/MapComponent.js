@@ -67,12 +67,12 @@ const Map = () => {
         const markers = countries.map((entry) => {
             // console.log(data)
             let obj = data.find(obj => obj.country === entry.country);
-            let marker = { latLng: [obj.latitude, obj.longitude], name: `${entry.count} Alumini in ${obj.country}  ` }
+            let marker = { latLng: [obj.latitude, obj.longitude], name: `${entry.count} Alumni in ${obj.country}  ` }
             return marker
 
         })
 
-        const count_array = countries.map((entry) => { // return array of the aluminis count in each entry of the markers 
+        const count_array = countries.map((entry) => { // return array of the Alumnis count in each entry of the markers 
             return entry.count
         })
         return ([markers, count_array])
@@ -81,7 +81,7 @@ const Map = () => {
 
     const tip_handler = (e, el, code) => {
         // console.log(el)
-        let country_data = countries.find((country) => { return (country.code == code) }) // if the country hovered dont' have alumini this will be undefined
+        let country_data = countries.find((country) => { return (country.code == code) }) // if the country hovered dont' have Alumni this will be undefined
         console.log({ country_data })
         // let number_of_alum = countries[code]
         let hoverd_country_name = el.html();
@@ -92,7 +92,7 @@ const Map = () => {
         let hovered_country = countries.find(c => c.code == code);
         //  el.html(el.html()+' (GDP - '+countries[code]+')');
         if (!!country_data) {
-            el.html(country_data.count + ' Alumini in ' + hoverd_country_name);
+            el.html(country_data.count + ' Alumni in ' + hoverd_country_name);
         }
         else {
             el.html(hoverd_country_name);

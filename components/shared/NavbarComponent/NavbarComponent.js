@@ -44,7 +44,7 @@ const NavbarComponent = (props) => {
             <Container className="d-flex justify-content-center">
                 <div id="intro_text" className={"header_font" + " " + styles.intro_text}>
                     ZEWAILCITY
-                    Alumini
+                    Alumni
                     Association
                 </div>
 

@@ -10,16 +10,22 @@ import { Card, CardHeader, CardBody, CardTitle, } from 'reactstrap';
 
 
 const render_news_cards = (news_posts) => {
+    console.log(`news_posts`, news_posts)
+    let first_three_posts = []
+    if (news_posts.length > 3) {
+        first_three_posts = news_posts.slice(0, 3);
+    }
+    else {
+        first_three_posts = news_posts;
+    }
 
+    console.log(`first_three_posts`, first_three_posts)
 
-    let cards_view = news_posts.map((post, index) => {
-
+    let cards_view = first_three_posts.map((post, index) => {
         if (!post.EditorData) {
             return
         }
-
         let thumbnailimage = process.env.NEXT_PUBLIC_BACKEND_URL + '/logo.png'
-
         if (post.EditorData && post.EditorData.blocks) {
             const blocks = post.EditorData.blocks;
             for (const index in blocks) {
@@ -31,8 +37,6 @@ const render_news_cards = (news_posts) => {
                 else if (blocks[index].type === 'image') {
                     thumbnailimage = blocks[index].data.url
                     break
-
-
                 }
             }
         }

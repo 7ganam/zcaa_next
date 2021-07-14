@@ -188,7 +188,7 @@ function Network_diagramComponent(props) {
 
             <div id="network_card" style={{}}>
                 <div id="network_card_div">
-                    <div id="network_card_text">connecting ZC alumini around the world</div>
+                    <div id="network_card_text">connecting ZC Alumni around the world</div>
 
                 </div>
             </div>
