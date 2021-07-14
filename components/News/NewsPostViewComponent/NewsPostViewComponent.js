@@ -14,7 +14,7 @@ const EditorComponent = dynamic(() => import("./EditorComponent/EditorComponent"
 
 function NewsPostViewComponent(props) {
 
-
+    console.log(`props.post.meta_values[0].Title`, props.post.meta_values[0].Title)
     return (
         <div>
             {props.post.length === 0 ?
