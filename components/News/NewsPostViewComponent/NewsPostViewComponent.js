@@ -45,7 +45,7 @@ function NewsPostViewComponent(props) {
                                             <span style={{ fontSize: "20px", color: "#0091AC" }}> {moment(props.post.meta_values[0].Date).format('DD/MM/YYYY')} </span>
                                         </div>
                                     </div>
-//TODO: turn this into generic case
+
                                     {props.post.meta_values[0].Title == 'Alumni Gathering 2021 Announcement' &&
                                         <div id="side_div side_div2" style={{ padding: "1px", marginBottom: "30px", width: "100%", display: 'flex' }} >
                                             <div style={{ width: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
