@@ -701,7 +701,7 @@ const FormComponent = (props) => {
                                                                 <div className="form_text3 " >Universities
                                                                     <div style={{ color: "#ADE3ED", fontWeight: "bolder", fontSize: "15px", letterSpacing: ".1em" }}>{" (Optional)"}</div>
                                                                 </div>
-                                                                <div className="form_text4 " >Which universities other than ZC have you visited?</div>
+                                                                <div className="form_text4 " >Which universities or institutes other than ZC have you visited?</div>
                                                                 <div className="d-flex ">
                                                                     <div className="form-group mx-3  ml-lg-4 " style={{ width: "100%" }}>
                                                                         <FieldArray name='universities'>
