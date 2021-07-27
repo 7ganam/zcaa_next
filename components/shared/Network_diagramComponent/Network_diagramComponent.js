@@ -156,11 +156,11 @@ function Network_diagramComponent(props) {
             x = w.innerWidth || e.clientWidth || g.clientWidth,
             y = w.innerHeight || e.clientHeight || g.clientHeight;
 
-        const particles_number = Math.ceil(100 / 1520 * x);
+        const particles_number = Math.ceil(150 / 1520 * x);
 
         if (x > 500) {
             const jp = $("#network_div").jParticle({
-                particlesNumber: particles_number, background: 'CCE6EB', color: 'white', createLinkDist: 180, speed: 200
+                particlesNumber: particles_number, background: 'CCE6EB', color: 'white', createLinkDist: 120, speed: 660
 
             });
         }
