@@ -156,9 +156,16 @@ const FormComponent = (props) => {
             setSending_data(false)
             setResponse_json_content(response.data)
 
-            if (response.data.message === "success" || response.data.message === "already_applied_before") {
+            if (response.data.message === "success") {
                 setFetch_success(true)
                 console.log(response.data)
+
+                login(response.data.user, response.data.token, response.data.expirateion_date_string, true)
+            }
+            if (response.data.message === "already_applied_before") {
+                setFetch_success(true)
+                console.log(response.data)
+                alert('you already signed up before, your data was not updated')
 
                 login(response.data.user, response.data.token, response.data.expirateion_date_string, true)
             }
@@ -186,7 +193,7 @@ const FormComponent = (props) => {
             </Container>
 
             <Formik
-                validationSchema={SignupSchema}
+                // validationSchema={SignupSchema}
                 innerRef={formRef}
                 initialValues={{
                     birth_date: '',
@@ -681,10 +688,8 @@ const FormComponent = (props) => {
                                                     </Row>
                                                 </div >
 
-                                                {/* <div style={{ height: "100px", marginTop: "100px" }}>{JSON.stringify(formik_object.values, null, 2)}</div> */}
                                                 <div className="" style={{ marginTop: "100px", display: "flex", justifyContent: 'flex-end', alignItems: 'flex-end', }}>
                                                     <button style={{ marginBottom: "100px" }} type="submit" className="btn btn-primary" disabled={!formik_object.isValid} >{!formik_object.isValid ? "form data not valid" : "Submit"}</button>
-                                                    {/* <div style={{ height: "100px", marginTop: "100px" }}>{JSON.stringify(formik_object.isValid, null, 2)}</div> */}
                                                 </div>
 
                                             </Form>
