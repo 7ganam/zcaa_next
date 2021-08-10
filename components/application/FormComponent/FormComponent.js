@@ -105,6 +105,7 @@ const FormComponent = (props) => {
 
 
 
+
     // remap static props provided by next.js to a form suitable for react select library
     const map_selections_to_react_select_object = (exp_fields, unies, entities) => {
         let maped_exp_fields = exp_fields.map((exp_field) => { exp_field.value = exp_field._id; return (exp_field) })
@@ -185,7 +186,7 @@ const FormComponent = (props) => {
             </Container>
 
             <Formik
-                // validationSchema={SignupSchema}
+                validationSchema={SignupSchema}
                 innerRef={formRef}
                 initialValues={{
                     birth_date: '',
@@ -239,10 +240,7 @@ const FormComponent = (props) => {
                                                             </Container>}
                                                         </div>
                                                     </ModalBody>
-                                                    {/* <ModalFooter>
-                                                        <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-                                                        <Button color="secondary" onClick={toggle}>Cancel</Button>
-                                                    </ModalFooter> */}
+
                                                 </Modal>
                                             </div>
 
@@ -393,15 +391,7 @@ const FormComponent = (props) => {
                                                             </div>
                                                         </Col>
                                                     </Row>
-                                                    {/* <Row className="justify-content-end ">
-                                                        <Col lg="8">
-                                                            <div className="form-group" style={{ width: "100%" }}>
-                                                                <label htmlFor="address" className="form_text">address </label>
-                                                                <Field name="address" className="form-control in_field" type="text" />
-                                                                <ErrorMessage name='address' component={TextError} />
-                                                            </div>
-                                                        </Col>
-                                                    </Row> */}
+
                                                 </div>
 
                                                 <div id="undergrad_info_section ">
