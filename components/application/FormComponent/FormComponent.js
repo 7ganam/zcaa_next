@@ -193,7 +193,7 @@ const FormComponent = (props) => {
             </Container>
 
             <Formik
-                // validationSchema={SignupSchema}
+                validationSchema={SignupSchema}
                 innerRef={formRef}
                 initialValues={{
                     birth_date: '',
