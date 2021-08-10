@@ -30,6 +30,7 @@ import { useHttpClient } from "../../../hooks/http-hook"
 import axios from 'axios';
 
 
+import WelcomMessageComponent from './WelcomMessageComponent/WelcomMessageComponent'
 
 // const SignupSchema = Yup.object().shape({})
 const SignupSchema = Yup.object().shape({
@@ -129,90 +130,6 @@ const FormComponent = (props) => {
 
 
 
-    //----------------------------- client side fetch ( replaced by server side static rendering because of a bug i couldn't find)---------------------
-
-    // const { isLoading: Exp_fieldsIsLoading, error: Exp_fieldsError, sendRequest: sendExp_fieldsRequest, clearError } = useHttpClient();
-    // const [LoadedExp_fields, setLoadedExp_fields] = useState([]);
-    // const fetch_Exp_fields = useCallback(
-    //     async () => {
-    //         try {
-
-    //             const responseData = await sendExp_fieldsRequest(
-    //                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/experienceField`
-    //             );
-
-    //             let maped_ids_to_values = responseData.map((exp_field) => { exp_field.value = exp_field._id; return (exp_field) })
-    //             setLoadedExp_fields(maped_ids_to_values);
-    //             console.log('setLoadedExp_fields', maped_ids_to_values)
-    //         } catch (err) {
-    //             console.log({ err })
-    //         }
-    //     },
-    //     [sendExp_fieldsRequest],
-    // );
-
-    // const { isLoading: UniesIsLoading, error: UniesError, sendRequest: sendUniesRequest, clearError: clearUniesError } = useHttpClient();
-    // const [LoadedUnies, setLoadedUnies] = useState([]);
-    // const fetch_Unies = useCallback(
-    //     async () => {
-    //         try {
-
-    //             const responseData = await sendUniesRequest(
-    //                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/university`
-    //             );
-
-    //             let maped_ids_to_values = responseData.map((uni) => {
-    //                 uni.value = uni._id;
-    //                 uni.label = uni.name;
-    //                 return (uni)
-    //             }
-    //             )
-    //             setLoadedUnies(maped_ids_to_values);
-    //             console.log('setLoadedUnies', maped_ids_to_values)
-    //         } catch (err) {
-    //             console.log({ err })
-    //         }
-
-
-    //     },
-    //     [sendUniesRequest],
-    // );
-
-    // const { isLoading: EntitiesIsLoading, error: EntitiesError, sendRequest: sendEntitiesRequest, clearError: clearEntitiesError } = useHttpClient();
-    // const [LoadedEntities, setLoadedEntities] = useState([]);
-    // const fetch_Entities = useCallback(
-    //     async () => {
-    //         try {
-
-    //             const responseData = await sendEntitiesRequest(
-    //                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/entity`
-    //             );
-
-    //             let maped_ids_to_values = responseData.map((uni) => {
-    //                 uni.value = uni._id;
-    //                 uni.label = uni.name;
-    //                 return (uni)
-    //             }
-    //             )
-    //             setLoadedEntities(maped_ids_to_values);
-    //             console.log('setLoadedEntities', maped_ids_to_values)
-    //         } catch (err) {
-    //             console.log({ err })
-    //         }
-
-
-    //     },
-    //     [sendEntitiesRequest],
-    // );
-
-    useEffect(() => {
-        // fetch_Exp_fields();
-        // fetch_Unies();
-        // fetch_Entities()
-    }, []);
-
-
-
 
 
     const submit_applicant2 = async (google_data) => {
@@ -268,7 +185,7 @@ const FormComponent = (props) => {
             </Container>
 
             <Formik
-                validationSchema={SignupSchema}
+                // validationSchema={SignupSchema}
                 innerRef={formRef}
                 initialValues={{
                     birth_date: '',
@@ -286,41 +203,8 @@ const FormComponent = (props) => {
                         <Container>
                             {
                                 IsLoggedIn ?
-                                    <div id="application_sucess" style={{}}>
-                                        <div style={{ marginBottom: "30px" }}>
-                                            {
-                                                <Container fluid style={{ display: "flex", justifyContent: "center", minHeight: '100vh', alignItems: "center", }}>
-                                                    <div id="login_card" style={{ backgroundColor: "white", marginTop: "50px" }}>
 
-                                                        <div style={{ width: "20%", minWidth: "155px", position: "relative", height: "auto", marginTop: "30px" }}>
-                                                            <img style={{
-                                                                width: "100%", minWidth: "155px", height: "auto", marginTop: "20px", borderRadius: "50%", border: '11px solid #ADE3ED'
-
-                                                            }} src={Fetch_success ? Response_json_content.user.g_picture : Token.g_picture} alt="logo" />
-
-                                                            <img style={{
-                                                                width: "30%", minWidth: "70px", height: "auto", position: "absolute", bottom: "-20px", right: "0px"
-                                                                ,
-                                                            }} src={"/logo.png"} alt="logo" />
-
-                                                        </div>
-
-                                                        <div style={{
-                                                            width: "50%", marginTop: "10px", fontSize: '30px',
-                                                            lineHeight: '125.5%', textAlign: 'center', textTransform: 'uppercase',
-                                                            color: '#BDD7DB', fontFamily: "Cairo", fontStyle: 'normal', fontWeight: 'bold',
-                                                        }}>
-                                                            <div style={{ color: "gray", marginTop: "30px", }}>
-                                                                Welocme
-                                                            </div>
-                                                            <div>
-                                                                to the family
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </Container>}
-                                        </div>
-                                    </div>
+                                    <WelcomMessageComponent Fetch_success={Fetch_success} Response_json_content={Response_json_content} />
                                     :
                                     (Sending_data ?
                                         <div id="loading_spinner" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "400px" }} >
@@ -333,7 +217,8 @@ const FormComponent = (props) => {
 
                                             <div id="google_modal" >
                                                 <Modal
-                                                    size="lg" style={{ maxWidth: '1600px', width: '80%', marginRight: "auto", marginLeft: "auto", backgroundColor: 'transparent' }}
+                                                    size="lg"
+                                                    style={{ maxWidth: '1600px', width: '80%', marginRight: "auto", marginLeft: "auto", backgroundColor: 'transparent' }}
                                                     isOpen={modal} toggle={toggle}>
                                                     {/* <ModalHeader toggle={toggle} style={{ borderBottom: "0px solid #dee2e6" }}></ModalHeader> */}
                                                     <div style={{}} ></div>

@@ -99,7 +99,7 @@ const NavbarComponent = (props) => {
                                                 <NavLink className={styles.nav_link}>
                                                     <img
                                                         style={{ width: "40px", height: "40", borderRadius: "100%", }}
-                                                        src={Token.g_picture}
+                                                        src={Token.g_picture ? Token.g_picture : '/user.png'}
                                                         alt="logo" />
                                                 </NavLink>
 

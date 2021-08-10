@@ -160,7 +160,7 @@ function Network_diagramComponent(props) {
 
         if (x > 500) {
             const jp = $("#network_div").jParticle({
-                particlesNumber: particles_number, background: 'CCE6EB', color: 'white', createLinkDist: 120, speed: 660
+                particlesNumber: particles_number, background: 'CCE6EB', color: 'white', createLinkDist: 120, speed: 66
 
             });
         }
