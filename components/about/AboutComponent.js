@@ -13,25 +13,25 @@ export default function AboutComponent() {
     useEffect(() => {
         setTimeout(() => {
             const fetched_members = [
-                { name: "Ahmed Hashem", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Ahmed+Hashem.jpg", role: "President" },
+                { name: "Ahmed Hashem", image: "https://zcaa-bucket2.s3.eu-central-1.amazonaws.com/Ahmed+Hashem.jpg", role: "President" },
 
-                { name: "Mahmoud Abdelhay", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Mahmoud_Radwan.jpg", role: "Vice President" },
+                { name: "Mahmoud Abdelhay", image: "https://zcaa-bucket2.s3.eu-central-1.amazonaws.com/Mahmoud_Radwan.jpg", role: "Vice President" },
 
-                { name: "Mohamed Askar", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/206729424_827009477930908_3383254210265013338_n.jpg", role: "Financial Vice" },
+                { name: "Mohamed Askar", image: "https://zcaa-bucket2.s3.eu-central-1.amazonaws.com/240255407_1471363716572724_7643733241861387229_n.jpg", role: "Financial Vice" },
 
-                { name: "Amr Mousa ", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Amr+Mousa.jpg", role: "Membership Committee Head" },
+                { name: "Amr Mousa ", image: "https://zcaa-bucket2.s3.eu-central-1.amazonaws.com/Amr+Mousa.jpg", role: "Membership Committee Head" },
 
-                { name: "Eslam Alaa", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Eslam+Abdelaleem.jpg", role: "Legislation Committee Head" },
+                { name: "Eslam Alaa", image: "https://zcaa-bucket2.s3.eu-central-1.amazonaws.com/Eslam+Abdelaleem.jpg", role: "Legislation Committee Head" },
 
                 {
-                    name: "Mohammed Hatem", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/DSC_0255.JPG", role: "HR Committee Head"
+                    name: "Mohammed Hatem", image: "https://zcaa-bucket2.s3.eu-central-1.amazonaws.com/hatem.jpg", role: "HR Committee Head"
                 },
 
-                { name: "Mustafa Nasr", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Image+004.png", role: "Communication Committee Head" },
+                { name: "Mustafa Nasr", image: "https://zcaa-bucket2.s3.eu-central-1.amazonaws.com/Mostafa+Nasr.jpeg", role: "Communication Committee Head" },
 
-                { name: "Toka Hussein", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/Toka+Hussein.jpg", role: "Activities Committee Head" },
+                { name: "Toka Hussein", image: "https://zcaa-bucket2.s3.eu-central-1.amazonaws.com/Toka+Hussein.jpg", role: "Activities Committee Head" },
 
-                { name: "Mahmoud Hamamo", image: "https://zcaa-bucket.s3.eu-central-1.amazonaws.com/IMG_Hamamou.jpg", role: "Services Committee Head" },
+                { name: "Mahmoud Hamamo", image: "https://zcaa-bucket2.s3.eu-central-1.amazonaws.com/IMG_Hamamou.jpg", role: "Services Committee Head" },
             ]
             setMembers(fetched_members);
             let members_views = fetched_members.map((member, index) => {
