@@ -7,6 +7,8 @@ import GooglebtnComponent from './GooglebtnComponent/GooglebtnComponent'
 import { useContext } from "react";
 import { LoginContext } from "../../../contexts/loginContext"
 import { Alert } from 'reactstrap';
+import ReactLoading from 'react-loading';
+
 
 
 function LoginModalComponenet() {
@@ -97,7 +99,13 @@ function LoginModalComponenet() {
                                             <span className="font1">to Login </span>
                                         </div>
                                         <div style={{ marginTop: "10px" }}>
-                                            <GooglebtnComponent onclick={submit_applicant} />
+                                            <div style={{ position: "relative" }}>
+                                                <GooglebtnComponent onclick={submit_applicant} />
+                                                <div style={{ position: "absolute", top: "15px", left: '45%', zIndex: '0' }}>
+                                                    <ReactLoading type={"spin"} color={"#00D2F9"} width={"20px"} />
+                                                </div>
+                                            </div>
+
                                             {Fetch_error ?
                                                 <Alert color="danger" className="mt-3" style={{ width: "100%" }}>
                                                     {Error_message}

@@ -58,7 +58,7 @@ class GooglebtnComponent extends Component {
     render() {
         return (
             <React.Fragment>
-                <div style={{ marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "center", display: "flex", flexDirection: "column" }}>
+                <div style={{ marginTop: "20px", display: "flex", alignItems: "center", justifyContent: "center", display: "flex", flexDirection: "column", zIndex: '2', position: 'relative' }}>
                     {
                         <GoogleLogin
                             style={{ width: "300px" }}

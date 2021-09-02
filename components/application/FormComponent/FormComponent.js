@@ -242,6 +242,7 @@ const FormComponent = (props) => {
                                                                     </div>
                                                                     <div style={{ marginTop: "10px" }}>
                                                                         <GooglebtnComponent onclick={submit_applicant2} />
+
                                                                     </div>
                                                                 </div>
                                                             </Container>}

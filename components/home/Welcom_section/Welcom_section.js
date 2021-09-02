@@ -32,7 +32,6 @@ function Welcom_section() {
 
                         <Link href="/APPLICATION" >
                             <a style={{ textDecoration: 'none' }}>
-
                                 <button className={styles.welcome_btn + " " + styles.welcome_btn2} style={{}}>APPLY</button>
                             </a>
 
