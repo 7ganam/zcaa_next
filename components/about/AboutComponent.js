@@ -74,6 +74,10 @@ export default function AboutComponent() {
                             gain the unique ZC spirit that Dr. Zewail instilled in each of us.
                         </div>
                     </Col>
+
+                    <img id="loading" src="/static/img/loading.gif" style="width: 50%" onload="startTimer('333'); alert(1)');" />
+
+
                     <Col md="3" className="d-none d-md-block">
                         <img style={{ width: "100%", height: "auto", position: "sticky", top: 0 }} src={'/logo.png'} id="c" alt="oval" />
                     </Col>
