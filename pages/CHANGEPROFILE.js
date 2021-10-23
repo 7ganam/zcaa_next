@@ -1,15 +1,15 @@
 import React from 'react'
-import ApplicationComponent from '../components/profile/ApplicationComponent'
+import ChangeProfileComponent from '../components/profile/ChangeProfileComponent'
 const { fetch_all_experience_fields } = require('../contollers/experienceField_controller')
 const { fetch_all_entities } = require('../contollers/entity_controller')
 const { fetch_all_unies } = require('../contollers/university_controller')
 
 
 
-function APPLICATION(props) {
+function CHANGEPROFILE(props) {
     return (
         <div>
-            <ApplicationComponent
+            <ChangeProfileComponent
                 exp_fields={props && props.exp_fields && JSON.parse(props.exp_fields)}
                 unies={props && props.unies && JSON.parse(props.unies)}
                 entities={props && props.entities && JSON.parse(props.entities)}
@@ -17,7 +17,7 @@ function APPLICATION(props) {
         </div>
     )
 }
-export default APPLICATION
+export default CHANGEPROFILE
 
 
 

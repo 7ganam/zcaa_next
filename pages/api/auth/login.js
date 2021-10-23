@@ -4,14 +4,8 @@ const { dbConnect } = require('../../../utils/dbConnect')
 var _ = require('lodash');
 
 
-import { verify_google_user, verify_google_user_with_form, login_user } from '../../../contollers/auth_controller'
-
-
-
-
-
-
-
+import { login_user } from '../../../contollers/user_controller'
+const { verify_zc_email_user } = require('../../../middleware/auth_middleware')
 
 
 
@@ -35,8 +29,8 @@ export default async function handler(req, res) {
             try {
 
                 console.log(`post`)
-                await verify_google_user(req, res, true)
-                await login_user(req, res)
+                await verify_zc_email_user(req, res, true) // middleware to check if zc email exists and attach user data to req
+                await login_user(req, res) // user controller to send jwt token to client
 
             } catch (error) {
                 res.status(400).json({ success: false })

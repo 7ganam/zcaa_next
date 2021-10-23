@@ -14,9 +14,7 @@ export const LoginContextProvider = ({ children }) => {
         setIsLogInModalShown(!IsLogInModalShown);
     }
 
-
     const login = (token, input_user, expirateion_date_string, setstorage = false) => {
-
         setToken(token)
         setUser(input_user)
         setExpirateion_date_string(expirateion_date_string)
@@ -43,12 +41,9 @@ export const LoginContextProvider = ({ children }) => {
         console.log(`logout`)
     };
 
-
-
-
     return (
-        <LoginContext.Provider value={{ IsLoggedIn, login, logout, Token, ToggleLoginModal, IsLogInModalShown }}>
-            { children}
+        <LoginContext.Provider value={{ IsLoggedIn, login, logout, Token, ToggleLoginModal, IsLogInModalShown, User }}>
+            {children}
         </LoginContext.Provider >
     );
 };

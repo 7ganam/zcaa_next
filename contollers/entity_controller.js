@@ -32,7 +32,6 @@ const register_entities = async (entities) => {
 
 
 
-
 const fetch_entity_or_create_new_one = async (entity_id, entity_label) => { // dont catch errors here .. errors should be handled in upper comps
     await dbConnect()
 

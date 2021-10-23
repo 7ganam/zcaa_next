@@ -1,10 +1,10 @@
 
 const { dbConnect } = require('../../../utils/dbConnect')
-
+const { verify_zc_email_user, attach_form_data_to_user } = require('../../../middleware/auth_middleware')
 var _ = require('lodash');
 
 
-import { verify_google_user_with_form, register_user } from '../../../contollers/auth_controller'
+import { register_user } from '../../../contollers/user_controller'
 
 
 
@@ -29,8 +29,10 @@ export default async function handler(req, res) {
             try {
 
                 console.log(`post`)
-                await verify_google_user_with_form(req, res, false)
-                await register_user(req, res)
+
+                await verify_zc_email_user(req, res, false) // middleware to check if zc email exists and attach user data to req
+                await attach_form_data_to_user(req, res) // middleware to check extract form data + create any new (uni - exp filed - entity ) and attach data to the user object
+                await register_user(req, res) // adding the user to the db
 
             } catch (error) {
                 console.log(`error`, error)
