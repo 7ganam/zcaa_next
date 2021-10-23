@@ -74,19 +74,6 @@ const SignupSchema = Yup.object().shape({
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 const FormComponent = (props) => {
 
     const { login, IsLoggedIn, Token } = useContext(LoginContext);
@@ -125,12 +112,6 @@ const FormComponent = (props) => {
 
     }
     let [maped_exp_fields, maped_unies, maped_entities] = map_selections_to_react_select_object(props.exp_fields, props.unies, props.entities)
-
-
-
-
-
-
 
 
     const submit_applicant2 = async (google_data) => {
@@ -178,10 +159,6 @@ const FormComponent = (props) => {
 
 
     }
-
-
-
-
 
     const formRef = useRef();
 
@@ -313,25 +290,26 @@ const FormComponent = (props) => {
                                                     <Row className="justify-content-end">
                                                         <Col lg="8">
                                                             <Field name={`birth_date`} className="form-control in_field" >
-                                                                {({ form, field }) => {
-                                                                    const { setFieldValue } = form
-                                                                    const { value } = field
-                                                                    return (
-                                                                        <DateView className="form-control in_field"
-                                                                            style={{
-                                                                                textAlign: "end"
-                                                                            }}
-                                                                            id={`birth_date`}
-                                                                            {...field}
-                                                                            selected={value}
-                                                                            peekNextMonth
-                                                                            showMonthDropdown
-                                                                            showYearDropdown
-                                                                            dropdownMode="select"
-                                                                            onChange={val => setFieldValue(`birth_date`, val)}
-                                                                        />
-                                                                    )
-                                                                }}
+                                                                {
+                                                                    ({ form, field }) => {
+                                                                        const { setFieldValue } = form
+                                                                        const { value } = field
+                                                                        return (
+                                                                            <DateView className="form-control in_field"
+                                                                                style={{
+                                                                                    textAlign: "end"
+                                                                                }}
+                                                                                id={`birth_date`}
+                                                                                {...field}
+                                                                                selected={value}
+                                                                                peekNextMonth
+                                                                                showMonthDropdown
+                                                                                showYearDropdown
+                                                                                dropdownMode="select"
+                                                                                onChange={val => setFieldValue(`birth_date`, val)}
+                                                                            />
+                                                                        )
+                                                                    }}
                                                             </Field>
                                                             <ErrorMessage name='birth_date' component={TextError} />
                                                         </Col>
