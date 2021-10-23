@@ -71,6 +71,11 @@ const NavbarComponent = (props) => {
                                             <a><NavLink className={styles.nav_link}>news</NavLink></a>
                                         </Link>
                                     </NavItem>
+                                    <NavItem className={styles.nav_item}>
+                                        <Link href="/DONATE">
+                                            <a><NavLink className={styles.nav_link}>donate</NavLink></a>
+                                        </Link>
+                                    </NavItem>
                                     <div style={{ flexGrow: "1" }}>
 
                                     </div>
