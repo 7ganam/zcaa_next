@@ -95,12 +95,15 @@ function DonateModalComponenet(props) {
                                         </div>
                                         <div style={{ width: '80%', display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
 
+
                                             <a href='https://www.zewailcity.edu.eg/main/donate.php?lang=en'>
                                                 <button style={{ marginBottom: "100px" }} className={`btn btn-primary ${styles.redirect_button}`} >
                                                     <span style={{ marginRight: '5px' }}>Go to payment webstie</span>
                                                     <img style={{ width: "30px", height: "auto", marginTop: "0px" }} src={"/arrow-right.png"} alt="c" />
                                                 </button>
                                             </a>
+
+
                                         </div>
 
                                     </div>
