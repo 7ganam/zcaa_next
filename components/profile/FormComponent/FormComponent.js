@@ -174,11 +174,7 @@ const FormComponent = (props) => {
 
                                         <SubmitModalComponent submit_applicant={submit_applicant} gdata={gdata} modal={modal} toggle={toggle} />
                                         {/* print the form state for debuggin */}
-<<<<<<< Updated upstream
                                         {/* <div>{JSON.stringify(formik_object.values, null, 2)}</div> */}
-=======
-                                        <div>{JSON.stringify(formik_object.values.universities, null, 2)}</div>
->>>>>>> Stashed changes
 
                                         <Form>
 
