@@ -28,6 +28,43 @@ export default function ChangeProfileComponent(props) {
     const [LoadedUser, setLoadedUser] = useState(null); //define a new state
 
 
+    const map_fetched_data_to_form_data = (Fetched_user_data) => {
+
+        if (Fetched_user_data.birth_date) { Fetched_user_data.birth_date = new Date(Fetched_user_data.birth_date) }
+
+        if (Fetched_user_data.universities) {
+            Fetched_user_data.universities.map(uni => {
+                let new_uni = {}
+                if (uni.grad_date) {
+                    uni.grad_date = new Date(uni.grad_date) //turn the date string into date object
+                }
+                uni.uni_name = { _id: uni.uni_ref[0]._id, name: uni.uni_ref[0].name, value: uni.uni_ref[0]._id, label: uni.uni_ref[0].name, __v: uni.uni_ref[0]?.__v } // makeing sure the uni will be in the same form as new created unis from the form and stored in formik state
+                return (new_uni)
+            })
+        }
+
+        if (Fetched_user_data.entities) {
+            Fetched_user_data.entities.map(entity => {
+                if (entity.start_date) {
+                    entity.start_date = new Date(entity.start_date)
+                }
+                if (entity.end_date) {
+                    entity.end_date = new Date(entity.end_date)
+                }
+                entity.entity_name = { _id: entity.entity_ref[0]._id, name: entity.entity_ref[0].name, value: entity.entity_ref[0]._id, label: entity.entity_ref[0].name, __v: entity.entity_ref[0]?.__v }
+                return (entity)
+            })
+        }
+
+        if (Fetched_user_data.experience_field) {
+            Fetched_user_data.exp_field = Fetched_user_data.experience_field // it's called exp_field in the front end and experience_field in the backend
+        }
+
+        return Fetched_user_data
+
+    }
+
+
     const fetchUser = useCallback(
         async (id) => {
 
@@ -37,24 +74,8 @@ export default function ChangeProfileComponent(props) {
 
                 const responseData = await sendUserRequest(`/api/user/${id}`);
                 let Fetched_user_data = responseData.user
-                Fetched_user_data.birth_date = new Date(Fetched_user_data.birth_date)
-                Fetched_user_data.universities.map(uni => {
-                    if (uni.grad_date) {
-                        uni.grad_date = new Date(uni.grad_date)
-                    }
-                    return (uni)
-                })
-
-                Fetched_user_data.entities.map(entity => {
-                    if (entity.start_date) {
-                        entity.start_date = new Date(entity.start_date)
-                    }
-                    if (entity.end_date) {
-                        entity.end_date = new Date(entity.end_date)
-                    }
-                    return (entity)
-                })
-                setLoadedUser(Fetched_user_data); //note that the result of http request isn't stored in the hooks inner state but in this components state
+                let fixed_Fetched_user_data = map_fetched_data_to_form_data(Fetched_user_data)
+                setLoadedUser(fixed_Fetched_user_data); //note that the result of http request isn't stored in the hooks inner state but in this components state
 
             } catch (err) {
                 console.log({ err })

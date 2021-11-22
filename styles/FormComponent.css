@@ -15,21 +15,7 @@
     border-color: rgb(20 135 155 / 43%) !important;
     border-width: .5px  !important;
 }
-.form_section_title{
-    font-family: 'Mulish', sans-serif;
-    text-transform: uppercase;
-    font-family: Mulish;
-    font-style: normal;
-    font-weight: 300;
-    font-size: 20px;
-    line-height: 25px;
-    /* identical to box height */
 
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-
-    color: rgba(0, 0, 0, 0.4);
-}
 
 .form_text{
     font-family: Mulish;

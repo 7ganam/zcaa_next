@@ -1,7 +1,6 @@
 // components/contactus-form.component.js
 import { useContext } from "react";
 import { LoginContext } from "../../../contexts/loginContext"
-
 import React, { useState, useCallback, useRef } from 'react'
 import { Formik, Field, Form, FieldArray, ErrorMessage } from 'formik';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,26 +8,21 @@ import { Container, Row, Col } from 'reactstrap'
 // import './FormComponent.css'
 import CollapsingUniCardComponent from './CollapsingUniCardComponent/CollapsingUniCardComponent'
 import CollapsingEntityCardComponent from './CollapsingEntityCardComponent/CollapsingEntityCardComponent'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import * as Yup from 'yup';
 import TextError from "./TextError"
-
 import ReactLoading from 'react-loading';
-
 import DateView from 'react-datepicker'
-
 import CreatableSelect from 'react-select/creatable';
-
-
 import axios from 'axios';
-
-
 import SubmitModalComponent from './SubmitModalComponent/SubmitModalComponent'
 import { date } from 'yup/lib/locale';
+import styles from './FormComponent.module.css'
+
+
 // const SignupSchema = Yup.object().shape({})
 const SignupSchema = Yup.object().shape({
     first_name: Yup.string()
@@ -64,29 +58,20 @@ const SignupSchema = Yup.object().shape({
 
 });
 
-
-
-
-
 const FormComponent = (props) => {
-    console.log({ props })
 
+    // login context
     const { login, IsLoggedIn, Token } = useContext(LoginContext);
 
     // http states
-
     const [Sending_data, setSending_data] = useState(false);
-
 
     // google modal states
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     let [gdata, set_gdata] = useState(null)
 
-
-
-
-    // remap static props provided by next.js to a form suitable for react select library
+    // HELPER FUNCTION: remap static props provided by next.js to a form suitable for react select library
     const map_selections_to_react_select_object = (exp_fields, unies, entities) => {
         let maped_exp_fields = exp_fields.map((exp_field) => { exp_field.value = exp_field._id; return (exp_field) })
         let maped_unies = unies.map((uni) => {
@@ -106,14 +91,16 @@ const FormComponent = (props) => {
     }
     let [maped_exp_fields, maped_unies, maped_entities] = map_selections_to_react_select_object(props.exp_fields, props.unies, props.entities)
 
+    // ref to formik object to be able to extract values in the submit
+    const formRef = useRef();
 
-
+    // submit function -> called when the google auth button in the modal is clicked not when the form submit button is clicked
     const submit_applicant = async (google_data) => {
 
 
         try {
-            toggle();
-            setSending_data(true)
+            toggle(); // hide the modal
+            setSending_data(true) // to show rotating spinner 
 
             let form_state = formRef.current.values;
             let id_token = google_data.tokenObj.id_token
@@ -131,17 +118,15 @@ const FormComponent = (props) => {
             setSending_data(false)
             props.setResponse_json_content(response.data)
 
+            // if success log in the user
             if (response.data.message === "success") {
                 props.setFetch_success(true)
-                console.log(response.data)
-
                 login(response.data.user, response.data.token, response.data.expirateion_date_string, true)
             }
+            // if user already registered before show an alarm
             if (response.data.message === "already_applied_before") {
                 props.setFetch_success(true)
-                console.log(response.data)
                 alert('you already signed up before, your data was not updated')
-
                 login(response.data.user, response.data.token, response.data.expirateion_date_string, true)
             }
 
@@ -154,23 +139,21 @@ const FormComponent = (props) => {
 
     }
 
-    const formRef = useRef();
+
 
 
     return (
         <>
             <Container fluid style={{ position: 'relative', padding: '0', }}>
-                <img
-                    style={{ width: "100%", height: "auto", position: "absolute", top: "-190px", zIndex: "-1" }} src={"/about/bg2.png"} id="c" alt="oval" />
+                <img className={styles.background_image} src={"/about/bg2.png"} id="c" alt="oval" />
             </Container>
 
             <Formik
                 // validationSchema={SignupSchema}
                 innerRef={formRef}
                 initialValues={props.init_values}
-                onSubmit={
-                    (values) => { toggle() } // just show the google modal on submit ... it will call the submit function when google authenticate
-                }
+                // onSubmit={(values) => { toggle() }}// just show the google modal on submit ... it will call the submit function when google authenticate
+                onSubmit={(values) => props.submit_form(values)}
             >
                 {(formik_object) => {
                     // the dispaly sequence as follows : if success state is true show the sucess component 
@@ -181,7 +164,7 @@ const FormComponent = (props) => {
                             {
 
                                 (Sending_data ?
-                                    <div id="loading_spinner" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "400px" }} >
+                                    <div id="loading_spinner" className={styles.loading_spinner}  >
                                         <div style={{ marginTop: "100px" }}>
                                             <ReactLoading type={"spin"} color={"#00D2F9"} width={"20vw"} />
                                         </div>
@@ -191,23 +174,14 @@ const FormComponent = (props) => {
 
                                         <SubmitModalComponent submit_applicant={submit_applicant} gdata={gdata} modal={modal} toggle={toggle} />
                                         {/* print the form state for debuggin */}
-                                        {/* <div>{JSON.stringify(formik_object, null, 2)}</div> */}
+                                        {/* <div>{JSON.stringify(formik_object.values, null, 2)}</div> */}
 
                                         <Form>
 
                                             <div id="personal_info_section ">
                                                 <Row >
                                                     <Col xs="12" className="" >
-                                                        <div
-                                                            style={{
-                                                                textAlign: "left",
-                                                                marginTop: "50px",
-                                                                marginBottom: "50px",
-                                                                borderBottomStyle: 'solid',
-                                                                borderBottomWidth: "0.5px",
-                                                                borderBottomColor: " #C5BCBC"
-                                                            }} className="form_section_title"
-                                                        >
+                                                        <div className={styles.form_section_title}  >
                                                             Personal info
                                                         </div>
                                                     </Col>
@@ -343,16 +317,7 @@ const FormComponent = (props) => {
                                             <div id="undergrad_info_section ">
                                                 <Row >
                                                     <Col xs="12" className="" >
-                                                        <div
-                                                            style={{
-                                                                textAlign: "left",
-                                                                marginTop: "50px",
-                                                                marginBottom: "50px",
-                                                                borderBottomStyle: 'solid',
-                                                                borderBottomWidth: "0.5px",
-                                                                borderBottomColor: " #C5BCBC"
-                                                            }} className="form_section_title"
-                                                        >
+                                                        <div className={styles.form_section_title}  >
                                                             undergrad info
                                                         </div>
                                                     </Col>
@@ -434,18 +399,9 @@ const FormComponent = (props) => {
                                             </div>
 
                                             <div id="career_info_section ">
-                                                <Row >
+                                                <Row className="section_title_row">
                                                     <Col xs="12" className="" >
-                                                        <div
-                                                            style={{
-                                                                textAlign: "left",
-                                                                marginTop: "50px",
-                                                                marginBottom: "50px",
-                                                                borderBottomStyle: 'solid',
-                                                                borderBottomWidth: "0.5px",
-                                                                borderBottomColor: " #C5BCBC"
-                                                            }} className="form_section_title"
-                                                        >
+                                                        <div className={styles.form_section_title}  >
                                                             career info
                                                         </div>
                                                     </Col>
@@ -500,19 +456,6 @@ const FormComponent = (props) => {
 
                                                     </Col>
                                                 </Row>
-                                                {formik_object.values.exp_field === "other" &&
-                                                    <Row className="justify-content-end ">
-                                                        <Col lg="8">
-                                                            <div className="form-group" style={{ width: "100%" }}>
-                                                                <label htmlFor="new_exp_field" className="form_text"> type your field of experience </label>
-                                                                <Field name="new_exp_field" type="text" className="form-control in_field">
-                                                                </Field>
-                                                                <ErrorMessage name='new_exp_field' component={TextError} />
-
-                                                            </div>
-                                                        </Col>
-                                                    </Row>
-                                                }
                                                 <Row id="universities_card" className="justify-content-end" style={{ marginTop: "50px" }}>
                                                     <Col lg="8" >
                                                         <div className=" from_group_box">
@@ -546,7 +489,8 @@ const FormComponent = (props) => {
                                                                                                         <div className="trash_icon" title={`delete university ${index + 1}`} style={{}} onClick={() => remove(index)}>
                                                                                                             <FontAwesomeIcon icon={faTrashAlt} className="pt-1" />
                                                                                                         </div>
-                                                                                                    )}
+                                                                                                    )
+                                                                                                }
                                                                                             </div>
                                                                                         </div>
                                                                                     ))}
@@ -572,7 +516,7 @@ const FormComponent = (props) => {
                                                     <Col lg="8" >
                                                         <div className=" from_group_box">
                                                             <div className="form_text3 " >{'companies & organizations '}
-                                                                <div style={{ color: "#ADE3ED", fontWeight: "bolder", fontSize: "15px", letterSpacing: ".1em" }}>{" (Optional)"}</div>
+                                                                <div className={styles.optional_text} >  {" (Optional)"}    </div>
                                                             </div>
                                                             <div className="form_text4 " >Which entites did you visit during your career?</div>
                                                             <div className="d-flex ">
@@ -587,24 +531,27 @@ const FormComponent = (props) => {
                                                                                 <div>
                                                                                     {entities.map((phNumber, index) => (
                                                                                         <div className="d-flex mt-4">
+
                                                                                             <div key={index} style={{ width: "100%" }}>
                                                                                                 <CollapsingEntityCardComponent entities={maped_entities} index={index} remove={remove}
                                                                                                     formik_object={formik_object} />
                                                                                             </div>
-                                                                                            <div className="form-group  my-0 d-none d-lg-flex"
-                                                                                                style={{ width: "70px", color: "grey", fontSize: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}
-                                                                                            >
+
+                                                                                            <div className={`form-group  my-0 d-none d-lg-flex ${styles.trash_icon_container}`} >
                                                                                                 {
-                                                                                                    // index > 0 &&
                                                                                                     (
-                                                                                                        <div className="trash_icon" title={`delete entity ${index + 1}`} style={{}} onClick={() => remove(index)}>
+                                                                                                        <div className="trash_icon"
+                                                                                                            title={`delete entity ${index + 1}`}
+                                                                                                            onClick={() => remove(index)}>
                                                                                                             <FontAwesomeIcon icon={faTrashAlt} className="pt-1" />
                                                                                                         </div>
-                                                                                                    )}
+                                                                                                    )
+                                                                                                }
                                                                                             </div>
+
                                                                                         </div>
                                                                                     ))}
-                                                                                    < div style={{ display: "flex", justifyContent: "center", fontSize: "40px", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                                                                                    < div className={styles.plus_button_button} >
                                                                                         <div onClick={() => push({})} type="button" class="  plus_button ">
                                                                                             <FontAwesomeIcon icon={faPlus} />
                                                                                         </div>
@@ -616,7 +563,6 @@ const FormComponent = (props) => {
                                                                             )
                                                                         }}
                                                                     </FieldArray>
-
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -624,8 +570,13 @@ const FormComponent = (props) => {
                                                 </Row>
                                             </div >
 
-                                            <div className="" style={{ marginTop: "100px", display: "flex", justifyContent: 'flex-end', alignItems: 'flex-end', }}>
-                                                <button style={{ marginBottom: "100px" }} type="submit" className="btn btn-primary" disabled={!formik_object.isValid} >{!formik_object.isValid ? "form data not valid" : "Submit"}</button>
+                                            <div className={styles.form_submit_section} >
+                                                <button
+                                                    style={{ marginBottom: "100px" }}
+                                                    type="submit"
+                                                    className="btn btn-primary"
+                                                    disabled={!formik_object.isValid} >{!formik_object.isValid ? "form data not valid" : "Submit"}
+                                                </button>
                                             </div>
 
                                         </Form>

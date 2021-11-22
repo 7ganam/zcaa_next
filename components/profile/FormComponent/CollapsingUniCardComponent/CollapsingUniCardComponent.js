@@ -92,9 +92,11 @@ function CollapsingUniCardComponent(props) {
                                                             isClearable
                                                             components={{ MenuList }}
                                                             filterOption={createFilter({ ignoreAccents: false })} // this makes all the difference!
+                                                            defaultInputValue={form.values.universities[index].uni_ref && form.values.universities[index].uni_ref[0].name}
                                                             onChange={
                                                                 (newValue, actionMeta) => {
-                                                                    setFieldValue(`universities[${index}].uni_name`, newValue)
+                                                                    setFieldValue(`universities[${index}].uni_name`, newValue);
+                                                                    console.log(newValue)
 
                                                                 }}
                                                             options={props.unies ? props.unies : []}

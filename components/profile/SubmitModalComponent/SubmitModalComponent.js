@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, ModalBody } from 'reactstrap';
-import GooglebtnComponent from '../GooglebtnComponent/GooglebtnComponent'
+import GooglebtnComponent from './GooglebtnComponent/GooglebtnComponent'
 import { Container, Row, Col } from 'reactstrap'
 
 function SubmitModalComponent(props) {

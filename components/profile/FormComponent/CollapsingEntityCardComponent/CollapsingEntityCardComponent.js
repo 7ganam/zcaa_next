@@ -53,8 +53,10 @@ class MenuList extends Component { // this is a component to use the react-windo
 function CollapsingEntityCardComponent(props) {
     const index = props.index;
 
+    let form_value = props.formik_object.values;
+
     const [IsOpen, setIsOpen] = useState(false);
-    const [Iscurrent, setIscurrent] = useState(false);
+    const [Iscurrent, setIscurrent] = useState(form_value.entities[index]?.isCurrent ? form_value.entities[index]?.isCurrent : false);
 
 
     const toggle_current = () => {
@@ -108,6 +110,7 @@ function CollapsingEntityCardComponent(props) {
                                                             isClearable
                                                             components={{ MenuList }}
                                                             filterOption={createFilter({ ignoreAccents: false })} // this makes all the difference!
+                                                            defaultInputValue={form.values.entities[index].entity_ref && form.values.entities[index].entity_ref[0].name}
                                                             onChange={
                                                                 (newValue, actionMeta) => {
                                                                     setFieldValue(`entities[${index}].entity_name`, newValue)
@@ -280,6 +283,7 @@ function CollapsingEntityCardComponent(props) {
                                                             selected={value}
                                                             dateFormat="MM/yyyy"
                                                             showMonthYearPicker
+
                                                             onChange={val => setFieldValue(`entities[${index}].end_date`, val)}
                                                         />
                                                     )
