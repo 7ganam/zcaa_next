@@ -109,7 +109,7 @@ const FormComponent = (props) => {
                                 <div id="form_and_modal">
 
                                     {/* print the form state for debuggin */}
-                                    {/* <div>{JSON.stringify(formik_object.values, null, 2)}</div> */}
+                                    {/* <div>{JSON.stringify(formik_object.values.exp_field, null, 2)}</div> */}
 
                                     <Form>
 
@@ -235,7 +235,7 @@ const FormComponent = (props) => {
                                                                 const value = field.value
                                                                 return (
                                                                     <RegionDropdown
-                                                                        country={formik_object.values.residency.country}
+                                                                        country={formik_object.values?.residency?.country}
                                                                         style={{ width: "100%" }}
                                                                         className="in_field form-control"
                                                                         value={value}
@@ -341,7 +341,7 @@ const FormComponent = (props) => {
                                                     </div>
                                                 </Col>
                                             </Row>
-                                            <Row className="justify-content-end ">
+                                            <Row className="field_of_exp_row justify-content-end ">
                                                 <Col lg="8">
 
                                                     <div className="form-group" style={{ width: "100%" }}>
@@ -404,7 +404,7 @@ const FormComponent = (props) => {
                                                                     {fieldArrayProps => {
                                                                         const { push, remove, form } = fieldArrayProps
                                                                         const { values } = form
-                                                                        const { universities } = values
+                                                                        const universities = values?.universities
                                                                         return (
                                                                             <div>
                                                                                 {universities.map((phNumber, index) => (

@@ -60,7 +60,7 @@ async function verify_zc_email_user(req, res, should_use_google_oauth) { //check
 
 
 
-async function attach_form_data_to_user(req, res, should_use_google_oauth) {
+async function attach_form_data_to_user(req, res) {
 
 
 
@@ -136,8 +136,8 @@ async function verify_token(req, res) {
   }
   try {
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
-    console.log(decoded)
-    // req.user = decoded.user;
+    req.verified_user = decoded.user;
+    req.user = decoded.user;
     // return res.status(200).json({ user: decoded.user });
 
   } catch (err) {

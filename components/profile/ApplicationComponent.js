@@ -19,26 +19,17 @@ import ReactLoading from 'react-loading';
 
 export default function ApplicationComponent(props) {
 
-
-
-    // http states
-    const [Sending_data, setSending_data] = useState(false);
-    const [Fetch_success, setFetch_success] = useState(false);
-    const [Form_response, setForm_response] = useState({});
+    // LOGIN CONTEXT
     const { login, IsLoggedIn, Token } = useContext(LoginContext);
 
-    // google modal states
-    const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
-    let [gdata, set_gdata] = useState(null)
-
-
-    const [FormData, setFormData] = useState(null)
+    //FORM initial and return variables
+    const [FormData, setFormData] = useState(null) // form data will be saved here once submited
     let init_values = {
         birth_date: '',
         first_name: '', last_name: '', email: '', exp_field: '', residency: { country: "", region: "" }, content: '', phone: '', address: '', zc_id: '', grad_year: '', major: '', minor: '', other_undergraduate_data: '', universities: [{}], entities: [{}]
     }
 
+    //FORM submit handler
     let submit_form = (form_data) => {
         console.log(form_data)
         setFormData(form_data)
@@ -46,13 +37,17 @@ export default function ApplicationComponent(props) {
     }
 
 
+    // GOOGLE MODAL states
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+    let [gdata, set_gdata] = useState(null)
 
+    // GOOGLE submit variables , states , and handler
+    const [Sending_data, setSending_data] = useState(false);
+    const [Fetch_success, setFetch_success] = useState(false);
+    const [Form_response, setForm_response] = useState({});
 
-
-
-    // submit function -> called when the google auth button in the modal is clicked not when the form submit button is clicked
     const submit_applicant = async (google_data) => {
-
 
         try {
             toggle(); // hide the modal
@@ -95,12 +90,7 @@ export default function ApplicationComponent(props) {
 
     }
 
-
-
-
-
-
-
+    // MAIN VIEW CONDITIONS
     const conditional_view = (IsLoggedIn) => {
         if (IsLoggedIn) {
             return (<WelcomMessageComponent Fetch_success={Fetch_success} Response_json_content={Form_response} setFetch_success={setFetch_success} setForm_response={setForm_response} />)

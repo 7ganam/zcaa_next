@@ -23,7 +23,7 @@ const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
 
 const login_user = async (req, res, login_message = 'success') => {
 
-    // seach database for the same email
+    // seach database for the same email------------------------
     let existingUser;
     try {
         existingUser = await Users.findOne({ zc_email: req.user.zc_email });
@@ -32,7 +32,6 @@ const login_user = async (req, res, login_message = 'success') => {
         console.log(`dev_err`, dev_err)
         res.status(500).json({ success: false, message: 'Loggin in failed, please try again later.' })
     }
-
 
     if (!existingUser) {
         return res.status(442).json({ success: false, message: 'Failed to login, you are not a member.' });
@@ -56,8 +55,6 @@ const login_user = async (req, res, login_message = 'success') => {
         }
 
         // SEND TOKEN AND USER RESPONSE----------------------
-        console.log(5)
-
         res
             .status(201)
             .json({
@@ -78,7 +75,6 @@ const login_user = async (req, res, login_message = 'success') => {
 const register_user = async (req, res) => {
 
     // add the json object to the database
-    console.log(2)
     let user_search_result;
     // -------------------- LOOK DATABASE FOR THE USER ------------------------
     try {
@@ -89,8 +85,6 @@ const register_user = async (req, res) => {
         res.status(500).json({ success: false, message: 'Loggin in failed, please try again later.' })
     };
 
-
-    console.log(3)
 
 
     if (user_search_result.length < 1 || user_search_result == undefined) { // case no user found registerd already // if the user didn't sign before register it and return success message
@@ -160,4 +154,43 @@ const fetch_user_by_id = async (req, res, user_mongo_id) => {
 }
 
 
-export { login_user, register_user, fetch_user_by_id }
+const update_user = async (req, res) => {
+    let verfied_user_with_form_data = req.user;
+    let new_user_data = req.body.form_state;
+
+
+
+
+    // -------------------- LOOK DATABASE FOR THE USER ------------------------
+    let user_search_result;
+    try {
+        // user_search_result = await Users.find({ zc_email: verfied_user_with_form_data.zc_email });
+        user_search_result = await Users.findById(verfied_user_with_form_data._id)
+        console.log(`user_search_result`, user_search_result)
+    }
+    catch (dev_err) {
+        console.log(`dev_err`, dev_err)
+        res.status(500).json({ success: false, message: 'Loggin in failed, please try again later.' })
+    };
+    console.log(`user_search_result`, user_search_result)
+
+    if (!user_search_result) {
+        res.status(403).json({ success: false, message: 'this zc_email is not regitered' })
+    }
+    else {
+
+    }
+
+    try {
+        let updated_user = await Users.findByIdAndUpdate(verfied_user_with_form_data._id, verfied_user_with_form_data, { new: false });
+        updated_user.save();
+        res.status(200).json({ success: true, data: updated_user });
+    } catch (dev_err) {
+        console.log(`dev_err`, dev_err)
+        res.status(500).json({ success: false, message: 'update in failed, please try again later.' })
+    };
+
+
+}
+
+export { login_user, register_user, fetch_user_by_id, update_user }
