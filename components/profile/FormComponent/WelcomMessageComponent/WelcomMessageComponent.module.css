@@ -13,6 +13,7 @@
 .wel_card_inner{
     width: 20%;
     min-width: 155px;
+    max-width: 200px;
     position: relative;
     height: auto;
     margin-top: 30px;
