@@ -184,7 +184,8 @@ const update_user = async (req, res) => {
     try {
         let updated_user = await Users.findByIdAndUpdate(verfied_user_with_form_data._id, verfied_user_with_form_data, { new: false });
         updated_user.save();
-        res.status(200).json({ success: true, data: updated_user });
+        req.user = updated_user
+        // res.status(200).json({ success: true, data: updated_user });
     } catch (dev_err) {
         console.log(`dev_err`, dev_err)
         res.status(500).json({ success: false, message: 'update in failed, please try again later.' })

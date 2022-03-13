@@ -19,7 +19,6 @@ function MyApp({ Component, pageProps }) {
 
 
 
-  console.log(`router`, router.pathname)
 
   return (
     <>

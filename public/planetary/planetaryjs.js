@@ -10,7 +10,7 @@
 
 }(this, function (d3, topojson, window) {
   'use strict';
-  console.log("plantery runned")
+
   var originalPlanetaryjs = null;
   if (window) originalPlanetaryjs = window.planetaryjs;
   var plugins = [];

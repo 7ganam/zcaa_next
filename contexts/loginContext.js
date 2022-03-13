@@ -15,11 +15,13 @@ export const LoginContextProvider = ({ children }) => {
     }
 
     const login = (token, input_user, expirateion_date_string, setstorage = false) => {
+
         setToken(token)
         setUser(input_user)
         setExpirateion_date_string(expirateion_date_string)
-        console.log('setstorage ', setstorage)
+
         if (setstorage) {
+            localStorage.removeItem('userData'); // remove old if exist -> just to make sure the data is up to date -> this might be used to keep the data updated in case user data changed
             localStorage.setItem(
                 'userData',
                 JSON.stringify({

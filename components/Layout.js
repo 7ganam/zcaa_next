@@ -16,7 +16,9 @@ function Layout(props) {
 
     const check_if_logged_in = () => {
         const storedData = JSON.parse(localStorage.getItem('userData'));
+
         if (storedData && storedData.token) {
+            console.log('------------------------------------------', storedData.user._id)
             login(storedData.token, storedData.user, storedData.expirateion_date_string, false);
         }
     }

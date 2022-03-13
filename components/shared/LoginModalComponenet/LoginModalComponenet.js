@@ -55,8 +55,6 @@ function LoginModalComponenet() {
             if (response_json_content.message === "success") {
                 setFetch_success(true)
                 console.log({ response_json_content })
-                console.log("test")
-
                 login(response_json_content.token, response_json_content.user, response_json_content.expirateion_date_string, true)
                 toggle();
             }

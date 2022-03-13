@@ -23,7 +23,7 @@ export default function ChangeProfileComponent(props) {
 
     // GOOGLE submit variables , states , and handler
     const [FormData, setFormData] = useState(null) // form data will be saved here once submited
-    const [Sending_data, setSending_data] = useState(false);
+    const [Sending_newdata, setSending_newdata] = useState(false);
     const [Fetch_success, setFetch_success] = useState(false);
     const [Form_response, setForm_response] = useState({});
 
@@ -33,7 +33,7 @@ export default function ChangeProfileComponent(props) {
 
 
         try {
-            setSending_data(true) // to show rotating spinner 
+            setSending_newdata(true) // to show rotating spinner 
 
             let form_state = form_data;
 
@@ -48,15 +48,15 @@ export default function ChangeProfileComponent(props) {
             );
             console.log('response', response);
 
-            setSending_data(false)
+            setSending_newdata(false)
             // setForm_response(response.data)
 
-            // // if success log in the user again
-            // if (response.data.message === "success") {
-            //     setFetch_success(true)
-            //     login(response.data.user, response.data.token, response.data.expirateion_date_string, true)
-            //     alert('data updated')
-            // }
+            // if success log in the user again
+            if (response.data.success) {
+                setFetch_success(true)
+                login(response.data.user, response.data.token, response.data.expirateion_date_string, true)
+                alert('data updated')
+            }
 
 
         } catch (error) {
@@ -155,21 +155,19 @@ export default function ChangeProfileComponent(props) {
         if (!IsLoggedIn) {
             return (<div>you are not logged in</div>)
         }
-        else if (LoadedUser) {
+
+        else if (LoadedUser && !Fetch_success) {
             return (
                 <>
                     <Container fluid style={{ background: "rgba(164, 223, 234, 0.15)", minHeight: "80vh", padding: '0' }}>
-                        <FormComponent {...props} init_values={LoadedUser}
-                            Fetch_success={Fetch_success}
-                            Response_json_content={Form_response}
-                            setFetch_success={setFetch_success}
-                            setResponse_json_content={setForm_response}
-                            submit_form={submit_form}
-                        />
+                        <FormComponent {...props} init_values={LoadedUser} submit_form={submit_form} />
 
                     </Container>
                 </>
             )
+        }
+        else if (Fetch_success) {
+            return (<div>updated successfully</div>)
         }
         else {
             return (
