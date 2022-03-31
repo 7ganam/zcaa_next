@@ -6,8 +6,8 @@ import ReactLoading from 'react-loading';
 import NewsCardComponenet from "../../components/News/NewsCardComponenet/NewsCardComponenet"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NewsComponent from '../../components/News/NewsComponent'
-// import { fetch_all_news } from '../../contollers/news_controller'
-const { fetch_all_news } = require('../../contollers/news_controller')
+// import { fetch_all_news } from '../../controllers/news_controller'
+const { fetch_all_news } = require('../../controllers/news_controller')
 
 
 

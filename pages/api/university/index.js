@@ -1,5 +1,5 @@
 
-import { fetch_all_unies } from '../../../contollers/university_controller'
+import { fetch_all_unies } from '../../../controllers/university_controller'
 var _ = require('lodash');
 
 

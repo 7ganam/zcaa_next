@@ -1,5 +1,5 @@
 
-import { delete_post, fetch_all_news } from '../../../../contollers/news_controller'
+import { delete_post, fetch_all_news } from '../../../../controllers/news_controller'
 import dbConnect from '../../../../utils/dbConnect'
 var _ = require('lodash');
 

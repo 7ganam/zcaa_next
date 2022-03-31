@@ -6,7 +6,7 @@ import React from 'react'
 
 
 import dynamic from 'next/dynamic'
-const { fetch_all_news } = require('../contollers/news_controller')
+const { fetch_all_news } = require('../controllers/news_controller')
 
 
 

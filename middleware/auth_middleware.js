@@ -4,9 +4,9 @@ const client = new OAuth2Client(process.env.OAUTH2ClIENT);
 var _ = require('lodash');
 
 
-const { register_experience_fields } = require('../contollers/experienceField_controller')
-const { register_unies } = require('../contollers/university_controller')
-const { register_entities } = require('../contollers/entity_controller')
+const { register_experience_fields } = require('../controllers/experienceField_controller')
+const { register_unies } = require('../controllers/university_controller')
+const { register_entities } = require('../controllers/entity_controller')
 
 const jwt = require("jsonwebtoken");
 

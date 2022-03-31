@@ -1,5 +1,5 @@
 
-import { create_post } from '../../../contollers/news_controller'
+import { create_post } from '../../../controllers/news_controller'
 import dbConnect from '../../../utils/dbConnect'
 var _ = require('lodash');
 

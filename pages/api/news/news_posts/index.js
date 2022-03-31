@@ -1,5 +1,5 @@
 
-import { fetch_all_news } from '../../../../contollers/news_controller'
+import { fetch_all_news } from '../../../../controllers/news_controller'
 import dbConnect from '../../../../utils/dbConnect'
 var _ = require('lodash');
 

@@ -1,5 +1,5 @@
 
-import { fetch_all_experience_fields } from '../../../contollers/experienceField_controller'
+import { fetch_all_experience_fields } from '../../../controllers/experienceField_controller'
 import dbConnect from '../../../utils/dbConnect'
 var _ = require('lodash');
 

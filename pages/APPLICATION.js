@@ -1,8 +1,8 @@
 import React from 'react'
 import ApplicationComponent from '../components/profile/ApplicationComponent'
-const { fetch_all_experience_fields } = require('../contollers/experienceField_controller')
-const { fetch_all_entities } = require('../contollers/entity_controller')
-const { fetch_all_unies } = require('../contollers/university_controller')
+const { fetch_all_experience_fields } = require('../controllers/experienceField_controller')
+const { fetch_all_entities } = require('../controllers/entity_controller')
+const { fetch_all_unies } = require('../controllers/university_controller')
 
 
 

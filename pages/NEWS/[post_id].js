@@ -3,7 +3,7 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NewsPostViewComponent from '../../components/News/NewsPostViewComponent/NewsPostViewComponent'
 
-const { fetch_all_news, fetch_news_post_by_id } = require('../../contollers/news_controller')
+const { fetch_all_news, fetch_news_post_by_id } = require('../../controllers/news_controller')
 
 function news_post_view(props) {
 

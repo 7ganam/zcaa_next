@@ -4,7 +4,7 @@ const { dbConnect } = require('../../../utils/dbConnect')
 var _ = require('lodash');
 
 
-import { login_user } from '../../../contollers/user_controller'
+import { login_user } from '../../../controllers/user_controller'
 const { verify_zc_email_user } = require('../../../middleware/auth_middleware')
 
 

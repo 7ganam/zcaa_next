@@ -4,7 +4,7 @@ const { dbConnect } = require('../../../utils/dbConnect')
 var _ = require('lodash');
 
 
-import { fetch_user_by_id } from '../../../contollers/user_controller'
+import { fetch_user_by_id } from '../../../controllers/user_controller'
 import { verify_token } from '../../../middleware/auth_middleware'
 
 
