@@ -1,14 +1,14 @@
-// login proccess flow : 
-// on submit the form sends the data back to this login componenet and trigers its show modal function
-// on google button clicked the button sends the google credetintals to the login copnente and trigers its send data function
-// login in component sends the data to the back end and shows loading component untill the process finishs
+// login process flow : 
+// on submit the form sends the data back to this login component and triggers its show modal function
+// on google button clicked the button sends the google credentials to the login component and triggers its send data function
+// login in component sends the data to the back end and shows loading component until the process finish
 
 
 import React, { useState } from 'react'
 import { Container } from 'reactstrap'
 import { useContext } from "react";
 import { LoginContext } from "../../contexts/loginContext"
-import WelcomMessageComponent from './FormComponent/WelcomMessageComponent/WelcomMessageComponent'
+import WelcomeMessageComponent from './FormComponent/WelcomeMessageComponent/WelcomeMessageComponent'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FormComponent from './FormComponent/FormComponent'
 import SubmitModalComponent from './SubmitModalComponent/SubmitModalComponent';
@@ -23,7 +23,7 @@ export default function ApplicationComponent(props) {
     const { login, IsLoggedIn, Token } = useContext(LoginContext);
 
     //FORM initial and return variables
-    const [FormData, setFormData] = useState(null) // form data will be saved here once submited
+    const [FormData, setFormData] = useState(null) // form data will be saved here once submitted
     let init_values = {
         birth_date: '',
         first_name: '', last_name: '', email: '', exp_field: '', residency: { country: "", region: "" }, content: '', phone: '', address: '', zc_id: '', grad_year: '', major: '', minor: '', other_undergraduate_data: '', universities: [{}], entities: [{}]
@@ -93,7 +93,7 @@ export default function ApplicationComponent(props) {
     // MAIN VIEW CONDITIONS
     const conditional_view = (IsLoggedIn) => {
         if (IsLoggedIn) {
-            return (<WelcomMessageComponent Fetch_success={Fetch_success} Response_json_content={Form_response} setFetch_success={setFetch_success} setForm_response={setForm_response} />)
+            return (<WelcomeMessageComponent Fetch_success={Fetch_success} Response_json_content={Form_response} setFetch_success={setFetch_success} setForm_response={setForm_response} />)
         }
         else if (Sending_data) {
             return (

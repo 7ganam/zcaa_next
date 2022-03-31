@@ -30,7 +30,7 @@ import { useHttpClient } from "../../../hooks/http-hook"
 import axios from 'axios';
 
 
-import WelcomMessageComponent from './WelcomMessageComponent/WelcomMessageComponent'
+import WelcomeMessageComponent from './WelcomeMessageComponent/WelcomeMessageComponent'
 
 // const SignupSchema = Yup.object().shape({})
 const SignupSchema = Yup.object().shape({
@@ -212,7 +212,7 @@ const FormComponent = (props) => {
                             {
                                 IsLoggedIn ?
 
-                                    <WelcomMessageComponent Fetch_success={Fetch_success} Response_json_content={Response_json_content} />
+                                    <WelcomeMessageComponent Fetch_success={Fetch_success} Response_json_content={Response_json_content} />
                                     :
                                     (Sending_data ?
                                         <div id="loading_spinner" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "400px" }} >

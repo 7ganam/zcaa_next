@@ -3,9 +3,9 @@ import { Container, Row, Col } from 'reactstrap'
 import { useContext } from "react";
 
 import { LoginContext } from "../../../../contexts/loginContext"
-import styles from './WelcomMessageComponent.module.css'
+import styles from './WelcomeMessageComponent.module.css'
 
-function WelcomMessageComponent(props) {
+function WelcomeMessageComponent(props) {
     const { login, IsLoggedIn, Token } = useContext(LoginContext);
 
 
@@ -44,4 +44,4 @@ function WelcomMessageComponent(props) {
     )
 }
 
-export default WelcomMessageComponent
+export default WelcomeMessageComponent
