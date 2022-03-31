@@ -14,7 +14,7 @@ class GooglebtnComponent extends Component {
         super(props);
 
         this.state = {
-            isLogined: false,
+            isLoggedIn: false,
             accessToken: '',
             show_alert: false
 
@@ -28,10 +28,10 @@ class GooglebtnComponent extends Component {
 
     login(response) {
         console.log(response)
-        if (!response.profileObj.email.endsWith('@zewailcity.edu.eg')) {
+        if (!response.profileObj.email.endsWith('@' + process.env.NEXT_PUBLIC_ALLOWED_EMAILS)) {
             this.setState({ show_alert: true });
         }
-        if (response.accessToken && response.profileObj.email.endsWith('@zewailcity.edu.eg')) {
+        if (response.accessToken && response.profileObj.email.endsWith('@' + process.env.NEXT_PUBLIC_ALLOWED_EMAILS)) {
             this.props.onclick(response)
             this.setState({ show_alert: false });
             // var xhr = new XMLHttpRequest();
@@ -42,7 +42,7 @@ class GooglebtnComponent extends Component {
             // };
             // xhr.send('idtoken=' + response.tokenObj.id_token)
             this.setState(state => ({
-                isLogined: true,
+                isLoggedIn: true,
                 accessToken: response.accessToken
             }));
         }
@@ -50,7 +50,7 @@ class GooglebtnComponent extends Component {
 
     logout(response) {
         this.setState(state => ({
-            isLogined: false,
+            isLoggedIn: false,
             accessToken: ''
         }));
     }

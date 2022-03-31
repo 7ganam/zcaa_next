@@ -235,7 +235,7 @@ const FormComponent = (props) => {
                                                             {!gdata && <Container fluid style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "0px" }}>
                                                                 <div id="login_card" style={{}}>
                                                                     <img style={{ width: "150px", height: "auto", opacity: "0.5", marginTop: "50px" }} src={"/logo.png"} alt="logo" />
-                                                                    <div id="login_disclimare" >
+                                                                    <div id="login_disclaimer" >
                                                                         <span className="font1">You need to have a </span>
                                                                         <span className="font2">zewailcity email </span>
                                                                         <span className="font1">to apply </span>

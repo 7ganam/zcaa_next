@@ -12,29 +12,39 @@ const jwt = require("jsonwebtoken");
 
 
 async function verify_zc_email_user(req, res, should_use_google_oauth) { //checks with google oauth if the zc email exists and attaches the google data in a user object to req
+  console.log('process.env.NEXT_PUBLIC_ALLOWED_EMAILS', process.env.NEXT_PUBLIC_ALLOWED_EMAILS)
 
 
-  const use_google_oauth = should_use_google_oauth // google cloud verification takes a long time suddenly .. they might have a problem on their servers .. disaple it for development and rely on client side verification.
+  const use_google_oauth = should_use_google_oauth // google cloud verification takes a long time suddenly .. they might have a problem on their servers .. disable it for development and rely on client side verification.
 
   let payload = {}
   let userid = ""
   let g_picture = ""
   let zc_email = ""
 
-  if (use_google_oauth) { // ------ get user data verfied from google if use_google_oauth is true ---------------
+  if (use_google_oauth) { // ------ get user data verified from google if use_google_oauth is true ---------------
     const ticket = await client.verifyIdToken({ idToken: req.body.google_data.tokenObj.id_token, audience: process.env.OAUTH2ClIENTAUDIENCE });
+    if (!ticket) {
+      console.log('ticket not found ')
+      return;
+    }
     payload = ticket.getPayload();
     userid = payload['sub'];
     g_picture = payload.picture;
     zc_email = payload.email;
     if (!_.has(payload, 'hd')) {
       res.status(400).json({ success: false, message: 'google recognize this email as not a zewail city email.' })
+      console.log(`1`)
     }
-    else if (_.has(payload, 'hd') && payload.hd != 'zewailcity.edu.eg') {
+    else if (_.has(payload, 'hd') && payload.hd != process.env.NEXT_PUBLIC_ALLOWED_EMAILS) {
       res.status(400).json({ success: false, message: 'google recognize this email as not a zewail city email.' })
+      console.log(payload.hd, process.env.NEXT_PUBLIC_ALLOWED_EMAILS)
+
     }
     else if (!payload.email_verified) {
       res.status(400).json({ success: false, message: 'google recognize this email as not verified.' })
+      console.log(`3`)
+
     }
     console.log(`zc_email`, zc_email)
 
@@ -55,6 +65,8 @@ async function verify_zc_email_user(req, res, should_use_google_oauth) { //check
     g_name: payload.name,
 
   }
+  console.log(`3.5`)
+
 }
 
 

@@ -87,7 +87,7 @@ const register_user = async (req, res) => {
 
 
 
-    if (user_search_result.length < 1 || user_search_result == undefined) { // case no user found registerd already // if the user didn't sign before register it and return success message
+    if (user_search_result.length < 1 || user_search_result == undefined) { // case no user found registered already // if the user didn't sign before register it and return success message
 
         // CREATE THE USER----------------------
         let created_user;
@@ -96,7 +96,7 @@ const register_user = async (req, res) => {
         }
         catch (dev_err) {
             console.log(`dev_err`, dev_err)
-            res.status(500).json({ success: false, message: 'Loggin in failed, please try again later.' })
+            res.status(500).json({ success: false, message: 'Logging in failed, please try again later.' })
         };
 
         console.log("created_user", created_user)

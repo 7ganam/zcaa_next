@@ -86,8 +86,6 @@ export default function ApplicationComponent(props) {
             // setError_message(error.message)
             console.log(error);
         }
-
-
     }
 
     // MAIN VIEW CONDITIONS

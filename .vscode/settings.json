@@ -23,6 +23,8 @@
   "cSpell.ignoreWords": [
     "ABOUTUS",
     "CREATEPOST",
+    "Googlebtn",
+    "IENTAUDIENCE",
     "ZEWAILCITY",
     "datepicker",
     "editorjs",
@@ -30,9 +32,13 @@
     "formik",
     "fortawesome",
     "gdata",
+    "idtoken",
     "jvectormap",
     "navwrapper",
     "unies",
-    "zcaa"
-  ]
+    "userid",
+    "zcaa",
+    "zewail"
+  ],
+  "cSpell.words": ["fshpvp", "googleusercontent", "oblkk"]
 }

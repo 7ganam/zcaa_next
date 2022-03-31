@@ -91,7 +91,7 @@ function LoginModalComponenet() {
                                 <Container fluid style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "0px" }}>
                                     <div id="login_card" style={{}}>
                                         <img style={{ width: "150px", height: "auto", opacity: "0.5", marginTop: "70px" }} src={"/logo.png"} alt="logo" />
-                                        <div id="login_disclimare" >
+                                        <div id="login_disclaimer" >
                                             <span className="font1">Use your </span>
                                             <span className="font2">zewailcity email </span>
                                             <span className="font1">to Login </span>
