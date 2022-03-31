@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { LoginContext } from "../../../contexts/loginContext"
 import React, { useState } from 'react';
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink, Container } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, Container } from 'reactstrap';
 // import { Link } from "react-router-dom";
 import Link from 'next/link'
 import styles from "./NavbarComponent.module.css"
@@ -58,17 +58,17 @@ const NavbarComponent = (props) => {
                                 <Nav className={"mr-auto d-flex nav_list" + " " + styles.nav_list} navbar>
                                     <NavItem className={styles.nav_item}>
                                         <Link href="/">
-                                            <a> <NavLink className={styles.nav_link}>Home</NavLink></a>
+                                            <a style={{ textDecoration: 'none' }}> <div className={styles.nav_link}>Home</div></a>
                                         </Link>
                                     </NavItem>
                                     <NavItem className={styles.nav_item}>
                                         <Link href="/ABOUTUS">
-                                            <a><NavLink className={styles.nav_link} >about us</NavLink></a>
+                                            <a style={{ textDecoration: 'none' }}><div className={styles.nav_link} >about us</div></a>
                                         </Link>
                                     </NavItem>
                                     <NavItem className={styles.nav_item}>
                                         <Link href="/NEWS">
-                                            <a><NavLink className={styles.nav_link}>news</NavLink></a>
+                                            <a style={{ textDecoration: 'none' }}><div className={styles.nav_link}>news</div></a>
                                         </Link>
                                     </NavItem>
                                     <div style={{ flexGrow: "1" }}>
@@ -78,13 +78,13 @@ const NavbarComponent = (props) => {
                                         <>
                                             <NavItem className={styles.nav_item} style={{ borderRightStyle: "solid", borderRightWidth: ".5px", borderRightColor: "grey" }}>
                                                 <Link href="/APPLICATION">
-                                                    <a><NavLink className={styles.nav_link}>apply for membership</NavLink></a>
+                                                    <a style={{ textDecoration: 'none' }}><div className={styles.nav_link}>apply for membership</div></a>
                                                 </Link>
                                             </NavItem>
                                             <NavItem className={styles.nav_item}
                                                 onClick={ToggleLoginModal}
                                                 style={{ cursor: 'pointer' }}>
-                                                <NavLink className={styles.nav_link}>Login</NavLink>
+                                                <div className={styles.nav_link}>Login</div>
                                             </NavItem>
                                         </>
                                     }
@@ -93,10 +93,10 @@ const NavbarComponent = (props) => {
                                             <NavItem className={styles.nav_item}
                                                 onClick={logout}
                                                 style={{ cursor: 'pointer', borderRightStyle: "solid", borderRightWidth: ".5px", borderRightColor: "grey" }}>
-                                                <NavLink className={styles.nav_link}>Logout</NavLink>
+                                                <div className={styles.nav_link}>Logout</div>
                                             </NavItem>
                                             <NavItem className={styles.nav_item}>
-                                                <NavLink className={styles.nav_link}>
+                                                <div className={styles.nav_link}>
                                                     {/* <img
                                                         style={{ width: "40px", height: "40", borderRadius: "100%", }}
                                                         src={Token.g_picture ? Token.g_picture : '/user.png'}
@@ -105,7 +105,7 @@ const NavbarComponent = (props) => {
                                                         style={{ width: "40px", height: "40", borderRadius: "100%", }}
                                                         src={Token.g_picture}
                                                         alt="logo" />
-                                                </NavLink>
+                                                </div>
 
                                             </NavItem>
 

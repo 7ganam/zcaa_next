@@ -21,12 +21,16 @@
   "peacock.remoteColor": "#61dafb",
   "peacock.color": "#61dbfb",
   "cSpell.ignoreWords": [
+    "ABOUTUS",
+    "CREATEPOST",
+    "ZEWAILCITY",
     "datepicker",
     "editorjs",
     "fontawesome",
     "formik",
     "fortawesome",
     "jvectormap",
+    "navwrapper",
     "unies",
     "zcaa"
   ]
