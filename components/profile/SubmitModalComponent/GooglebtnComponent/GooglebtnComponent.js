@@ -28,10 +28,20 @@ class GooglebtnComponent extends Component {
 
     login(response) {
         console.log(response)
-        if (!response.profileObj.email.endsWith('@' + process.env.NEXT_PUBLIC_ALLOWED_EMAILS)) {
+        if (process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE" && !response.profileObj.email.endsWith('@' + process.env.NEXT_PUBLIC_ALLOWED_EMAILS)) {
             this.setState({ show_alert: true });
         }
-        if (response.accessToken && response.profileObj.email.endsWith('@' + process.env.NEXT_PUBLIC_ALLOWED_EMAILS)) {
+        if (response.accessToken &&
+            (
+                (
+                    process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE" && response.profileObj.email.endsWith('@' + process.env.NEXT_PUBLIC_ALLOWED_EMAILS)
+                )
+                ||
+                (
+                    process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK !== "TRUE"
+                )
+            )
+        ) {
             this.props.onclick(response)
             this.setState({ show_alert: false });
             this.setState(state => ({

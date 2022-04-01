@@ -20,6 +20,7 @@ const fetch_all_unies = async () => {
 
 
 const register_unies = async (unies) => {
+    console.log(unies)
     for (uni of unies) {
         let fetched_uni = await fetch_uni_or_create_new_one(uni.uni_name.value, uni.uni_name.label)
         uni.uni_ref = fetched_uni
