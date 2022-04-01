@@ -30,7 +30,7 @@ import { useHttpClient } from "../../../hooks/http-hook"
 import axios from 'axios';
 
 
-import WelcomMessageComponent from './WelcomMessageComponent/WelcomMessageComponent'
+import WelcomeMessageComponent from './WelcomeMessageComponent/WelcomeMessageComponent'
 
 // const SignupSchema = Yup.object().shape({})
 const SignupSchema = Yup.object().shape({
@@ -212,7 +212,7 @@ const FormComponent = (props) => {
                             {
                                 IsLoggedIn ?
 
-                                    <WelcomMessageComponent Fetch_success={Fetch_success} Response_json_content={Response_json_content} />
+                                    <WelcomeMessageComponent Fetch_success={Fetch_success} Response_json_content={Response_json_content} />
                                     :
                                     (Sending_data ?
                                         <div id="loading_spinner" style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "400px" }} >
@@ -235,7 +235,7 @@ const FormComponent = (props) => {
                                                             {!gdata && <Container fluid style={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "0px" }}>
                                                                 <div id="login_card" style={{}}>
                                                                     <img style={{ width: "150px", height: "auto", opacity: "0.5", marginTop: "50px" }} src={"/logo.png"} alt="logo" />
-                                                                    <div id="login_disclimare" >
+                                                                    <div id="login_disclaimer" >
                                                                         <span className="font1">You need to have a </span>
                                                                         <span className="font2">zewailcity email </span>
                                                                         <span className="font1">to apply </span>

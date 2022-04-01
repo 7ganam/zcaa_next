@@ -1,11 +1,9 @@
-// components/contactus-form.component.js
 import { useContext } from "react";
 import { LoginContext } from "../../../contexts/loginContext"
 import React, { useState, useCallback, useRef } from 'react'
 import { Formik, Field, Form, FieldArray, ErrorMessage } from 'formik';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'reactstrap'
-// import './FormComponent.css'
 import CollapsingUniCardComponent from './CollapsingUniCardComponent/CollapsingUniCardComponent'
 import CollapsingEntityCardComponent from './CollapsingEntityCardComponent/CollapsingEntityCardComponent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -100,7 +98,7 @@ const FormComponent = (props) => {
                 onSubmit={(values) => props.submit_form(values)}
             >
                 {(formik_object) => {
-                    // the dispaly sequence as follows : if success state is true show the sucess component 
+                    // the display sequence as follows : if success state is true show the success component 
                     // else if the data is being sent show the loading component 
                     // else show the form component ... which contains the google modal.
                     return (
@@ -108,7 +106,7 @@ const FormComponent = (props) => {
                             {
                                 <div id="form_and_modal">
 
-                                    {/* print the form state for debuggin */}
+                                    {/* print the form state for debugging */}
                                     {/* <div>{JSON.stringify(formik_object.values.exp_field, null, 2)}</div> */}
 
                                     <Form>

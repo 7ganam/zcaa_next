@@ -14,7 +14,7 @@ class GooglebtnComponent extends Component {
         super(props);
 
         this.state = {
-            isLogined: false,
+            isLoggedIn: false,
             accessToken: '',
             show_alert: false
 
@@ -28,21 +28,24 @@ class GooglebtnComponent extends Component {
 
     login(response) {
         console.log(response)
-        if (!response.profileObj.email.endsWith('@zewailcity.edu.eg')) {
+        if (process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE" && !response.profileObj.email.endsWith('@' + process.env.NEXT_PUBLIC_ALLOWED_EMAILS)) {
             this.setState({ show_alert: true });
         }
-        if (response.accessToken && response.profileObj.email.endsWith('@zewailcity.edu.eg')) {
+        if (response.accessToken &&
+            (
+                (
+                    process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE" && response.profileObj.email.endsWith('@' + process.env.NEXT_PUBLIC_ALLOWED_EMAILS)
+                )
+                ||
+                (
+                    process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK !== "TRUE"
+                )
+            )
+        ) {
             this.props.onclick(response)
             this.setState({ show_alert: false });
-            // var xhr = new XMLHttpRequest();
-            // xhr.open('POST', 'http://localhost:5000');
-            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            // xhr.onload = function () {
-            //     console.log('Signed in as: ' + xhr.responseText);
-            // };
-            // xhr.send('idtoken=' + response.tokenObj.id_token)
             this.setState(state => ({
-                isLogined: true,
+                isLoggedIn: true,
                 accessToken: response.accessToken
             }));
         }
@@ -50,7 +53,7 @@ class GooglebtnComponent extends Component {
 
     logout(response) {
         this.setState(state => ({
-            isLogined: false,
+            isLoggedIn: false,
             accessToken: ''
         }));
     }
@@ -77,7 +80,7 @@ class GooglebtnComponent extends Component {
                                     onClick={renderProps.onClick}
                                     disabled={renderProps.disabled}>
                                     <div style={{ display: "flex", alignItems: "center" }}>
-                                        <span style={{ marginLeft: "10px" }}>verfiy with google</span>
+                                        <span style={{ marginLeft: "10px" }}>verify with google</span>
                                         <div style={{ flexGrow: "1" }}></div>
                                         <img style={{ width: "30px", height: "auto", opacity: "1", justifySelf: "end", marginRight: "7px" }} src={'/application/google_logo.png'} alt="logo" />
                                         <img style={{ width: "30px", height: "auto", opacity: "1", justifySelf: "end" }} src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/zc_logo.png`} alt="logo" />
