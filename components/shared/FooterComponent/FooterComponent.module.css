@@ -1,11 +1,11 @@
-.footer_container{
-height: 250px;
-padding-top: 55px;
-background: linear-gradient(180deg, #26ADCB 0%, #107A92 100%);
-border: 1px solid #26ADCB;
-box-sizing: border-box;
-background-image: url('./Footer_background.jpg');
-background-repeat: no-repeat;
-background-size: cover;
-box-shadow: inset 0px 3px 4px rgba(0, 0, 0, 0.25);
+.footer_container {
+  height: 250px;
+  padding-top: 55px;
+  background: linear-gradient(180deg, #26adcb 0%, #107a92 100%);
+  border: 1px solid #26adcb;
+  box-sizing: border-box;
+  background-image: url("./Footer_background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset 0px 3px 4px rgba(0, 0, 0, 0.25);
 }

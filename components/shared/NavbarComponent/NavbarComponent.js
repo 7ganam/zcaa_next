@@ -1,6 +1,6 @@
-import {useContext} from 'react';
-import {LoginContext} from '../../../contexts/loginContext';
-import React, {useState} from 'react';
+import { useContext } from "react";
+import { LoginContext } from "../../../contexts/loginContext";
+import React, { useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -8,13 +8,13 @@ import {
   Nav,
   NavItem,
   Container,
-} from 'reactstrap';
+} from "reactstrap";
 // import { Link } from "react-router-dom";
-import Link from 'next/link';
-import styles from './NavbarComponent.module.css';
+import Link from "next/link";
+import styles from "./NavbarComponent.module.css";
 const NavbarComponent = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const {login, IsLoggedIn, Token, ToggleLoginModal, logout} =
+  const { login, IsLoggedIn, Token, ToggleLoginModal, logout } =
     useContext(LoginContext);
 
   // let Token = false;
@@ -27,107 +27,115 @@ const NavbarComponent = (props) => {
       {!!Token && Token.admin && (
         <Container
           fluid
-          className='d-flex justify-content-left'
+          className="d-flex justify-content-left"
           style={{
-            height: '50px',
-            backgroundColor: '#26ADCB',
-            paddingLeft: '0px',
-          }}>
+            height: "50px",
+            backgroundColor: "#26ADCB",
+            paddingLeft: "0px",
+          }}
+        >
           <div
             style={{
-              margin: '0px 0px',
-              color: 'white',
-              fontWeight: 'bolder',
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: 'black',
-              padding: '10px',
-            }}>
+              margin: "0px 0px",
+              color: "white",
+              fontWeight: "bolder",
+              display: "flex",
+              alignItems: "center",
+              backgroundColor: "black",
+              padding: "10px",
+            }}
+          >
             <div>ADMIN actions : </div>
           </div>
           <div
             style={{
-              margin: '0px 20px',
-              color: 'white',
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-            }}>
-            <Link href='/ADMIN/CREATEPOST'>
-              <a style={{color: 'white'}}>
-                {' '}
+              margin: "0px 20px",
+              color: "white",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Link href="/ADMIN/CREATEPOST">
+              <a style={{ color: "white" }}>
+                {" "}
                 <div>CREATE NEW POST</div>
               </a>
             </Link>
           </div>
           <div
             style={{
-              color: 'white',
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-            }}>
-            <Link href='/NEWS'>
-              <a style={{color: 'white'}}>
+              color: "white",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Link href="/NEWS">
+              <a style={{ color: "white" }}>
                 <div>DELETE POSTS</div>
               </a>
             </Link>
           </div>
         </Container>
       )}
-      <Container className='d-flex justify-content-center'>
+      <Container className="d-flex justify-content-center">
         <div
-          id='intro_text'
-          className={'header_font' + ' ' + styles.intro_text}>
+          id="intro_text"
+          className={"header_font" + " " + styles.intro_text}
+        >
           ZEWAILCITY Alumni Association
         </div>
       </Container>
       <Container
         fluid
-        id='nav_bar_container'
-        className={styles.nav_bar_container}>
+        id="nav_bar_container"
+        className={styles.nav_bar_container}
+      >
         <Container>
           <div>
-            <Navbar light expand='md'>
+            <Navbar light expand="md">
               <NavbarToggler onClick={toggle} />
               <Collapse isOpen={isOpen} navbar>
                 <Nav
-                  className={'mr-auto d-flex nav_list' + ' ' + styles.nav_list}
-                  navbar>
+                  className={"mr-auto d-flex nav_list" + " " + styles.nav_list}
+                  navbar
+                >
                   <NavItem className={styles.nav_item}>
-                    <Link href='/'>
-                      <a style={{textDecoration: 'none'}}>
-                        {' '}
+                    <Link href="/">
+                      <a style={{ textDecoration: "none" }}>
+                        {" "}
                         <div className={styles.nav_link}>Home</div>
                       </a>
                     </Link>
                   </NavItem>
                   <NavItem className={styles.nav_item}>
-                    <Link href='/ABOUTUS'>
-                      <a style={{textDecoration: 'none'}}>
+                    <Link href="/ABOUTUS">
+                      <a style={{ textDecoration: "none" }}>
                         <div className={styles.nav_link}>about us</div>
                       </a>
                     </Link>
                   </NavItem>
                   <NavItem className={styles.nav_item}>
-                    <Link href='/NEWS'>
-                      <a style={{textDecoration: 'none'}}>
+                    <Link href="/NEWS">
+                      <a style={{ textDecoration: "none" }}>
                         <div className={styles.nav_link}>news</div>
                       </a>
                     </Link>
                   </NavItem>
-                  <div style={{flexGrow: '1'}}></div>
+                  <div style={{ flexGrow: "1" }}></div>
                   {!IsLoggedIn && (
                     <>
                       <NavItem
                         className={styles.nav_item}
                         style={{
-                          borderRightStyle: 'solid',
-                          borderRightWidth: '.5px',
-                          borderRightColor: 'grey',
-                        }}>
-                        <Link href='/APPLICATION'>
-                          <a style={{textDecoration: 'none'}}>
+                          borderRightStyle: "solid",
+                          borderRightWidth: ".5px",
+                          borderRightColor: "grey",
+                        }}
+                      >
+                        <Link href="/APPLICATION">
+                          <a style={{ textDecoration: "none" }}>
                             <div className={styles.nav_link}>
                               apply for membership
                             </div>
@@ -137,7 +145,8 @@ const NavbarComponent = (props) => {
                       <NavItem
                         className={styles.nav_item}
                         onClick={ToggleLoginModal}
-                        style={{cursor: 'pointer'}}>
+                        style={{ cursor: "pointer" }}
+                      >
                         <div className={styles.nav_link}>Login</div>
                       </NavItem>
                     </>
@@ -148,11 +157,12 @@ const NavbarComponent = (props) => {
                         className={styles.nav_item}
                         onClick={logout}
                         style={{
-                          cursor: 'pointer',
-                          borderRightStyle: 'solid',
-                          borderRightWidth: '.5px',
-                          borderRightColor: 'grey',
-                        }}>
+                          cursor: "pointer",
+                          borderRightStyle: "solid",
+                          borderRightWidth: ".5px",
+                          borderRightColor: "grey",
+                        }}
+                      >
                         <div className={styles.nav_link}>Logout</div>
                       </NavItem>
                       <NavItem className={styles.nav_item}>
@@ -163,14 +173,14 @@ const NavbarComponent = (props) => {
                                                         alt="logo" /> */}
                           <img
                             style={{
-                              width: '40px',
-                              height: '40',
-                              borderRadius: '100%',
+                              width: "40px",
+                              height: "40",
+                              borderRadius: "100%",
                             }}
                             src={
-                              Token.g_picture ? Token.g_picture : '/user.png'
+                              Token.g_picture ? Token.g_picture : "/user.png"
                             }
-                            alt='logo'
+                            alt="logo"
                           />
                         </div>
                       </NavItem>

@@ -1,7 +1,122 @@
-.read_more_btn{
+.read_more_btn {
+  margin-top: 10px;
+  appearance: none;
+  background: #26adcb;
+  color: #fff;
+  padding: 3px 1em;
+  border-radius: 4px;
+  height: 25px;
+  /* box-shadow: inset 0 -4px 0 0 rgba(0,0,0,0.2); */
+  margin-right: 1em;
+  cursor: pointer;
+  border: 0;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 125.5%;
+  /* or 30px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+.read_more_btn:hover {
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.5);
+}
+.read_more_btn:active {
+  position: relative;
+  top: 4px;
+  box-shadow: inset 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+  outline: 0;
+}
+.read_more_btn:focus {
+  outline: 0;
+}
+
+#card_body {
+  height: auto;
+  background: #ffffff;
+  border: 1px solid #bcb6b6;
+  border-radius: 4px;
+  margin: 25px 0;
+  /* filter: drop-shadow(-5px 8px 9px rgba(0, 0, 0, 0.25)); */
+  box-shadow: 2px 2px 5px 2px rgb(0 0 0 / 25%);
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+#card_meta_data {
+  /* height: 100%; */
+  width: 90%;
+  margin: 10px 0px 0px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#card_image {
+  /* height: 100%; */
+  margin: 20px 20px 20px 20px;
+  width: 90%;
+  height: 200px;
+}
+
+#news_card_title {
+  margin-top: 0px;
+  font-family: Philosopher;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 40px;
+
+  height: 85px;
+
+  border-bottom-style: solid;
+
+  overflow: auto;
+  /* color: rgb(0, 145, 172); */
+}
+#news_card_subData {
+  margin-top: 10px;
+  height: 50px;
+
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 25px;
+}
+#news_card_thumbnailText {
+  display: none;
+}
+
+#news_card_footer {
+  height: 100px;
+}
+
+/* // Extra small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap */
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  #news_card_footer {
+    height: 27px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .read_more_btn {
     margin-top: 10px;
     appearance: none;
-    background: #26ADCB;
+    background: #26adcb;
     color: #fff;
     padding: 3px 1em;
     border-radius: 4px;
@@ -9,7 +124,7 @@
     /* box-shadow: inset 0 -4px 0 0 rgba(0,0,0,0.2); */
     margin-right: 1em;
     cursor: pointer;
-    border:0;
+    border: 0;
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
@@ -22,241 +137,103 @@
     text-align: center;
     letter-spacing: 0.045em;
     text-transform: uppercase;
-    color: #FFFFFF;
-}
-.read_more_btn:hover{
-    box-shadow: 0 0 8px 0 rgba(0,0,0,0.5);
-}
-.read_more_btn:active{
+    color: #ffffff;
+  }
+  .read_more_btn:hover {
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.5);
+  }
+  .read_more_btn:active {
     position: relative;
     top: 4px;
-    box-shadow: inset 0 3px 5px 0 rgba(0,0,0,0.2);
+    box-shadow: inset 0 3px 5px 0 rgba(0, 0, 0, 0.2);
     outline: 0;
-}
-.read_more_btn:focus{
+  }
+  .read_more_btn:focus {
     outline: 0;
-}
+  }
 
-
-#card_body{
-    height: auto;
-    background: #FFFFFF;
-    border: 1px solid #BCB6B6;
+  #card_body {
+    height: 360px;
+    background: #ffffff;
+    border: 1px solid #bcb6b6;
     border-radius: 4px;
     margin: 25px 0;
     /* filter: drop-shadow(-5px 8px 9px rgba(0, 0, 0, 0.25)); */
     box-shadow: 2px 2px 5px 2px rgb(0 0 0 / 25%);
     display: flex;
-    flex-direction: column-reverse;
-}
+    flex-direction: row;
+  }
 
-#card_meta_data{
+  #card_meta_data {
     /* height: 100%; */
-    width: 90%;
-    margin: 10px 0px 0px 20px;
+    width: 60%;
+    margin: 10px 0px 20px 20px;
     display: flex;
     flex-direction: column;
+  }
 
-}
-
-#card_image{
+  #card_image {
     /* height: 100%; */
-    margin: 20px 20px 20px 20px;
-    width: 90%;
-    height: 200px;
-}
+    margin: 20px;
+    width: 40%;
+    height: auto;
+  }
 
-#news_card_title{
-    margin-top: 0px;
+  #news_card_title {
+    margin-top: 10px;
     font-family: Philosopher;
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
     line-height: 40px;
 
-    height: 85px; 
-
+    height: 85px;
 
     border-bottom-style: solid;
 
-
     overflow: auto;
     /* color: rgb(0, 145, 172); */
-}
-#news_card_subData{
-
-
+  }
+  #news_card_subData {
     margin-top: 10px;
-    height: 50px; 
-    
+    height: 50px;
+
     font-family: Noto Sans;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
     line-height: 25px;
-    }
-#news_card_thumbnailText{
+  }
+  #news_card_thumbnailText {
+    flex-grow: 1;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin-left: 30px;
 
-    display: none;
+    /* font-family: Roboto; */
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
 
-    }
-
-    #news_card_footer{
-        height: 100px;
-    }
-
-
- /* // Extra small devices (portrait phones, less than 576px)
-// No media query for `xs` since this is the default in Bootstrap */
-
-/* // Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) { 
-    
- }
-
-/* // Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-    #news_card_footer{
-        height: 27px;
-         margin-top: 5px;
-          display: flex;
-           align-items: center; 
-    }
-
-
-    .read_more_btn{
-        margin-top: 10px;
-        appearance: none;
-        background: #26ADCB;
-        color: #fff;
-        padding: 3px 1em;
-        border-radius: 4px;
-        height: 25px;
-        /* box-shadow: inset 0 -4px 0 0 rgba(0,0,0,0.2); */
-        margin-right: 1em;
-        cursor: pointer;
-        border:0;
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 15px;
-        line-height: 125.5%;
-        /* or 30px */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        letter-spacing: 0.045em;
-        text-transform: uppercase;
-        color: #FFFFFF;
-    }
-    .read_more_btn:hover{
-        box-shadow: 0 0 8px 0 rgba(0,0,0,0.5);
-    }
-    .read_more_btn:active{
-        position: relative;
-        top: 4px;
-        box-shadow: inset 0 3px 5px 0 rgba(0,0,0,0.2);
-        outline: 0;
-    }
-    .read_more_btn:focus{
-        outline: 0;
-    }
-    
-    
-    #card_body{
-        height: 360px;
-        background: #FFFFFF;
-        border: 1px solid #BCB6B6;
-        border-radius: 4px;
-        margin: 25px 0;
-        /* filter: drop-shadow(-5px 8px 9px rgba(0, 0, 0, 0.25)); */
-        box-shadow: 2px 2px 5px 2px rgb(0 0 0 / 25%);
-        display: flex;
-        flex-direction: row;
-
-    }
-    
-    #card_meta_data{
-        /* height: 100%; */
-        width: 60%;
-        margin: 10px 0px 20px 20px;
-        display: flex;
-        flex-direction: column;
-    
-    }
-    
-    #card_image{
-        /* height: 100%; */
-        margin: 20px;
-        width: 40%;
-        height: auto;
-    }
-    
-    #news_card_title{
-        margin-top: 10px;
-        font-family: Philosopher;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 20px;
-        line-height: 40px;
-    
-        height: 85px; 
-    
-    
-        border-bottom-style: solid;
-    
-    
-        overflow: auto;
-        /* color: rgb(0, 145, 172); */
-    }
-    #news_card_subData{
-    
-    
-        margin-top: 10px;
-        height: 50px; 
-        
-        font-family: Noto Sans;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 18px;
-        line-height: 25px;
-        }
-    #news_card_thumbnailText{
-
-        flex-grow: 1;
-        margin: auto;
-        display: flex;
-        justify-content: center;
-        margin-left: 30px;
-    
-        /* font-family: Roboto; */
-        font-style: normal;
-        font-weight: normal;
-        font-size: 20px;
-        line-height: 24px;
-    
-        /* display: -webkit-box;
+    /* display: -webkit-box;
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
         text-overflow: ellipsis; */
-    
-        color: rgb(129, 125, 125);
-        overflow: auto;
-        max-height: 95px;
-        margin-top: 10px;
-        /* color: rgb(77, 124, 133); */
-        }
-    
-    
+
+    color: rgb(129, 125, 125);
+    overflow: auto;
+    max-height: 95px;
+    margin-top: 10px;
+    /* color: rgb(77, 124, 133); */
+  }
 }
 
 /* // Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { 
-    
- }
+@media (min-width: 992px) {
+}
 
 /* // Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) { 
-    
- }
+@media (min-width: 1200px) {
+}

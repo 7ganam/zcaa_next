@@ -1,23 +1,23 @@
-const {dbConnect} = require('../../../utils/dbConnect');
-var _ = require('lodash');
+const { dbConnect } = require("../../../utils/dbConnect");
+var _ = require("lodash");
 
-import {login_user} from '../../../controllers/user_controller';
-const {verify_zc_email_user} = require('../../../middleware/auth_middleware');
+import { login_user } from "../../../controllers/user_controller";
+const { verify_zc_email_user } = require("../../../middleware/auth_middleware");
 
 export default async function handler(req, res) {
-  const {method} = req;
+  const { method } = req;
 
   await dbConnect();
 
   switch (method) {
-    case 'GET':
+    case "GET":
       try {
-        res.status(200).json({success: true, data: 'get'});
+        res.status(200).json({ success: true, data: "get" });
       } catch (error) {
-        res.status(400).json({success: false});
+        res.status(400).json({ success: false });
       }
       break;
-    case 'POST':
+    case "POST":
       try {
         console.log(`post`);
 
@@ -27,12 +27,12 @@ export default async function handler(req, res) {
         await login_user(req, res); // user controller to send jwt token to client
         console.log(`5`);
       } catch (error) {
-        console.log('error', error);
-        res.status(400).json({success: false});
+        console.log("error", error);
+        res.status(400).json({ success: false });
       }
       break;
     default:
-      res.status(400).json({success: false});
+      res.status(400).json({ success: false });
       break;
   }
 }

@@ -1,14 +1,14 @@
-const {OAuth2Client} = require('google-auth-library');
+const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.OAUTH2ClIENT);
-var _ = require('lodash');
+var _ = require("lodash");
 
 const {
   register_experience_fields,
-} = require('../controllers/experienceField_controller');
-const {register_unies} = require('../controllers/university_controller');
-const {register_entities} = require('../controllers/entity_controller');
+} = require("../controllers/experienceField_controller");
+const { register_unies } = require("../controllers/university_controller");
+const { register_entities } = require("../controllers/entity_controller");
 
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 async function verify_zc_email_user(req, res, should_use_google_oauth) {
   //checks with google oauth if the zc email exists and attaches the google data in a user object to req
@@ -16,9 +16,9 @@ async function verify_zc_email_user(req, res, should_use_google_oauth) {
   const use_google_oauth = should_use_google_oauth; // google cloud verification takes a long time suddenly .. they might have a problem on their servers .. disable it for development and rely on client side verification.
 
   let payload = {};
-  let userid = '';
-  let g_picture = '';
-  let zc_email = '';
+  let userid = "";
+  let g_picture = "";
+  let zc_email = "";
 
   if (use_google_oauth) {
     // ------ get user data verified from google if use_google_oauth is true ---------------
@@ -27,16 +27,16 @@ async function verify_zc_email_user(req, res, should_use_google_oauth) {
       audience: process.env.OAUTH2ClIENTAUDIENCE,
     });
     if (!ticket) {
-      console.log('ticket not found ');
+      console.log("ticket not found ");
       return;
     }
     payload = ticket.getPayload();
-    userid = payload['sub'];
+    userid = payload["sub"];
     g_picture = payload.picture;
     zc_email = payload.email;
     if (
-      !_.has(payload, 'hd') &&
-      process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === 'TRUE'
+      !_.has(payload, "hd") &&
+      process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE"
     ) {
       res.status(400).json({
         success: false,
@@ -44,18 +44,18 @@ async function verify_zc_email_user(req, res, should_use_google_oauth) {
       });
       console.log(`1`);
     } else if (
-      _.has(payload, 'hd') &&
-      process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === 'TRUE' &&
+      _.has(payload, "hd") &&
+      process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE" &&
       payload.hd != process.env.NEXT_PUBLIC_ALLOWED_EMAILS
     ) {
       res.status(400).json({
         success: false,
-        message: 'google recognize this email as not a zewail city email.',
+        message: "google recognize this email as not a zewail city email.",
       });
     } else if (!payload.email_verified) {
       res.status(400).json({
         success: false,
-        message: 'google recognize this email as not verified.',
+        message: "google recognize this email as not verified.",
       });
     }
     console.log(`zc_email`, zc_email);
@@ -85,7 +85,7 @@ async function attach_form_data_to_user(req, res) {
     );
   } catch (error) {
     console.log(`error`, error);
-    res.status(500).json({success: false});
+    res.status(500).json({ success: false });
   }
 
   //--------------------- check if unies  new or they already exists in the db --------------------------
@@ -93,7 +93,7 @@ async function attach_form_data_to_user(req, res) {
     req.body.form_state.universities,
     undefined,
     null,
-    ''
+    ""
   );
   let cleaned_unies2 = cleaned_unies.filter((uni) => uni.uni_name); // remove any empty entries
   let created_unies;
@@ -101,7 +101,7 @@ async function attach_form_data_to_user(req, res) {
     created_unies = await register_unies(cleaned_unies2);
   } catch (error) {
     console.log(`error`, error);
-    res.status(500).json({success: false});
+    res.status(500).json({ success: false });
   }
 
   //--------------------- check if entites  new or they already exists in the db --------------------------
@@ -109,7 +109,7 @@ async function attach_form_data_to_user(req, res) {
     req.body.form_state.entities,
     undefined,
     null,
-    ''
+    ""
   );
   let cleaned_entities2 = cleaned_entities.filter(
     (entity) => entity.entity_name
@@ -119,7 +119,7 @@ async function attach_form_data_to_user(req, res) {
     created_entities = await register_entities(cleaned_entities2);
   } catch (error) {
     console.log(`error`, error);
-    res.status(500).json({success: false});
+    res.status(500).json({ success: false });
   }
 
   //------ attach form data to the user in request -------
@@ -152,10 +152,10 @@ async function attach_form_data_to_user(req, res) {
 
 async function verify_token(req, res) {
   const token =
-    req.body.token || req.query.token || req.headers['x-access-token'];
+    req.body.token || req.query.token || req.headers["x-access-token"];
 
   if (!token) {
-    return res.status(403).send('A token is required for authentication');
+    return res.status(403).send("A token is required for authentication");
   }
   try {
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
@@ -163,8 +163,12 @@ async function verify_token(req, res) {
     req.user = decoded.user;
     // return res.status(200).json({ user: decoded.user });
   } catch (err) {
-    return res.status(401).json({success: false});
+    return res.status(401).json({ success: false });
   }
 }
 
-module.exports = {verify_zc_email_user, attach_form_data_to_user, verify_token};
+module.exports = {
+  verify_zc_email_user,
+  attach_form_data_to_user,
+  verify_token,
+};

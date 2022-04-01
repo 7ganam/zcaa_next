@@ -36,7 +36,7 @@
 }
 
 .brand_title {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: "Noto Sans", sans-serif;
   font-family: Cairo;
   position: relative;
   top: 7px;
@@ -46,7 +46,7 @@
 }
 
 .nav_link {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: "Noto Sans", sans-serif;
   /* font-family: Cairo; */
 
   font-size: 20px;
