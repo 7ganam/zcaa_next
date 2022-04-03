@@ -3,39 +3,39 @@
 // on google button clicked the button sends the google credentials to the login component and triggers its send data function
 // login in component sends the data to the back end and shows loading component until the process finish
 
-import React, { useState } from "react";
-import { Container } from "reactstrap";
-import { useContext } from "react";
-import { LoginContext } from "../../contexts/loginContext";
-import WelcomeMessageComponent from "./FormComponent/WelcomeMessageComponent/WelcomeMessageComponent";
-import "bootstrap/dist/css/bootstrap.min.css";
-import FormComponent from "./FormComponent/FormComponent";
-import SubmitModalComponent from "./SubmitModalComponent/SubmitModalComponent";
-import axios from "axios";
-import styles from "./ApplicationComponent.module.css";
-import ReactLoading from "react-loading";
+import React, {useState} from 'react';
+import {Container} from 'reactstrap';
+import {useContext} from 'react';
+import {LoginContext} from '../../contexts/loginContext';
+import WelcomeMessageComponent from './FormComponent/WelcomeMessageComponent/WelcomeMessageComponent';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import FormComponent from './FormComponent/FormComponent';
+import SubmitModalComponent from './SubmitModalComponent/SubmitModalComponent';
+import axios from 'axios';
+import styles from './ApplicationComponent.module.css';
+import ReactLoading from 'react-loading';
 
 export default function ApplicationComponent(props) {
   // LOGIN CONTEXT
-  const { login, IsLoggedIn, Token } = useContext(LoginContext);
+  const {login, IsLoggedIn, Token} = useContext(LoginContext);
 
   //FORM initial and return variables
   const [FormData, setFormData] = useState(null); // form data will be saved here once submitted
   let init_values = {
-    birth_date: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    exp_field: "",
-    residency: { country: "", region: "" },
-    content: "",
-    phone: "",
-    address: "",
-    zc_id: "",
-    grad_year: "",
-    major: "",
-    minor: "",
-    other_undergraduate_data: "",
+    birth_date: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    exp_field: '',
+    residency: {country: '', region: ''},
+    content: '',
+    phone: '',
+    address: '',
+    zc_id: '',
+    grad_year: '',
+    major: '',
+    minor: '',
+    other_undergraduate_data: '',
     universities: [{}],
     entities: [{}],
   };
@@ -64,24 +64,22 @@ export default function ApplicationComponent(props) {
 
       let form_state = FormData;
       let id_token = google_data.tokenObj.id_token;
-      const body_data = { form_state, google_data };
+      const body_data = {form_state, google_data};
       const response = await axios.post(
-        `/api/auth/signup`,
+        `/api/test/signup`, //TODO: return this back to auth
         {
           form_state,
           google_data,
         },
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {'Content-Type': 'application/json'},
         }
       );
-      console.log(response);
-
       setSending_data(false);
       setForm_response(response.data);
 
       // if success log in the user
-      if (response.data.message === "success") {
+      if (response.data.message === 'success') {
         setFetch_success(true);
         login(
           response.data.user,
@@ -91,9 +89,9 @@ export default function ApplicationComponent(props) {
         );
       }
       // if user already registered before show an alarm
-      if (response.data.message === "already_applied_before") {
+      if (response.data.message === 'already_applied_before') {
         setFetch_success(true);
-        alert("you already signed up before, your data was not updated");
+        alert('you already signed up before, your data was not updated');
         login(
           response.data.user,
           response.data.token,
@@ -121,9 +119,9 @@ export default function ApplicationComponent(props) {
       );
     } else if (Sending_data) {
       return (
-        <div id="loading_spinner" className={styles.loading_spinner}>
-          <div style={{ marginTop: "100px" }}>
-            <ReactLoading type={"spin"} color={"#00D2F9"} width={"20vw"} />
+        <div id='loading_spinner' className={styles.loading_spinner}>
+          <div style={{marginTop: '100px'}}>
+            <ReactLoading type={'spin'} color={'#00D2F9'} width={'20vw'} />
           </div>
         </div>
       );
@@ -139,11 +137,10 @@ export default function ApplicationComponent(props) {
           <Container
             fluid
             style={{
-              background: "rgba(164, 223, 234, 0.15)",
-              minHeight: "80vh",
-              padding: "0",
-            }}
-          >
+              background: 'rgba(164, 223, 234, 0.15)',
+              minHeight: '80vh',
+              padding: '0',
+            }}>
             <FormComponent
               {...props}
               init_values={init_values}
@@ -159,7 +156,5 @@ export default function ApplicationComponent(props) {
     }
   };
 
-  return (
-    <div style={{ minHeight: "100vh" }}>{conditional_view(IsLoggedIn)}</div>
-  );
+  return <div style={{minHeight: '100vh'}}>{conditional_view(IsLoggedIn)}</div>;
 }

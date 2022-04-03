@@ -1,39 +1,35 @@
-var _ = require("lodash");
-var ObjectId = require("mongodb").ObjectID;
+var _ = require('lodash');
+var ObjectId = require('mongodb').ObjectID;
 
-const { dbConnect } = require("../utils/dbConnect");
-const { Users } = require("../models/users");
+const {dbConnect} = require('../utils/dbConnect');
+const {Users} = require('../models/users');
 
-var _ = require("lodash");
-const { OAuth2Client } = require("google-auth-library");
+var _ = require('lodash');
+const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.OAUTH2ClIENT);
 
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
 
-const login_user = async (req, res, login_message = "success") => {
+const login_user = async (req, res, login_message = 'success') => {
   // seach database for the same email------------------------
   let existingUser;
   try {
-    existingUser = await Users.findOne({ zc_email: req.user.zc_email });
-    console.log({ existingUser });
+    existingUser = await Users.findOne({zc_email: req.user.zc_email});
+    console.log({existingUser});
   } catch (dev_err) {
     console.log(`dev_err`, dev_err);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Loggin in failed, please try again later.",
-      });
+    res.status(500).json({
+      success: false,
+      message: 'Loggin in failed, please try again later.',
+    });
   }
 
   if (!existingUser) {
-    return res
-      .status(442)
-      .json({
-        success: false,
-        message: "Failed to login, you are not a member.",
-      });
+    return res.status(442).json({
+      success: false,
+      message: 'Failed to login, you are not a member.',
+    });
   } else {
     // GENERATE TOKEN----------------------
     let token;
@@ -43,17 +39,15 @@ const login_user = async (req, res, login_message = "success") => {
     );
     let expirateion_date_string = expiration_date.toISOString();
     try {
-      token = jwt.sign({ user: existingUser }, TOKEN_SECRET_KEY, {
-        expiresIn: expiration_time_in_hours + "h",
+      token = jwt.sign({user: existingUser}, TOKEN_SECRET_KEY, {
+        expiresIn: expiration_time_in_hours + 'h',
       });
     } catch (dev_err) {
       console.log(`dev_err`, dev_err);
-      res
-        .status(500)
-        .json({
-          success: false,
-          message: "Loggin in failed, please try again later.",
-        });
+      res.status(500).json({
+        success: false,
+        message: 'Loggin in failed, please try again later.',
+      });
     }
 
     // SEND TOKEN AND USER RESPONSE----------------------
@@ -71,15 +65,13 @@ const register_user = async (req, res) => {
   let user_search_result;
   // -------------------- LOOK DATABASE FOR THE USER ------------------------
   try {
-    user_search_result = await Users.find({ zc_email: req.user.zc_email });
+    user_search_result = await Users.find({zc_email: req.user.zc_email});
   } catch (dev_err) {
     console.log(`dev_err`, dev_err);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Loggin in failed, please try again later.",
-      });
+    res.status(500).json({
+      success: false,
+      message: 'Loggin in failed, please try again later.',
+    });
   }
 
   if (user_search_result.length < 1 || user_search_result == undefined) {
@@ -91,15 +83,13 @@ const register_user = async (req, res) => {
       created_user = await Users.create(req.user);
     } catch (dev_err) {
       console.log(`dev_err`, dev_err);
-      res
-        .status(500)
-        .json({
-          success: false,
-          message: "Logging in failed, please try again later.",
-        });
+      res.status(500).json({
+        success: false,
+        message: 'Logging in failed, please try again later.',
+      });
     }
 
-    console.log("created_user", created_user);
+    console.log('created_user', created_user);
 
     // LOG IN THE USER
     login_user(req, res);
@@ -108,7 +98,7 @@ const register_user = async (req, res) => {
 
     console.log(4);
     // LOG IN THE USER
-    login_user(req, res, "already_applied_before");
+    login_user(req, res, 'already_applied_before');
   }
 };
 
@@ -117,37 +107,110 @@ const fetch_user_by_id = async (req, res, user_mongo_id) => {
   try {
     existingUser = await Users.findById(user_mongo_id)
       .populate({
-        path: "universities",
+        path: 'universities',
         populate: {
-          path: "uni_ref",
-          model: "University",
+          path: 'uni_ref',
+          model: 'University',
         },
       })
       .populate({
-        path: "entities",
+        path: 'entities',
         populate: {
-          path: "entity_ref",
-          model: "Entity",
+          path: 'entity_ref',
+          model: 'Entity',
         },
       })
-      .populate("experience_field");
-    console.log({ existingUser });
+      .populate('experience_field');
+    console.log({existingUser});
   } catch (dev_err) {
     console.log(`dev_err`, dev_err);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Loggin in failed, please try again later.",
-      });
+    res.status(500).json({
+      success: false,
+      message: 'Loggin in failed, please try again later.',
+    });
   }
 
   if (!existingUser) {
     return res
       .status(442)
-      .json({ success: false, message: "Failed to find user" });
+      .json({success: false, message: 'Failed to find user'});
   } else {
-    res.status(200).json({ user: existingUser, message: "success" });
+    res.status(200).json({user: existingUser, message: 'success'});
+  }
+};
+
+const fetch_user_by_id_2 = async (req, res, next) => {
+  const {id} = req.query;
+  console.log('...............', {id});
+  let existingUser;
+  try {
+    existingUser = await Users.findById(id)
+      .populate({
+        path: 'universities',
+        populate: {
+          path: 'uni_ref',
+          model: 'University',
+        },
+      })
+      .populate({
+        path: 'entities',
+        populate: {
+          path: 'entity_ref',
+          model: 'Entity',
+        },
+      })
+      .populate('experience_field');
+  } catch (dev_err) {
+    console.log(`dev_err`, dev_err);
+    res.status(500).json({
+      success: false,
+      message: 'Logging in failed, please try again later.',
+    });
+  }
+
+  if (!existingUser) {
+    return res
+      .status(442)
+      .json({success: false, message: 'Failed to find user'});
+  } else {
+    res.status(200).json({user: existingUser, message: 'success'});
+  }
+};
+
+const fetch_user_by_zc_email = async (req, res, next) => {
+  let existingUser;
+  try {
+    existingUser = await Users.find
+      .find({zc_email: req.user.zc_email})
+      .populate({
+        path: 'universities',
+        populate: {
+          path: 'uni_ref',
+          model: 'University',
+        },
+      })
+      .populate({
+        path: 'entities',
+        populate: {
+          path: 'entity_ref',
+          model: 'Entity',
+        },
+      })
+      .populate('experience_field');
+  } catch (dev_err) {
+    console.log(`dev_err`, dev_err);
+    res.status(500).json({
+      success: false,
+      message: 'Logging in failed, please try again later.',
+    });
+  }
+
+  if (!existingUser) {
+    return res
+      .status(442)
+      .json({success: false, message: 'Failed to find user'});
+  } else {
+    res.status(200).json({user: existingUser, message: 'success'});
   }
 };
 
@@ -163,19 +226,17 @@ const update_user = async (req, res) => {
     console.log(`user_search_result`, user_search_result);
   } catch (dev_err) {
     console.log(`dev_err`, dev_err);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Loggin in failed, please try again later.",
-      });
+    res.status(500).json({
+      success: false,
+      message: 'Loggin in failed, please try again later.',
+    });
   }
   console.log(`user_search_result`, user_search_result);
 
   if (!user_search_result) {
     res
       .status(403)
-      .json({ success: false, message: "this zc_email is not regitered" });
+      .json({success: false, message: 'this zc_email is not regitered'});
   } else {
   }
 
@@ -183,20 +244,25 @@ const update_user = async (req, res) => {
     let updated_user = await Users.findByIdAndUpdate(
       verfied_user_with_form_data._id,
       verfied_user_with_form_data,
-      { new: false }
+      {new: false}
     );
     updated_user.save();
     req.user = updated_user;
     // res.status(200).json({ success: true, data: updated_user });
   } catch (dev_err) {
     console.log(`dev_err`, dev_err);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "update in failed, please try again later.",
-      });
+    res.status(500).json({
+      success: false,
+      message: 'update in failed, please try again later.',
+    });
   }
 };
 
-export { login_user, register_user, fetch_user_by_id, update_user };
+export {
+  login_user,
+  register_user,
+  fetch_user_by_id_2,
+  fetch_user_by_id,
+  update_user,
+  fetch_user_by_zc_email,
+};
