@@ -116,15 +116,17 @@ const NavbarComponent = (props) => {
                       </a>
                     </Link>
                   </NavItem>
-                  <NavItem className={styles.nav_item}>
-                    <a
-                      href='https://docs.google.com/forms/d/1aiTZnVV6req4DdgqtBZ_8lKGdAH5bUoNdOU6p0Nbx2I/edit'
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      style={{textDecoration: 'none'}}>
-                      <div className={styles.nav_link}>Issue document</div>
-                    </a>
-                  </NavItem>
+                  {IsLoggedIn && (
+                    <NavItem className={styles.nav_item}>
+                      <a
+                        href='https://docs.google.com/forms/d/1aiTZnVV6req4DdgqtBZ_8lKGdAH5bUoNdOU6p0Nbx2I/edit'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        style={{textDecoration: 'none'}}>
+                        <div className={styles.nav_link}>Issue document</div>
+                      </a>
+                    </NavItem>
+                  )}
                   <div style={{flexGrow: '1'}}></div>
                   {!IsLoggedIn && (
                     <>
