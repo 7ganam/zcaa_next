@@ -31,7 +31,7 @@ function LoginModalComponenet() {
       const response = await fetch(
         //     `
         // ${process.env.NEXT_PUBLIC_BACKEND_URL}
-        `api/test/login`, // TODO: change this to auth back
+        `api/auth/login`,
         {
           method: 'POST',
           headers: {

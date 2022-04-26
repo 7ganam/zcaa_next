@@ -66,7 +66,7 @@ export default function ApplicationComponent(props) {
       let id_token = google_data.tokenObj.id_token;
       const body_data = {form_state, google_data};
       const response = await axios.post(
-        `/api/test/signup`, //TODO: return this back to auth
+        `/api/auth/signup`,
         {
           form_state,
           google_data,
