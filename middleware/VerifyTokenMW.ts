@@ -3,7 +3,7 @@ var _ = require('lodash');
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.OAUTH2ClIENT);
 const jwt = require('jsonwebtoken');
-import type {NextApiResponse, NextApiRequestExtended} from './Type';
+import type {NextApiResponse, NextApiRequestExtended} from '../types/Type';
 
 async function VerifyUserMW(
   req: NextApiRequestExtended,

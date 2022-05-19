@@ -1,5 +1,8 @@
 import {OAuth2Client} from 'google-auth-library';
 import {has} from 'lodash';
+import ErrorResponse from '../utils/errorResponse';
+const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
+import jwt from 'jsonwebtoken';
 
 interface UserData {
   g_userid: string;
@@ -26,17 +29,22 @@ const validateGoogleUser = async (
 
   if (use_google_oauth) {
     // ------------ get user data verified from google if use_google_oauth is true ---------------
-    const ticket = await client.verifyIdToken({
-      idToken: google_data.tokenObj.id_token,
-      audience,
-    });
-
-    if (!ticket) {
-      return {
-        success: false,
-        error_message: "Something went wrong, can't log in.",
-        userData: null,
-      };
+    let ticket;
+    try {
+      ticket = await client.verifyIdToken({
+        idToken: google_data.tokenObj.id_token,
+        audience,
+      });
+      if (!ticket) {
+        return {
+          success: false,
+          error_message: "Something went wrong, can't log in.",
+          userData: null,
+        };
+      }
+    } catch (error) {
+      new ErrorResponse(`failed to validate email`, 500);
+      throw ErrorResponse;
     }
 
     payload = ticket.getPayload();
@@ -103,4 +111,23 @@ const validateGoogleUser = async (
   }
 };
 
-export {validateGoogleUser};
+const createToken = async (user) => {
+  let token;
+  let expiration_time_in_hours = 500; //TODO: make the token expiration in the front end  ... i will leave this huge number as is now
+  let expiration_date = new Date(
+    new Date().getTime() + expiration_time_in_hours * 60 * 60 * 1000
+  );
+  let expirateion_date_string = expiration_date.toISOString();
+  try {
+    token = jwt.sign({user: user}, TOKEN_SECRET_KEY, {
+      expiresIn: expiration_time_in_hours + 'h',
+    });
+    return {expirateion_date_string, token};
+  } catch (dev_err) {
+    console.log('token error', dev_err);
+    new ErrorResponse(`failed to create token`, 500);
+    throw ErrorResponse;
+  }
+};
+
+export {validateGoogleUser, createToken};

@@ -3,7 +3,7 @@ import {fetch_user_by_zc_email} from '../services/user.services';
 import {createToken} from '../services/auth.services';
 import ErrorResponse from '../utils/errorResponse';
 
-const LoginMW = async (
+const Login = async (
   req: NextApiRequestExtended,
   res: NextApiResponse,
   next: Function
@@ -36,4 +36,4 @@ const LoginMW = async (
   }
 };
 
-export default LoginMW;
+export default Login;

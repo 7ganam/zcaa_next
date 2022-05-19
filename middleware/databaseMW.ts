@@ -6,7 +6,7 @@
 //It can be just a function call the baseHandler but this way I will have to make a connection to every request even those that doesn't use the database
 
 import mongoose from 'mongoose';
-import type {NextApiResponse, NextApiRequestExtended} from './Type';
+import type {NextApiResponse, NextApiRequestExtended} from '../types/Type';
 
 const globalAny: any = global; // node.js global object
 

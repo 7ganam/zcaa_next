@@ -4,7 +4,7 @@ const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.OAUTH2ClIENT);
 const jwt = require('jsonwebtoken');
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
-import type {NextApiResponse, NextApiRequestExtended} from './Type';
+import type {NextApiResponse, NextApiRequestExtended} from '../types/Type';
 
 //@Expects: req.user.zc_email
 //@Does   :

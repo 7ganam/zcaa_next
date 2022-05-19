@@ -1,3 +1,6 @@
+import {fetch_user_by_id_2} from '../services/user.services';
+import {fetch_user_by_zc_email} from '../services/user.services';
+
 var _ = require('lodash');
 var ObjectId = require('mongodb').ObjectID;
 
@@ -102,115 +105,36 @@ const register_user = async (req, res) => {
   }
 };
 
-const fetch_user_by_id = async (req, res, user_mongo_id) => {
-  let existingUser;
-  try {
-    existingUser = await Users.findById(user_mongo_id)
-      .populate({
-        path: 'universities',
-        populate: {
-          path: 'uni_ref',
-          model: 'University',
-        },
-      })
-      .populate({
-        path: 'entities',
-        populate: {
-          path: 'entity_ref',
-          model: 'Entity',
-        },
-      })
-      .populate('experience_field');
-    console.log({existingUser});
-  } catch (dev_err) {
-    console.log(`dev_err`, dev_err);
-    res.status(500).json({
-      success: false,
-      message: 'Loggin in failed, please try again later.',
-    });
-  }
-
-  if (!existingUser) {
-    return res
-      .status(442)
-      .json({success: false, message: 'Failed to find user'});
-  } else {
-    res.status(200).json({user: existingUser, message: 'success'});
-  }
-};
-
-const fetch_user_by_id_2 = async (req, res, next) => {
+const getUser = async (req, res, next) => {
   const {id} = req.query;
   console.log('...............', {id});
-  let existingUser;
   try {
-    existingUser = await Users.findById(id)
-      .populate({
-        path: 'universities',
-        populate: {
-          path: 'uni_ref',
-          model: 'University',
-        },
-      })
-      .populate({
-        path: 'entities',
-        populate: {
-          path: 'entity_ref',
-          model: 'Entity',
-        },
-      })
-      .populate('experience_field');
-  } catch (dev_err) {
-    console.log(`dev_err`, dev_err);
-    res.status(500).json({
-      success: false,
-      message: 'Logging in failed, please try again later.',
-    });
-  }
-
-  if (!existingUser) {
-    return res
-      .status(442)
-      .json({success: false, message: 'Failed to find user'});
-  } else {
-    res.status(200).json({user: existingUser, message: 'success'});
+    let existingUser = await fetch_user_by_id_2(id);
+    console.log(existingUser);
+    if (!existingUser) {
+      return res
+        .status(442)
+        .json({success: false, message: 'Failed to find user'});
+    } else {
+      res.status(200).json({user: existingUser, message: 'success'});
+    }
+  } catch (error) {
+    next(error);
   }
 };
 
-const fetch_user_by_zc_email = async (req, res, next) => {
-  let existingUser;
+const getUserByEmail = async (req, res, next) => {
   try {
-    existingUser = await Users.find
-      .find({zc_email: req.user.zc_email})
-      .populate({
-        path: 'universities',
-        populate: {
-          path: 'uni_ref',
-          model: 'University',
-        },
-      })
-      .populate({
-        path: 'entities',
-        populate: {
-          path: 'entity_ref',
-          model: 'Entity',
-        },
-      })
-      .populate('experience_field');
+    let existingUser = fetch_user_by_zc_email(req.user.zc_email);
+    if (!existingUser) {
+      return res
+        .status(442)
+        .json({success: false, message: 'Failed to find user'});
+    } else {
+      res.status(200).json({user: existingUser, message: 'success'});
+    }
   } catch (dev_err) {
-    console.log(`dev_err`, dev_err);
-    res.status(500).json({
-      success: false,
-      message: 'Logging in failed, please try again later.',
-    });
-  }
-
-  if (!existingUser) {
-    return res
-      .status(442)
-      .json({success: false, message: 'Failed to find user'});
-  } else {
-    res.status(200).json({user: existingUser, message: 'success'});
+    next(error);
   }
 };
 
@@ -258,11 +182,4 @@ const update_user = async (req, res) => {
   }
 };
 
-export {
-  login_user,
-  register_user,
-  fetch_user_by_id_2,
-  fetch_user_by_id,
-  update_user,
-  fetch_user_by_zc_email,
-};
+export {login_user, register_user, getUser, update_user, getUserByEmail};

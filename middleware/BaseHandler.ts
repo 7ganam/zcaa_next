@@ -1,10 +1,11 @@
 import nextConnect from 'next-connect';
-import type {NextApiResponse, NextApiRequestExtended} from './Type';
-import {initializeRequest} from './Type';
+import type {NextApiResponse, NextApiRequestExtended} from '../types/Type';
+import {initializeRequest} from '../types/Type';
 
 export default function getBaseHandler() {
   return nextConnect<NextApiRequestExtended, NextApiResponse>({
     onError(error, req, res) {
+      console.log('error', JSON.stringify(error));
       res
         .status(501)
         .json({error: `Sorry something Happened! ${error.message}`});

@@ -92,17 +92,21 @@ export default function ApplicationComponent(props) {
       if (response.data.message === 'already_applied_before') {
         setFetch_success(true);
         alert('you already signed up before, your data was not updated');
-        login(
-          response.data.user,
-          response.data.token,
-          response.data.expirateion_date_string,
-          true
-        );
+        // login(
+        //   response.data.user,
+        //   response.data.token,
+        //   response.data.expirateion_date_string,
+        //   true
+        // );
       }
     } catch (error) {
+      if (error.response.data.message === 'already_applied_before') {
+        setFetch_success(true);
+        alert('you already signed up before, your data was not updated');
+      }
       setSending_data(false);
       // setError_message(error.message)
-      console.log(error);
+      console.log({error});
     }
   };
 
