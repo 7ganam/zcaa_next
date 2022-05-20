@@ -67,4 +67,15 @@ const createUser = async (user) => {
   }
 };
 
-export {fetch_user_by_id, fetch_user_by_zc_email, createUser};
+const getAllUsers = async () => {
+  try {
+    const courses = await Users.find();
+    return courses;
+  } catch (error) {
+    console.log('getAllUsers error', error);
+    new ErrorResponse(`failed to fetch users`, 500);
+    throw ErrorResponse;
+  }
+};
+
+export {fetch_user_by_id, fetch_user_by_zc_email, createUser, getAllUsers};

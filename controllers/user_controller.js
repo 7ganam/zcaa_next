@@ -1,15 +1,11 @@
-import {fetch_user_by_id} from '../services/user.services';
-import {fetch_user_by_zc_email} from '../services/user.services';
-
-var _ = require('lodash');
-var ObjectId = require('mongodb').ObjectID;
-
-const {dbConnect} = require('../utils/dbConnect');
+import {
+  fetch_user_by_id,
+  getAllUsers,
+  fetch_user_by_zc_email,
+} from '../services/user.services';
 const {Users} = require('../models/users');
-
 var _ = require('lodash');
 const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client(process.env.OAUTH2ClIENT);
 
 const jwt = require('jsonwebtoken');
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
@@ -123,6 +119,16 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const getUsers = async (req, res, next) => {
+  try {
+    let users = await getAllUsers();
+    console.log(users);
+
+    res.status(200).json({success: true, count: users.length, data: users});
+  } catch (error) {
+    next(error);
+  }
+};
 const getUserByEmail = async (req, res, next) => {
   try {
     let existingUser = fetch_user_by_zc_email(req.user.zc_email);
@@ -182,4 +188,11 @@ const update_user = async (req, res) => {
   }
 };
 
-export {login_user, register_user, getUser, update_user, getUserByEmail};
+export {
+  login_user,
+  register_user,
+  getUser,
+  update_user,
+  getUserByEmail,
+  getUsers,
+};

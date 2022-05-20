@@ -34,7 +34,7 @@ export default function ChangeProfileComponent(props) {
       let form_state = form_data;
 
       const response = await axios.put(
-        `/api/user/${loggedInUser._id}`,
+        `/api/users/${loggedInUser._id}`,
         {
           form_state,
           token: Token,
@@ -160,7 +160,7 @@ export default function ChangeProfileComponent(props) {
   const fetchUser = useCallback(
     async (id) => {
       try {
-        const responseData = await sendUserRequest(`/api/user/${id}`);
+        const responseData = await sendUserRequest(`/api/users/${id}`);
         let Fetched_user_data = responseData.user;
         console.log('Fetched_user_data', Fetched_user_data);
         let fixed_Fetched_user_data =
