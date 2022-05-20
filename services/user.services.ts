@@ -3,7 +3,7 @@ var _ = require('lodash');
 const {Users} = require('../models/users');
 var _ = require('lodash');
 
-const fetch_user_by_id_2 = async (id: string) => {
+const fetch_user_by_id = async (id: string) => {
   let existingUser;
   try {
     existingUser = await Users.findById(id)
@@ -67,4 +67,4 @@ const createUser = async (user) => {
   }
 };
 
-export {fetch_user_by_id_2, fetch_user_by_zc_email, createUser};
+export {fetch_user_by_id, fetch_user_by_zc_email, createUser};

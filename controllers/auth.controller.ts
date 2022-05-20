@@ -17,12 +17,13 @@ const Login = async (
       });
     }
 
+    console.log('existingUser', existingUser);
     // GENERATE TOKEN----------------------
     let {token, expirateion_date_string} = await createToken(existingUser);
 
     // SEND TOKEN AND USER RESPONSE----------------------
     res.status(201).json({
-      message: req?.logInMessage ? req?.logInMessage : 'success',
+      message: 'success',
       expirateion_date_string: expirateion_date_string,
       user: existingUser,
       token: token,

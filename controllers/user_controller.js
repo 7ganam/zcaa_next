@@ -1,4 +1,4 @@
-import {fetch_user_by_id_2} from '../services/user.services';
+import {fetch_user_by_id} from '../services/user.services';
 import {fetch_user_by_zc_email} from '../services/user.services';
 
 var _ = require('lodash');
@@ -109,7 +109,7 @@ const getUser = async (req, res, next) => {
   const {id} = req.query;
   console.log('...............', {id});
   try {
-    let existingUser = await fetch_user_by_id_2(id);
+    let existingUser = await fetch_user_by_id(id);
     console.log(existingUser);
     if (!existingUser) {
       return res

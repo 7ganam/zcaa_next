@@ -5,7 +5,7 @@ import {initializeRequest} from '../types/Type';
 export default function getBaseHandler() {
   return nextConnect<NextApiRequestExtended, NextApiResponse>({
     onError(error, req, res) {
-      console.log('error', JSON.stringify(error));
+      console.log('error', JSON.stringify(error), error);
       res
         .status(501)
         .json({error: `Sorry something Happened! ${error.message}`});
