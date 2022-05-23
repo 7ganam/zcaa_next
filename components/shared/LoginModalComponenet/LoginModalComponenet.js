@@ -1,16 +1,16 @@
-import React, {useState} from "react";
-import {Modal, ModalBody} from "reactstrap";
-import {Container} from "reactstrap";
+import React, { useState } from "react";
+import { Modal, ModalBody } from "reactstrap";
+import { Container } from "reactstrap";
 // import zc_logo from './zc_logo.png'
-import GooglebtnComponent from "./GooglebtnComponent/GooglebtnComponent";
+import GooglebtnComponent from "components/shared/GooglebtnComponent/GooglebtnComponent";
 
-import {useContext} from "react";
-import {LoginContext} from "../../../contexts/loginContext";
-import {Alert} from "reactstrap";
+import { useContext } from "react";
+import { LoginContext } from "../../../contexts/loginContext";
+import { Alert } from "reactstrap";
 import ReactLoading from "react-loading";
 
 function LoginModalComponenet() {
-  const {login, IsLoggedIn, Token, ToggleLoginModal, IsLogInModalShown} =
+  const { login, IsLoggedIn, Token, ToggleLoginModal, IsLogInModalShown } =
     useContext(LoginContext);
 
   const [modal, setModal] = useState(false);
@@ -26,7 +26,7 @@ function LoginModalComponenet() {
       // toggle();
       setSending_data(true);
       let id_token = google_data.tokenObj.id_token;
-      const body_data = {google_data};
+      const body_data = { google_data };
       console.log("google_data____", google_data);
       const response = await fetch(
         //     `
@@ -51,7 +51,7 @@ function LoginModalComponenet() {
 
       if (response_json_content.message === "success") {
         setFetch_success(true);
-        console.log({response_json_content});
+        console.log({ response_json_content });
         login(response_json_content.token);
         toggle();
       }
@@ -76,9 +76,10 @@ function LoginModalComponenet() {
             backgroundColor: "transparent",
           }}
           isOpen={IsLogInModalShown}
-          toggle={toggle}>
+          toggle={toggle}
+        >
           <div style={{}}></div>
-          <ModalBody style={{padding: "0px"}}>
+          <ModalBody style={{ padding: "0px" }}>
             <div style={{}}>
               {
                 <Container
@@ -88,7 +89,8 @@ function LoginModalComponenet() {
                     justifyContent: "center",
                     alignItems: "center",
                     padding: "0px",
-                  }}>
+                  }}
+                >
                   <div id="login_card" style={{}}>
                     <img
                       style={{
@@ -105,8 +107,8 @@ function LoginModalComponenet() {
                       <span className="font2">zewailcity email </span>
                       <span className="font1">to Login </span>
                     </div>
-                    <div style={{marginTop: "10px"}}>
-                      <div style={{position: "relative"}}>
+                    <div style={{ marginTop: "10px" }}>
+                      <div style={{ position: "relative" }}>
                         <GooglebtnComponent onclick={submit_applicant} />
                         <div
                           style={{
@@ -114,7 +116,8 @@ function LoginModalComponenet() {
                             top: "15px",
                             left: "45%",
                             zIndex: "0",
-                          }}>
+                          }}
+                        >
                           <ReactLoading
                             type={"spin"}
                             color={"#00D2F9"}
@@ -127,7 +130,8 @@ function LoginModalComponenet() {
                         <Alert
                           color="danger"
                           className="mt-3"
-                          style={{width: "100%"}}>
+                          style={{ width: "100%" }}
+                        >
                           {Error_message}
                         </Alert>
                       ) : null}

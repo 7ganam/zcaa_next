@@ -16,7 +16,6 @@ import ReactLoading from "react-loading";
 import DateView from "react-datepicker";
 import CreatableSelect from "react-select/creatable";
 import axios from "axios";
-import SubmitModalComponent from "./SubmitModalComponent/SubmitModalComponent";
 import { date } from "yup/lib/locale";
 import styles from "./FormComponent.module.css";
 

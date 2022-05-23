@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
-// import "./GooglebtnComponent.css"
-// import zc_logo from '../../zc_logo.png'
+// import zc_logo from '../zc_logo.png'
 // import google_logo from './google_logo.png'
 import { Alert } from "reactstrap";
 
@@ -25,7 +24,7 @@ class GooglebtnComponent extends Component {
   }
 
   login(response) {
-    console.log(response);
+    console.log("google response", response);
     if (
       process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE" &&
       !response.profileObj.email.endsWith(
@@ -77,6 +76,8 @@ class GooglebtnComponent extends Component {
             justifyContent: "center",
             display: "flex",
             flexDirection: "column",
+            zIndex: "2",
+            position: "relative",
           }}
         >
           {
@@ -95,7 +96,7 @@ class GooglebtnComponent extends Component {
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <span style={{ marginLeft: "10px" }}>
-                      verify with google
+                      verfiy with google
                     </span>
                     <div style={{ flexGrow: "1" }}></div>
                     <img
@@ -106,7 +107,7 @@ class GooglebtnComponent extends Component {
                         justifySelf: "end",
                         marginRight: "7px",
                       }}
-                      src={"/application/google_logo.png"}
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/google_logo.png`}
                       alt="logo"
                     />
                     <img
