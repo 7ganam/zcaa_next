@@ -12,9 +12,9 @@ import {
 // import { Link } from "react-router-dom";
 import Link from "next/link";
 import styles from "./NavbarComponent.module.css";
-const NavbarComponent = (props) => {
+const NavbarComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { login, IsLoggedIn, Token, ToggleLoginModal, logout } =
+  const { IsLoggedIn, User, Token, ToggleLoginModal, logout } =
     useContext(LoginContext);
 
   // let Token = false;
@@ -172,14 +172,13 @@ const NavbarComponent = (props) => {
                                                         src={Token.g_picture ? Token.g_picture : '/user.png'}
                                                         alt="logo" /> */}
                           <img
+                            referrerpolicy="no-referrer"
                             style={{
                               width: "40px",
                               height: "40",
                               borderRadius: "100%",
                             }}
-                            src={
-                              Token.g_picture ? Token.g_picture : "/user.png"
-                            }
+                            src={User.g_picture ? User.g_picture : "/user.png"}
                             alt="logo"
                           />
                         </div>

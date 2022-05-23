@@ -22,6 +22,8 @@ const validateGoogleUser = async (
   error_message: string;
   userData: UserData | null;
 }> => {
+  console.log('333333333333');
+
   let payload = {} as any;
   let userid = '';
   let g_picture = '';
@@ -45,6 +47,7 @@ const validateGoogleUser = async (
       new ErrorResponse(`failed to validate email`, 500);
       throw ErrorResponse;
     }
+    console.log('444444444444');
 
     payload = ticket.getPayload();
     userid = payload['sub'];

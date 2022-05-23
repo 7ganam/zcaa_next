@@ -44,13 +44,6 @@ class GooglebtnComponent extends Component {
     ) {
       this.props.onclick(response);
       this.setState({ show_alert: false });
-      // var xhr = new XMLHttpRequest();
-      // xhr.open('POST', 'http://localhost:5000');
-      // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      // xhr.onload = function () {
-      //     console.log('Signed in as: ' + xhr.responseText);
-      // };
-      // xhr.send('idtoken=' + response.tokenObj.id_token)
       this.setState((state) => ({
         isLoggedIn: true,
         accessToken: response.accessToken,

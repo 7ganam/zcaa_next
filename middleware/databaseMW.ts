@@ -8,6 +8,13 @@
 import mongoose from 'mongoose';
 import type {NextApiResponse, NextApiRequestExtended} from '../types/Type';
 
+//register all the models...this is usefull for any "populate" statement down the road it will expect the poplated schemas are already loaded
+const {ExperiencField} = require('../models/experienceField');
+const {University} = require('../models/university');
+const {Users} = require('../models/users');
+const {Entity} = require('../models/entity');
+const {NewsPosts} = require('../models/newsPosts');
+
 const globalAny: any = global; // node.js global object
 
 const MONGODB_URI = process.env.MONGODB_URI;

@@ -54,12 +54,7 @@ export default function ChangeProfileComponent(props) {
       // if success log in the user again
       if (response.data.success) {
         setFetch_success(true);
-        login(
-          response.data.user,
-          response.data.token,
-          response.data.expirateion_date_string,
-          true
-        );
+        login(response.data.token);
         alert('data updated');
       }
     } catch (error) {

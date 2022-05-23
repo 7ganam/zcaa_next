@@ -7,16 +7,16 @@ async function googleAuthMW(
   res: NextApiResponse,
   next: Function
 ) {
-  console.log('req.body.google_data', req.body.google_data);
   try {
+    console.log('11111111111111111111');
+
     const use_google_oauth = true; // for testing purposes we cam set this to false
-    console.log(JSON.stringify(req.headers));
     let {success, error_message, userData} = await validateGoogleUser(
       req.body.google_data,
       use_google_oauth
     );
     if (!success) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: error_message,
       });
@@ -24,6 +24,9 @@ async function googleAuthMW(
     req.user = userData;
     return next();
   } catch (error) {
+    console.log('222222222222222222222');
+
+    console.log('auth error', error);
     next(error);
   }
 }

@@ -131,7 +131,8 @@ const getUsers = async (req, res, next) => {
 };
 const getUserByEmail = async (req, res, next) => {
   try {
-    let existingUser = fetch_user_by_zc_email(req.user.zc_email);
+    let existingUser = await fetch_user_by_zc_email(req.user.zc_email);
+    console.log({existingUser});
     if (!existingUser) {
       return res
         .status(442)

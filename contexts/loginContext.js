@@ -1,49 +1,63 @@
+//login is just setting the token in the local storage followed by a request to /api/me to fetch user data-
+//every time the application starts it fetches the user data from the api using the stored token
+//the token stores only the user id which is used to fetch the user data from api/me
+//logging out is simply removing the stored token and the global user object
+
 import React, { useState } from "react";
 import { createContext } from "react";
 export const LoginContext = createContext();
+import axios from "axios";
 
 export const LoginContextProvider = ({ children }) => {
   const [IsLogInModalShown, setIsLogInModalShown] = useState(false);
-
   const [IsLoggedIn, setIsLoggedIn] = useState(false);
-  const [Token, setToken] = useState();
   const [User, setUser] = useState();
-  const [Expirateion_date_string, setExpirateion_date_string] = useState();
 
   const ToggleLoginModal = () => {
     setIsLogInModalShown(!IsLogInModalShown);
   };
 
-  const login = (
-    token,
-    input_user,
-    expirateion_date_string,
-    setstorage = false
-  ) => {
-    setToken(token);
-    setUser(input_user);
-    setExpirateion_date_string(expirateion_date_string);
-
-    if (setstorage) {
-      localStorage.removeItem("userData"); // remove old if exist -> just to make sure the data is up to date -> this might be used to keep the data updated in case user data changed
+  const login = async (zcaaToken) => {
+    try {
+      localStorage.removeItem("userData");
       localStorage.setItem(
         "userData",
         JSON.stringify({
-          user: input_user,
-          token: token,
-          expirateion_date_string: expirateion_date_string,
-          //expiration: tokenExpirationDate.toISOString()
+          token: zcaaToken,
         })
       );
+
+      const user = await fetchUserData(zcaaToken);
+
+      if (!user) {
+        throw new Error("failed to fetch user");
+      }
+      setUser(user);
+      setIsLoggedIn(true);
+    } catch (error) {
+      alert("failed to login");
+      logout();
     }
-    setIsLoggedIn(true);
+  };
+
+  const fetchUserData = async (zcaaToken) => {
+    const response = await axios.get(`/api/users/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${zcaaToken}`,
+      },
+    });
+    let user = response?.data?.user || null;
+    // eslint-disable-next-line no-console
+    console.log(`logged out`);
+    return user;
   };
 
   const logout = () => {
     setIsLoggedIn(false);
-    setToken(null);
     localStorage.removeItem("userData");
-    console.log(`logout`);
+    // eslint-disable-next-line no-console
+    console.log(`logged out`);
   };
 
   return (
@@ -52,7 +66,6 @@ export const LoginContextProvider = ({ children }) => {
         IsLoggedIn,
         login,
         logout,
-        Token,
         ToggleLoginModal,
         IsLogInModalShown,
         User,

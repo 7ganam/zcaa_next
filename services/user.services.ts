@@ -1,6 +1,7 @@
 import ErrorResponse from '../utils/errorResponse';
 var _ = require('lodash');
 const {Users} = require('../models/users');
+
 var _ = require('lodash');
 
 const fetch_user_by_id = async (id: string) => {
@@ -48,9 +49,9 @@ const fetch_user_by_zc_email = async (zc_email) => {
         },
       })
       .populate('experience_field');
-    return existingUser;
+    return existingUser[0];
   } catch (error) {
-    console.log('zc error', error);
+    console.log('zc email error', error);
     new ErrorResponse(`failed to fetch user by zc-email`, 500);
     throw ErrorResponse;
   }

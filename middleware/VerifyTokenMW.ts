@@ -5,7 +5,7 @@ const client = new OAuth2Client(process.env.OAUTH2ClIENT);
 const jwt = require('jsonwebtoken');
 import type {NextApiResponse, NextApiRequestExtended} from '../types/Type';
 
-async function VerifyUserMW(
+async function VerifyTokenMW(
   req: NextApiRequestExtended,
   res: NextApiResponse,
   next: Function
@@ -27,4 +27,29 @@ async function VerifyUserMW(
   }
 }
 
-export default VerifyUserMW;
+async function VerifyTokenMW2(
+  req: NextApiRequestExtended,
+  res: NextApiResponse,
+  next: Function
+) {
+  let token = req.headers.authorization.substring(
+    7,
+    req.headers.authorization.length
+  );
+  if (!token) {
+    return res.status(403).send('A token is required for authentication');
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
+    req.verified_user = decoded.user;
+    req.user = decoded.user;
+    console.log('decoded', decoded);
+
+    next();
+    // return res.status(200).json({ user: decoded.user });
+  } catch (err) {
+    return res.status(401).json({success: false});
+  }
+}
+
+export {VerifyTokenMW, VerifyTokenMW2};

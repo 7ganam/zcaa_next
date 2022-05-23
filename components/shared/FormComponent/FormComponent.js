@@ -143,12 +143,7 @@ const FormComponent = (props) => {
         setFetch_success(true);
         console.log(response.data);
 
-        login(
-          response.data.user,
-          response.data.token,
-          response.data.expirateion_date_string,
-          true
-        );
+        login(response.data.token);
       }
       if (response.data.message === 'already_applied_before') {
         setFetch_success(true);
