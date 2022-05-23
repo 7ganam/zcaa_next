@@ -1,6 +1,4 @@
-import { useContext } from "react";
-import { LoginContext } from "../../../contexts/loginContext";
-import React, { useState, useCallback, useRef } from "react";
+import React, { useRef } from "react";
 import { Formik, Field, Form, FieldArray, ErrorMessage } from "formik";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "reactstrap";
@@ -10,54 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
-import * as Yup from "yup";
 import TextError from "./TextError";
-import ReactLoading from "react-loading";
 import DateView from "react-datepicker";
 import CreatableSelect from "react-select/creatable";
-import axios from "axios";
-import { date } from "yup/lib/locale";
 import styles from "./FormComponent.module.css";
-
-// const SignupSchema = Yup.object().shape({})
-const SignupSchema = Yup.object().shape({
-  first_name: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  last_name: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  email: Yup.string().email("Invalid email"),
-  // exp_field: Yup.string().required('Required'),
-  phone: Yup.number("must be a number")
-    .positive("positive numbers only ")
-    .integer("integers only"),
-  birth_date: Yup.string().required("Required"),
-  // address: Yup.string().required('Required'),
-  zc_id: Yup.number("must be a number")
-    .min(201300000, "201300000 min")
-    .required("Required"),
-  grad_year: Yup.number("must be a number")
-    .min(2017, "2017 min")
-    .required("Required"),
-  major: Yup.string().required("Required"),
-  residency: Yup.object().shape({
-    country: Yup.string().min(2, "error").required("Required"),
-    region: Yup.string().min(2, "error"),
-    // Rest of your amenities object properties
-  }),
-  exp_field: Yup.array()
-    .min(1, "Pick at least 1 field")
-    .max(3, "Pick  max 3 fields")
-    .of(
-      Yup.object().shape({
-        label: Yup.string().required(),
-        value: Yup.string().required(),
-      })
-    ),
-});
 
 const FormComponent = (props) => {
   // HELPER FUNCTION: remap static props provided by next.js to a form suitable for react select library
@@ -66,24 +20,24 @@ const FormComponent = (props) => {
     unies,
     entities
   ) => {
-    let maped_exp_fields = exp_fields.map((exp_field) => {
+    let mapped_exp_fields = exp_fields.map((exp_field) => {
       exp_field.value = exp_field._id;
       return exp_field;
     });
-    let maped_unies = unies.map((uni) => {
+    let mapped_unies = unies.map((uni) => {
       uni.value = uni._id;
       uni.label = uni.name;
       return uni;
     });
-    let maped_entities = entities.map((entity) => {
+    let mapped_entities = entities.map((entity) => {
       entity.value = entity._id;
       entity.label = entity.name;
       return entity;
     });
 
-    return [maped_exp_fields, maped_unies, maped_entities];
+    return [mapped_exp_fields, mapped_unies, mapped_entities];
   };
-  let [maped_exp_fields, maped_unies, maped_entities] =
+  let [mapped_exp_fields, mapped_unies, mapped_entities] =
     map_selections_to_react_select_object(
       props.exp_fields,
       props.unies,
@@ -172,7 +126,7 @@ const FormComponent = (props) => {
                               className="form_text"
                               style={{ letterSpacing: "0.2em" }}
                             >
-                              prefered email for communication
+                              preferred email for communication
                               <span
                                 style={{
                                   color: "gray",
@@ -281,14 +235,14 @@ const FormComponent = (props) => {
                                     style={{ width: "100%" }}
                                     className="in_field form-control"
                                     value={value}
-                                    onClick={(val) => {
-                                      console.log(formik_object);
+                                    onClick={() => {
+                                      // console.log(formik_object);
                                     }}
-                                    onBlur={(val) =>
+                                    onBlur={() =>
                                       setFieldTouched(`residency.country`)
                                     }
                                     onChange={(val) => {
-                                      console.log(formik_object);
+                                      // console.log(formik_object);
                                       setFieldValue(`residency.country`, val);
                                     }}
                                   />
@@ -521,7 +475,7 @@ const FormComponent = (props) => {
                         <Col lg="8">
                           <div className="form-group" style={{ width: "100%" }}>
                             <label
-                              onClick={() => console.log(`clicked`)}
+                              // onClick={() => console.log(`clicked`)}
                               htmlFor="exp_field"
                               className="form_text"
                             >
@@ -555,13 +509,13 @@ const FormComponent = (props) => {
                                     {...field}
                                     isClearable
                                     isMulti
-                                    onChange={(newValue, actionMeta) => {
+                                    onChange={(newValue) => {
                                       setFieldValue(`exp_field`, newValue);
                                     }}
                                     options={
                                       (value && value.length) === 3
                                         ? []
-                                        : maped_exp_fields
+                                        : mapped_exp_fields
                                     }
                                     noOptionsMessage={() => {
                                       return (value && value.length) === 3
@@ -631,7 +585,7 @@ const FormComponent = (props) => {
                                               style={{ width: "100%" }}
                                             >
                                               <CollapsingUniCardComponent
-                                                unies={maped_unies}
+                                                unies={mapped_unies}
                                                 index={index}
                                                 remove={remove}
                                               />
@@ -679,7 +633,7 @@ const FormComponent = (props) => {
                                           <div
                                             onClick={() => push("")}
                                             type="button"
-                                            class="  plus_button "
+                                            className=" plus_button "
                                           >
                                             <FontAwesomeIcon icon={faPlus} />
                                           </div>
@@ -711,7 +665,7 @@ const FormComponent = (props) => {
                               </div>
                             </div>
                             <div className="form_text4 ">
-                              Which entites did you visit during your career?
+                              Which entities did you visit during your career?
                             </div>
                             <div className="d-flex ">
                               <div
@@ -728,13 +682,16 @@ const FormComponent = (props) => {
                                     return (
                                       <div>
                                         {entities.map((phNumber, index) => (
-                                          <div className="d-flex mt-4">
+                                          <div
+                                            className="d-flex mt-4"
+                                            key={index}
+                                          >
                                             <div
                                               key={index}
                                               style={{ width: "100%" }}
                                             >
                                               <CollapsingEntityCardComponent
-                                                entities={maped_entities}
+                                                entities={mapped_entities}
                                                 index={index}
                                                 remove={remove}
                                                 formik_object={formik_object}
@@ -767,7 +724,7 @@ const FormComponent = (props) => {
                                           <div
                                             onClick={() => push({})}
                                             type="button"
-                                            class="  plus_button "
+                                            className="  plus_button "
                                           >
                                             <FontAwesomeIcon icon={faPlus} />
                                           </div>
