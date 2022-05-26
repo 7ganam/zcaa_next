@@ -2,12 +2,6 @@ import React from "react";
 import NewsCardComponent from "./NewsCardComponent/NewsCardComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Col, Row } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "next/link";
-import { Card, CardHeader, CardBody, CardTitle } from "reactstrap";
-
-import styles from "./News_section.module.css";
 
 const render_news_cards = (news_posts) => {
   let first_three_posts = [];
@@ -17,19 +11,19 @@ const render_news_cards = (news_posts) => {
     first_three_posts = news_posts;
   }
 
-  let cards_view = first_three_posts.map((post, index) => {
+  let cards_view = first_three_posts.map((post) => {
     if (!post.EditorData) {
       return;
     }
-    let thumbnailimage = process.env.NEXT_PUBLIC_BACKEND_URL + "/logo.png";
+    let thumbnailImage = process.env.NEXT_PUBLIC_BACKEND_URL + "/logo.png";
     if (post.EditorData && post.EditorData.blocks) {
       const blocks = post.EditorData.blocks;
       for (const index in blocks) {
         if (blocks[index].type === "imageTool" && blocks[index].data.file) {
-          thumbnailimage = blocks[index].data.file.url;
+          thumbnailImage = blocks[index].data.file.url;
           break;
         } else if (blocks[index].type === "image") {
-          thumbnailimage = blocks[index].data.url;
+          thumbnailImage = blocks[index].data.url;
           break;
         }
       }
@@ -42,7 +36,7 @@ const render_news_cards = (news_posts) => {
     return (
       <Col key={post._id} xs="9" md="4" className="mt-5">
         <NewsCardComponent
-          img={thumbnailimage}
+          img={thumbnailImage}
           title={Title}
           body_text={thumbnail_text}
           Date={Date}

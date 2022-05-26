@@ -54,13 +54,13 @@ function NewsCardComponent(props) {
 
   const blocks = props.post.EditorData.blocks;
 
-  let thumbnailimage = process.env.NEXT_PUBLIC_BACKEND_URL + "/logo.png";
+  let thumbnailImage = process.env.NEXT_PUBLIC_BACKEND_URL + "/logo.png";
   for (const index in blocks) {
     if (blocks[index].type === "imageTool" && blocks[index].data.file) {
-      thumbnailimage = blocks[index].data.file.url;
+      thumbnailImage = blocks[index].data.file.url;
       break;
     } else if (blocks[index].type === "image") {
-      thumbnailimage = blocks[index].data.url;
+      thumbnailImage = blocks[index].data.url;
       break;
     }
   }
@@ -165,7 +165,7 @@ function NewsCardComponent(props) {
           </div>
           <div id="card_image">
             <img
-              src={thumbnailimage}
+              src={thumbnailImage}
               alt="card_image"
               style={{ height: "100%", width: "100%", objectFit: "cover" }}
             />

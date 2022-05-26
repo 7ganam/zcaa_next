@@ -1,6 +1,3 @@
-var _ = require("lodash");
-import { OAuth2Client } from "google-auth-library";
-
 import { register_experience_fields } from "../services/experienceField.services";
 import { register_unies } from "../services/university.services";
 import { register_entities } from "../services/entity.services";

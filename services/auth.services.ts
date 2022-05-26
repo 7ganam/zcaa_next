@@ -151,6 +151,7 @@ const validateGoogleUser2 = async (
       };
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log("error", error);
     new ErrorResponse(`failed to validate email`, 500);
     throw ErrorResponse;

@@ -1,41 +1,23 @@
 import React from "react";
 import Head from "next/head";
-import dynamic from "next/dynamic";
 import { AuthContext } from "contexts/AuthContext";
 import { useContext, useEffect } from "react";
 
-const Network_diagramComponent = dynamic(
-  () =>
-    import(
-      "../components/shared/Network_diagramComponent/Network_diagramComponent"
-    ),
-  {
-    ssr: false,
-  }
-);
 function Layout(props) {
   // ---------------| LOGIN LOGIC |--------------------------
-  const { actions, state } = useContext(AuthContext);
-
-  // const _check_if_logged_in = () => {
-  //   const storedData = JSON.parse(localStorage.getItem("userData"));
-
-  //   if (storedData && storedData.token) {
-  //     loginByZcaaToken(storedData.token);
-  //   }
-  // };
+  const { actions } = useContext(AuthContext);
 
   const check_if_logged_in = () => {
     const storedToken = localStorage.getItem("zcaaToken");
 
     if (storedToken) {
-      console.log("storedToken", storedToken);
       actions.fetchUser(storedToken);
     }
   };
 
   useEffect(() => {
     check_if_logged_in();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

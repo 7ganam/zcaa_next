@@ -213,112 +213,6 @@ export const AuthContextProvider = ({ children }) => {
     setIsLogInModalShown(false);
   };
 
-  const loginByGoogleAccessToken = async (google_data) => {
-    try {
-      const body_data = { google_data };
-      const response = await fetch(`api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body_data),
-      });
-      if (!response.ok) {
-        throw new Error(response_json_content.message || "can't login");
-      }
-      const response_json_content = await response.json();
-      return response_json_content;
-    } catch (err) {
-      alert("failed to login");
-      logout();
-      throw err;
-    }
-  };
-
-  const loginByZcaaToken = async (zcaaToken) => {
-    try {
-      localStorage.removeItem("userData");
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({
-          token: zcaaToken,
-        })
-      );
-
-      const user = await fetchUserData(zcaaToken);
-
-      if (!user) {
-        throw new Error("failed to fetch user");
-      }
-      setUser(user);
-      // setIsLoggedIn(true);
-    } catch (error) {
-      alert("failed to login");
-      logout();
-    }
-  };
-
-  const login = async (zcaaToken) => {
-    try {
-      localStorage.removeItem("userData");
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({
-          token: zcaaToken,
-        })
-      );
-
-      const user = await fetchUserData(zcaaToken);
-
-      if (!user) {
-        throw new Error("failed to fetch user");
-      }
-      setUser(user);
-      // setIsLoggedIn(true);
-    } catch (error) {
-      alert("failed to login");
-      logout();
-    }
-  };
-
-  const signUp = async (formData, googleData) => {
-    let access_token = googleData.tokenObj.access_token;
-
-    const response = await axios.post(
-      `/api/auth/signup2`,
-      {
-        formData,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `bearer ${access_token}`,
-        },
-      }
-    );
-    return response;
-  };
-
-  const fetchUserData = async (zcaaToken) => {
-    const response = await axios.get(`/api/users/me`, {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${zcaaToken}`,
-      },
-    });
-    let user = response?.data?.user || null;
-    // eslint-disable-next-line no-console
-    console.log(`logged out`);
-    return user;
-  };
-
-  const logout = () => {
-    // setIsLoggedIn(false);
-    localStorage.removeItem("userData");
-    // eslint-disable-next-line no-console
-    console.log(`logged out`);
-  };
-
   let IsLoggedIn = !!state.user;
   let User = state.user;
 
@@ -328,11 +222,6 @@ export const AuthContextProvider = ({ children }) => {
         state,
         actions,
         IsLoggedIn,
-        // signUp,
-        // loginByGoogleAccessToken,
-        // loginByZcaaToken,
-        // login,
-        // logout,
         ToggleLoginModal,
         IsLogInModalShown,
         User,

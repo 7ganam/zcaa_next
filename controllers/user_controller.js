@@ -5,22 +5,21 @@ import {
 } from "../services/user.services";
 const { Users } = require("../models/users");
 var _ = require("lodash");
-const { OAuth2Client } = require("google-auth-library");
 
 const jwt = require("jsonwebtoken");
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
 
 const login_user = async (req, res, login_message = "success") => {
-  // seach database for the same email------------------------
+  // search database for the same email------------------------
   let existingUser;
   try {
     existingUser = await Users.findOne({ zc_email: req.user.zc_email });
-    console.log({ existingUser });
   } catch (dev_err) {
+    // eslint-disable-next-line no-console
     console.log(`dev_err`, dev_err);
     res.status(500).json({
       success: false,
-      message: "Loggin in failed, please try again later.",
+      message: "Logging in failed, please try again later.",
     });
   }
 
@@ -42,6 +41,7 @@ const login_user = async (req, res, login_message = "success") => {
         expiresIn: expiration_time_in_hours + "h",
       });
     } catch (dev_err) {
+      // eslint-disable-next-line no-console
       console.log(`dev_err`, dev_err);
       res.status(500).json({
         success: false,
@@ -122,13 +122,13 @@ const getUser = async (req, res, next) => {
 const getUsers = async (req, res, next) => {
   try {
     let users = await getAllUsers();
-    console.log(users);
 
     res.status(200).json({ success: true, count: users.length, data: users });
   } catch (error) {
     next(error);
   }
 };
+
 const getUserByEmail = async (req, res, next) => {
   try {
     let existingUser = await fetch_user_by_zc_email(req.user.zc_email);
@@ -147,20 +147,19 @@ const getUserByEmail = async (req, res, next) => {
 };
 
 const update_user = async (req, res) => {
-  let verfied_user_with_form_data = req.user;
-  let new_user_data = req.body.formData;
+  let verified_user_with_form_data = req.user;
 
   // -------------------- LOOK DATABASE FOR THE USER ------------------------
   let user_search_result;
   try {
-    // user_search_result = await Users.find({ zc_email: verfied_user_with_form_data.zc_email });
-    user_search_result = await Users.findById(verfied_user_with_form_data._id);
-    console.log(`user_search_result`, user_search_result);
+    // user_search_result = await Users.find({ zc_email: verified_user_with_form_data.zc_email });
+    user_search_result = await Users.findById(verified_user_with_form_data._id);
   } catch (dev_err) {
+    // eslint-disable-next-line no-console
     console.log(`dev_err`, dev_err);
     res.status(500).json({
       success: false,
-      message: "Loggin in failed, please try again later.",
+      message: "Logging in failed, please try again later.",
     });
   }
   console.log(`user_search_result`, user_search_result);
@@ -174,8 +173,8 @@ const update_user = async (req, res) => {
 
   try {
     let updated_user = await Users.findByIdAndUpdate(
-      verfied_user_with_form_data._id,
-      verfied_user_with_form_data,
+      verified_user_with_form_data._id,
+      verified_user_with_form_data,
       { new: false }
     );
     updated_user.save();
