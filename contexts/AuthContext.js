@@ -131,6 +131,10 @@ export const AuthContextProvider = ({ children }) => {
         });
       } catch (error) {
         if (error.response) {
+          if (error.response.data.error === "already_applied_before") {
+            alert("you already signed up before, your data was not updated");
+          }
+
           dispatch({
             type: types.SIGNUP_FAILURE,
             payload: error.response.data.error,

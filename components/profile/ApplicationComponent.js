@@ -45,44 +45,8 @@ export default function ApplicationComponent(props) {
   };
 
   const submit_applicant = async (google_data) => {
-    console.log("google_data", google_data);
     toggle(); // hide the modal
     await actions.signUpUser(FormData, google_data.tokenObj.access_token);
-
-    if (authState.signUpError === "already_applied_before") {
-      alert("you already signed up before, your data was not updated");
-    }
-
-    // try {
-    //   toggle(); // hide the modal
-    //   setSending_data(true); // to show rotating spinner
-
-    //   let formData = FormData;
-
-    //   const signUpResponse = await signUp(formData, google_data);
-
-    //   setSending_data(false);
-    //   setForm_response(signUpResponse.data);
-
-    //   // if success log in the user
-    //   if (signUpResponse.data.message === "success") {
-    //     setFetch_success(true);
-    //     loginByZcaaToken(signUpResponse.data.token);
-    //   }
-    //   // if user already registered before show an alarm
-    //   if (signUpResponse.data.message === "already_applied_before") {
-    //     setFetch_success(true);
-    //     alert("you already signed up before, your data was not updated");
-    //   }
-    // } catch (error) {
-    //   if (error.response.data.message === "already_applied_before") {
-    //     setFetch_success(true);
-    //     alert("you already signed up before, your data was not updated");
-    //   }
-    //   setSending_data(false);
-    //   // eslint-disable-next-line no-console
-    //   console.log({ error });
-    // }
   };
 
   // MAIN VIEW CONDITIONS
