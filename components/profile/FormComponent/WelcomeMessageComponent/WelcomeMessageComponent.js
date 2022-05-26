@@ -1,16 +1,16 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container } from "reactstrap";
 import { useContext } from "react";
 
-import { LoginContext } from "../../../../contexts/loginContext";
+import { AuthContext } from "../../../../contexts/AuthContext";
 import styles from "./WelcomeMessageComponent.module.css";
 
-function WelcomeMessageComponent(props) {
-  const { login, IsLoggedIn, Token } = useContext(LoginContext);
+function WelcomeMessageComponent() {
+  const { User } = useContext(AuthContext);
 
   return (
     <>
-      <div id="application_sucess" style={{}}>
+      <div id="application_success" style={{}}>
         <div style={{ marginBottom: "30px" }}>
           {
             <Container fluid className={styles.wel_container}>
@@ -18,7 +18,7 @@ function WelcomeMessageComponent(props) {
                 <div className={styles.wel_card_inner}>
                   <img
                     className={styles.user_image}
-                    src={Token.g_picture ? Token.g_picture : "/user.png"}
+                    src={User?.g_picture ?? "/user.png"}
                     alt="logo"
                     // {/* if this is displayed without fetch_success this means its from a login and a token exist */}
                   />
@@ -32,7 +32,7 @@ function WelcomeMessageComponent(props) {
 
                 <div className={styles.text_div}>
                   <div style={{ color: "gray", marginTop: "30px" }}>
-                    Welocme
+                    Welcome
                   </div>
                   <div>to the family</div>
                 </div>

@@ -1,65 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, ModalBody } from "reactstrap";
 import { Container } from "reactstrap";
-// import zc_logo from './zc_logo.png'
 import GooglebtnComponent from "components/shared/GooglebtnComponent/GooglebtnComponent";
 
 import { useContext } from "react";
-import { LoginContext } from "../../../contexts/loginContext";
+import { AuthContext } from "../../../contexts/AuthContext";
 import { Alert } from "reactstrap";
 import ReactLoading from "react-loading";
 
-function LoginModalComponenet() {
-  const { login, IsLoggedIn, Token, ToggleLoginModal, IsLogInModalShown } =
-    useContext(LoginContext);
+function LoginModalComponent() {
+  const { actions, state, ToggleLoginModal, IsLogInModalShown } =
+    useContext(AuthContext);
 
-  const [modal, setModal] = useState(false);
-  const [Response_json_content, setResponse_json_content] = useState({});
-  const [Fetch_success, setFetch_success] = useState(false);
-  const [Sending_data, setSending_data] = useState(false);
-  const [Fetch_error, setFetch_error] = useState(false);
-  const [Error_message, setError_message] = useState(null);
   const toggle = ToggleLoginModal;
 
   const submit_applicant = async (google_data) => {
-    try {
-      // toggle();
-      setSending_data(true);
-      let id_token = google_data.tokenObj.id_token;
-      const body_data = { google_data };
-      console.log("google_data____", google_data);
-      const response = await fetch(
-        //     `
-        // ${process.env.NEXT_PUBLIC_BACKEND_URL}
-        `api/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body_data),
-        }
-      );
-      const response_json_content = await response.json();
-
-      if (!response.ok) {
-        setFetch_error(true);
-        throw new Error(response_json_content.message || "can't login");
-      }
-      setSending_data(false);
-      setResponse_json_content(response_json_content);
-
-      if (response_json_content.message === "success") {
-        setFetch_success(true);
-        console.log({ response_json_content });
-        login(response_json_content.token);
-        toggle();
-      }
-      console.log("google_data2", google_data);
-    } catch (err) {
-      setSending_data(false);
-      setError_message(err.message);
-      console.log(err);
+    await actions.loginUser(google_data.tokenObj.access_token);
+    if (state.user) {
+      toggle();
     }
   };
 
@@ -126,15 +84,32 @@ function LoginModalComponenet() {
                         </div>
                       </div>
 
-                      {Fetch_error ? (
+                      {state.logInError && (
                         <Alert
                           color="danger"
                           className="mt-3"
                           style={{ width: "100%" }}
                         >
-                          {Error_message}
+                          {state.logInError}
                         </Alert>
-                      ) : null}
+                      )}
+                      {state.isLoggingIn && (
+                        <div
+                          style={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: "20px",
+                          }}
+                        >
+                          <ReactLoading
+                            type={"spin"}
+                            color={"#00D2F9"}
+                            width={"20px"}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </Container>
@@ -147,4 +122,4 @@ function LoginModalComponenet() {
   );
 }
 
-export default LoginModalComponenet;
+export default LoginModalComponent;

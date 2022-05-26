@@ -13,30 +13,27 @@ import DateView from "react-datepicker";
 import CreatableSelect from "react-select/creatable";
 import styles from "./FormComponent.module.css";
 
-const FormComponent = (props) => {
-  // HELPER FUNCTION: remap static props provided by next.js to a form suitable for react select library
-  const map_selections_to_react_select_object = (
-    exp_fields,
-    unies,
-    entities
-  ) => {
-    let mapped_exp_fields = exp_fields.map((exp_field) => {
-      exp_field.value = exp_field._id;
-      return exp_field;
-    });
-    let mapped_unies = unies.map((uni) => {
-      uni.value = uni._id;
-      uni.label = uni.name;
-      return uni;
-    });
-    let mapped_entities = entities.map((entity) => {
-      entity.value = entity._id;
-      entity.label = entity.name;
-      return entity;
-    });
+// HELPER FUNCTION: remap static props provided by next.js to a form suitable for react select library
+const map_selections_to_react_select_object = (exp_fields, unies, entities) => {
+  let mapped_exp_fields = exp_fields.map((exp_field) => {
+    exp_field.value = exp_field._id;
+    return exp_field;
+  });
+  let mapped_unies = unies.map((uni) => {
+    uni.value = uni._id;
+    uni.label = uni.name;
+    return uni;
+  });
+  let mapped_entities = entities.map((entity) => {
+    entity.value = entity._id;
+    entity.label = entity.name;
+    return entity;
+  });
 
-    return [mapped_exp_fields, mapped_unies, mapped_entities];
-  };
+  return [mapped_exp_fields, mapped_unies, mapped_entities];
+};
+
+const FormComponent = (props) => {
   let [mapped_exp_fields, mapped_unies, mapped_entities] =
     map_selections_to_react_select_object(
       props.exp_fields,
@@ -65,9 +62,6 @@ const FormComponent = (props) => {
         onSubmit={(values) => props.submit_form(values)}
       >
         {(formik_object) => {
-          // the display sequence as follows : if success state is true show the success component
-          // else if the data is being sent show the loading component
-          // else show the form component ... which contains the google modal.
           return (
             <Container>
               {

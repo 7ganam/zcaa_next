@@ -1,23 +1,23 @@
-import React from 'react';
-import {Container} from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import FormComponent from './FormComponent/FormComponent';
-import {useHttpClient} from '../../hooks/simple-http-hook';
-import {useState, useCallback, useEffect} from 'react';
-import {LoginContext} from '../../contexts/loginContext';
-import {useContext} from 'react';
-import ReactLoading from 'react-loading';
-import styles from './ChangeProfileComponent.module.css';
-import axios from 'axios';
+import React from "react";
+import { Container } from "reactstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import FormComponent from "./FormComponent/FormComponent";
+import { useHttpClient } from "../../hooks/simple-http-hook";
+import { useState, useCallback, useEffect } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
+import ReactLoading from "react-loading";
+import styles from "./ChangeProfileComponent.module.css";
+import axios from "axios";
 
 export default function ChangeProfileComponent(props) {
   //LOGIN CONTEXT
   const {
     User: loggedInUser,
-    login,
+    loginByZcaaToken,
     IsLoggedIn,
     Token,
-  } = useContext(LoginContext);
+  } = useContext(AuthContext);
 
   // GOOGLE submit variables , states , and handler
   const [FormData, setFormData] = useState(null); // form data will be saved here once submitted
@@ -31,22 +31,22 @@ export default function ChangeProfileComponent(props) {
     try {
       setSending_newdata(true); // to show rotating spinner
 
-      let form_state = form_data;
+      let formData = form_data;
 
       const response = await axios.put(
         `/api/users/${loggedInUser._id}`,
         {
-          form_state,
+          formData,
           token: Token,
         },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             authorization: `bearer ${Token}`,
           },
         }
       );
-      console.log('response', response);
+      console.log("response", response);
 
       setSending_newdata(false);
       // setForm_response(response.data)
@@ -54,8 +54,8 @@ export default function ChangeProfileComponent(props) {
       // if success log in the user again
       if (response.data.success) {
         setFetch_success(true);
-        login(response.data.token);
-        alert('data updated');
+        loginByZcaaToken(response.data.token);
+        alert("data updated");
       }
     } catch (error) {
       setSending_data(false);
@@ -72,20 +72,20 @@ export default function ChangeProfileComponent(props) {
 
   //FETCH FORM INIT DATA , helper-functions and hooks -> for setting Form init values
   let init_values = {
-    birth_date: '',
-    first_name: '',
-    last_name: '',
-    email: '',
-    exp_field: '',
-    residency: {country: '', region: ''},
-    content: '',
-    phone: '',
-    address: '',
-    zc_id: '',
-    grad_year: '',
-    major: '',
-    minor: '',
-    other_undergraduate_data: '',
+    birth_date: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    exp_field: "",
+    residency: { country: "", region: "" },
+    content: "",
+    phone: "",
+    address: "",
+    zc_id: "",
+    grad_year: "",
+    major: "",
+    minor: "",
+    other_undergraduate_data: "",
     universities: [{}],
     entities: [{}],
   }; // empty initial values to compensate for any unfilled data in the user profile
@@ -97,11 +97,11 @@ export default function ChangeProfileComponent(props) {
   } = useHttpClient();
   const [LoadedUser, setLoadedUser] = useState(null); //define a new state
   const map_fetched_data_to_form_data = (Fetched_user_data) => {
-    console.log('fixed_Fetched_user_data_2', Fetched_user_data);
+    console.log("fixed_Fetched_user_data_2", Fetched_user_data);
     if (Fetched_user_data.birth_date) {
       Fetched_user_data.birth_date = new Date(Fetched_user_data.birth_date);
     }
-    console.log('1', 1);
+    console.log("1", 1);
     if (Fetched_user_data.universities) {
       Fetched_user_data.universities.map((uni) => {
         let new_uni = {};
@@ -118,7 +118,7 @@ export default function ChangeProfileComponent(props) {
         return new_uni;
       });
     }
-    console.log('2', 2);
+    console.log("2", 2);
 
     if (Fetched_user_data.entities) {
       Fetched_user_data.entities.map((entity, i) => {
@@ -139,7 +139,7 @@ export default function ChangeProfileComponent(props) {
         return entity;
       });
     }
-    console.log('3', 3);
+    console.log("3", 3);
 
     if (Fetched_user_data.experience_field) {
       Fetched_user_data.exp_field = Fetched_user_data.experience_field; // it's called exp_field in the front end and experience_field in the backend
@@ -148,7 +148,7 @@ export default function ChangeProfileComponent(props) {
         return field;
       });
     }
-    console.log('4', 4);
+    console.log("4", 4);
 
     return Fetched_user_data;
   }; //helper function to map backend data format to the format used in the front-end form
@@ -157,10 +157,10 @@ export default function ChangeProfileComponent(props) {
       try {
         const responseData = await sendUserRequest(`/api/users/${id}`);
         let Fetched_user_data = responseData.user;
-        console.log('Fetched_user_data', Fetched_user_data);
+        console.log("Fetched_user_data", Fetched_user_data);
         let fixed_Fetched_user_data =
           map_fetched_data_to_form_data(Fetched_user_data);
-        console.log('fixed_Fetched_user_data', fixed_Fetched_user_data);
+        console.log("fixed_Fetched_user_data", fixed_Fetched_user_data);
 
         let form_init_data = Object.assign(
           init_values,
@@ -169,14 +169,14 @@ export default function ChangeProfileComponent(props) {
         console.log(`form_init_data`, form_init_data);
         setLoadedUser(form_init_data);
       } catch (err) {
-        console.log({err});
+        console.log({ err });
       }
     },
     [sendUserRequest]
   );
   useEffect(() => {
     if (!!loggedInUser) {
-      console.log('LoadedUser', loggedInUser);
+      console.log("LoadedUser", loggedInUser);
       fetchUser(loggedInUser._id);
     }
   }, [loggedInUser]);
@@ -186,7 +186,7 @@ export default function ChangeProfileComponent(props) {
     if (!IsLoggedIn) {
       return (
         <div>
-          you are not logged in{' '}
+          you are not logged in{" "}
           {`${Fetch_success}+ ${LoadedUser} +${IsLoggedIn} `}
         </div>
       );
@@ -196,10 +196,11 @@ export default function ChangeProfileComponent(props) {
           <Container
             fluid
             style={{
-              background: 'rgba(164, 223, 234, 0.15)',
-              minHeight: '80vh',
-              padding: '0',
-            }}>
+              background: "rgba(164, 223, 234, 0.15)",
+              minHeight: "80vh",
+              padding: "0",
+            }}
+          >
             <FormComponent
               {...props}
               init_values={LoadedUser}
@@ -217,7 +218,7 @@ export default function ChangeProfileComponent(props) {
         //     <ReactLoading type={'spin'} color={'#00D2F9'} width={'20vw'} />
         //   </div>
         // </div>
-        <div style={{height: '100px'}}>
+        <div style={{ height: "100px" }}>
           {`${Fetch_success}+ ${LoadedUser} +${IsLoggedIn} `}
         </div>
       );

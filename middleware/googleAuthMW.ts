@@ -1,6 +1,6 @@
-import type {NextApiResponse, NextApiRequestExtended} from '../types/Type';
-import {validateGoogleUser} from '../services/auth.services';
-import {validateGoogleUser2} from '../services/auth.services';
+import type { NextApiResponse, NextApiRequestExtended } from "../types/Type";
+import { validateGoogleUser } from "../services/auth.services";
+import { validateGoogleUser2 } from "../services/auth.services";
 
 async function googleAuthMW(
   req: NextApiRequestExtended,
@@ -8,10 +8,8 @@ async function googleAuthMW(
   next: Function
 ) {
   try {
-    console.log('11111111111111111111');
-
     const use_google_oauth = true; // for testing purposes we cam set this to false
-    let {success, error_message, userData} = await validateGoogleUser(
+    let { success, error_message, userData } = await validateGoogleUser(
       req.body.google_data,
       use_google_oauth
     );
@@ -24,9 +22,8 @@ async function googleAuthMW(
     req.user = userData;
     return next();
   } catch (error) {
-    console.log('222222222222222222222');
-
-    console.log('auth error', error);
+    // eslint-disable-next-line no-console
+    console.log("auth error", error);
     next(error);
   }
 }
@@ -42,7 +39,7 @@ async function googleAuthMW2(
       req.headers.authorization.length
     );
 
-    let {success, error_message, userData} = await validateGoogleUser2(
+    let { success, error_message, userData } = await validateGoogleUser2(
       googleAccessToken
     );
     if (!success) {
@@ -58,4 +55,4 @@ async function googleAuthMW2(
   }
 }
 
-export {googleAuthMW2, googleAuthMW};
+export { googleAuthMW2, googleAuthMW };

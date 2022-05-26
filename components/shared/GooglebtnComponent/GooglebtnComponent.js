@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
-// import zc_logo from '../zc_logo.png'
-// import google_logo from './google_logo.png'
+import { GoogleLogin } from "react-google-login";
 import { Alert } from "reactstrap";
 
 const CLIENT_ID =
@@ -17,14 +15,10 @@ class GooglebtnComponent extends Component {
       show_alert: false,
     };
 
-    this.login = this.login.bind(this);
-    this.handleLoginFailure = this.handleLoginFailure.bind(this);
-    this.logout = this.logout.bind(this);
-    this.handleLogoutFailure = this.handleLogoutFailure.bind(this);
+    this.handleResponse = this.handleResponse.bind(this);
   }
 
-  login(response) {
-    console.log("google response", response);
+  handleResponse(response) {
     if (
       process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE" &&
       !response.profileObj.email.endsWith(
@@ -43,26 +37,11 @@ class GooglebtnComponent extends Component {
     ) {
       this.props.onclick(response);
       this.setState({ show_alert: false });
-      this.setState((state) => ({
+      this.setState(() => ({
         isLoggedIn: true,
         accessToken: response.accessToken,
       }));
     }
-  }
-
-  logout(response) {
-    this.setState((state) => ({
-      isLoggedIn: false,
-      accessToken: "",
-    }));
-  }
-
-  handleLoginFailure(response) {
-    // alert('Failed to log in')
-  }
-
-  handleLogoutFailure(response) {
-    // alert('Failed to log out')
   }
 
   render() {
@@ -74,7 +53,6 @@ class GooglebtnComponent extends Component {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            display: "flex",
             flexDirection: "column",
             zIndex: "2",
             position: "relative",
@@ -124,7 +102,7 @@ class GooglebtnComponent extends Component {
                 </button>
               )}
               buttonText="Login"
-              onSuccess={this.login}
+              onSuccess={this.handleResponse}
               onFailure={this.handleLoginFailure}
               cookiePolicy={"single_host_origin"}
               responseType="code,token"

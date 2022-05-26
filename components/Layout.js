@@ -1,13 +1,13 @@
-import React from 'react';
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
-import {LoginContextProvider, LoginContext} from '../contexts/loginContext';
-import {useContext, useEffect} from 'react';
+import React from "react";
+import Head from "next/head";
+import dynamic from "next/dynamic";
+import { AuthContext } from "contexts/AuthContext";
+import { useContext, useEffect } from "react";
 
 const Network_diagramComponent = dynamic(
   () =>
     import(
-      '../components/shared/Network_diagramComponent/Network_diagramComponent'
+      "../components/shared/Network_diagramComponent/Network_diagramComponent"
     ),
   {
     ssr: false,
@@ -15,13 +15,22 @@ const Network_diagramComponent = dynamic(
 );
 function Layout(props) {
   // ---------------| LOGIN LOGIC |--------------------------
-  const {login, logout} = useContext(LoginContext);
+  const { actions, state } = useContext(AuthContext);
+
+  // const _check_if_logged_in = () => {
+  //   const storedData = JSON.parse(localStorage.getItem("userData"));
+
+  //   if (storedData && storedData.token) {
+  //     loginByZcaaToken(storedData.token);
+  //   }
+  // };
 
   const check_if_logged_in = () => {
-    const storedData = JSON.parse(localStorage.getItem('userData'));
+    const storedToken = localStorage.getItem("zcaaToken");
 
-    if (storedData && storedData.token) {
-      login(storedData.token);
+    if (storedToken) {
+      console.log("storedToken", storedToken);
+      actions.fetchUser(storedToken);
     }
   };
 
@@ -33,12 +42,13 @@ function Layout(props) {
     <>
       <Head>
         <title>ZCAA</title>
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-        <script type='text/javascript' src='/planetary/d3.v3.min.js'></script>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <script type="text/javascript" src="/planetary/d3.v3.min.js"></script>
         <script
-          type='text/javascript'
-          src='/planetary/topojson.v1.min.js'></script>
-        <script type='text/javascript' src='/planetary/planetaryjs.js'></script>
+          type="text/javascript"
+          src="/planetary/topojson.v1.min.js"
+        ></script>
+        <script type="text/javascript" src="/planetary/planetaryjs.js"></script>
       </Head>
       <main>{props.children}</main>
     </>

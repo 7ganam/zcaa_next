@@ -10,15 +10,12 @@ import { Card, CardHeader, CardBody, CardTitle } from "reactstrap";
 import styles from "./News_section.module.css";
 
 const render_news_cards = (news_posts) => {
-  console.log(`news_posts`, news_posts);
   let first_three_posts = [];
   if (news_posts.length > 3) {
     first_three_posts = news_posts.slice(0, 3);
   } else {
     first_three_posts = news_posts;
   }
-
-  console.log(`first_three_posts`, first_three_posts);
 
   let cards_view = first_three_posts.map((post, index) => {
     if (!post.EditorData) {

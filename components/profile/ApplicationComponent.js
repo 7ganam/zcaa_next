@@ -1,23 +1,17 @@
-// login process flow :
-// on submit the form sends the data back to this login component and triggers its show modal function
-// on google button clicked the button sends the google credentials to the login component and triggers its send data function
-// login in component sends the data to the back end and shows loading component until the process finish
-
 import React, { useState } from "react";
 import { Container } from "reactstrap";
 import { useContext } from "react";
-import { LoginContext } from "../../contexts/loginContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import WelcomeMessageComponent from "./FormComponent/WelcomeMessageComponent/WelcomeMessageComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormComponent from "./FormComponent/FormComponent";
 import SubmitModalComponent from "components/shared/SubmitModalComponent/SubmitModalComponent";
-import axios from "axios";
 import styles from "./ApplicationComponent.module.css";
 import ReactLoading from "react-loading";
 
 export default function ApplicationComponent(props) {
   // LOGIN CONTEXT
-  const { login, IsLoggedIn, Token } = useContext(LoginContext);
+  const { actions, state: authState } = useContext(AuthContext);
 
   //FORM initial and return variables
   const [FormData, setFormData] = useState(null); // form data will be saved here once submitted
@@ -40,88 +34,62 @@ export default function ApplicationComponent(props) {
     entities: [{}],
   };
 
+  // GOOGLE MODAL states
+  const [ShowModal, setModal] = useState(false);
+  const toggle = () => setModal(!ShowModal);
+
   //FORM submit handler
   let submit_form = (form_data) => {
-    console.log(form_data);
     setFormData(form_data);
     toggle();
   };
 
-  // GOOGLE MODAL states
-  const [modal, setModal] = useState(false);
-  const toggle = () => setModal(!modal);
-  let [gdata, set_gdata] = useState(null);
-
-  // GOOGLE submit variables , states , and handler
-  const [Sending_data, setSending_data] = useState(false);
-  const [Fetch_success, setFetch_success] = useState(false);
-  const [Form_response, setForm_response] = useState({});
-
   const submit_applicant = async (google_data) => {
-    try {
-      toggle(); // hide the modal
-      setSending_data(true); // to show rotating spinner
+    console.log("google_data", google_data);
+    toggle(); // hide the modal
+    await actions.signUpUser(FormData, google_data.tokenObj.access_token);
 
-      let form_state = FormData;
-      let id_token = google_data.tokenObj.id_token;
-      const body_data = { form_state, google_data };
-      const response = await axios.post(
-        `/api/auth/signup`,
-        {
-          form_state,
-          google_data,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      setSending_data(false);
-      setForm_response(response.data);
-
-      // if success log in the user
-      if (response.data.message === "success") {
-        setFetch_success(true);
-        login(
-          response.data.user,
-          response.data.token,
-          response.data.expirateion_date_string,
-          true
-        );
-      }
-      // if user already registered before show an alarm
-      if (response.data.message === "already_applied_before") {
-        setFetch_success(true);
-        alert("you already signed up before, your data was not updated");
-        // login(
-        //   response.data.user,
-        //   response.data.token,
-        //   response.data.expirateion_date_string,
-        //   true
-        // );
-      }
-    } catch (error) {
-      if (error.response.data.message === "already_applied_before") {
-        setFetch_success(true);
-        alert("you already signed up before, your data was not updated");
-      }
-      setSending_data(false);
-      // setError_message(error.message)
-      console.log({ error });
+    if (authState.signUpError === "already_applied_before") {
+      alert("you already signed up before, your data was not updated");
     }
+
+    // try {
+    //   toggle(); // hide the modal
+    //   setSending_data(true); // to show rotating spinner
+
+    //   let formData = FormData;
+
+    //   const signUpResponse = await signUp(formData, google_data);
+
+    //   setSending_data(false);
+    //   setForm_response(signUpResponse.data);
+
+    //   // if success log in the user
+    //   if (signUpResponse.data.message === "success") {
+    //     setFetch_success(true);
+    //     loginByZcaaToken(signUpResponse.data.token);
+    //   }
+    //   // if user already registered before show an alarm
+    //   if (signUpResponse.data.message === "already_applied_before") {
+    //     setFetch_success(true);
+    //     alert("you already signed up before, your data was not updated");
+    //   }
+    // } catch (error) {
+    //   if (error.response.data.message === "already_applied_before") {
+    //     setFetch_success(true);
+    //     alert("you already signed up before, your data was not updated");
+    //   }
+    //   setSending_data(false);
+    //   // eslint-disable-next-line no-console
+    //   console.log({ error });
+    // }
   };
 
   // MAIN VIEW CONDITIONS
-  const conditional_view = (IsLoggedIn) => {
-    if (IsLoggedIn) {
-      return (
-        <WelcomeMessageComponent
-          Fetch_success={Fetch_success}
-          Response_json_content={Form_response}
-          setFetch_success={setFetch_success}
-          setForm_response={setForm_response}
-        />
-      );
-    } else if (Sending_data) {
+  const conditional_view = () => {
+    if (authState.user) {
+      return <WelcomeMessageComponent />;
+    } else if (authState.isSingingUp) {
       return (
         <div id="loading_spinner" className={styles.loading_spinner}>
           <div style={{ marginTop: "100px" }}>
@@ -134,8 +102,7 @@ export default function ApplicationComponent(props) {
         <>
           <SubmitModalComponent
             submit_applicant={submit_applicant}
-            gdata={gdata}
-            modal={modal}
+            ShowModal={ShowModal}
             toggle={toggle}
           />
           <Container
@@ -149,10 +116,6 @@ export default function ApplicationComponent(props) {
             <FormComponent
               {...props}
               init_values={init_values}
-              Fetch_success={Fetch_success}
-              Response_json_content={Form_response}
-              setFetch_success={setFetch_success}
-              setResponse_json_content={setForm_response}
               submit_form={submit_form}
             />
           </Container>
@@ -162,6 +125,9 @@ export default function ApplicationComponent(props) {
   };
 
   return (
-    <div style={{ minHeight: "100vh" }}>{conditional_view(IsLoggedIn)}</div>
+    <div style={{ minHeight: "100vh" }}>
+      {/* <div>{JSON.stringify(authState, null, 2)}</div> */}
+      {conditional_view()}
+    </div>
   );
 }

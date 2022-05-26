@@ -3,9 +3,8 @@ import "../styles/jquery-jvectormap.css";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import dynamic from "next/dynamic";
-import { LoginContextProvider, LoginContext } from "../contexts/loginContext";
-import LoginModalComponenet from "../components/shared/LoginModalComponenet/LoginModalComponenet";
-import { useContext } from "react";
+import { AuthContextProvider } from "../contexts/AuthContext";
+import LoginModalComponent from "components/shared/LoginModalComponent/LoginModalComponent";
 
 const Network_diagramComponent = dynamic(
   () =>
@@ -34,15 +33,15 @@ function MyApp({ Component, pageProps }) {
         ></script>
         <script type="text/javascript" src="/planetary/planetaryjs.js"></script>
       </Head>
-      <LoginContextProvider>
+      <AuthContextProvider>
         <Layout>
-          <LoginModalComponenet />
+          <LoginModalComponent />
           <NavbarComponent />
           <Network_diagramComponent />
           <Component {...pageProps} />
           <FooterComponent />
         </Layout>
-      </LoginContextProvider>
+      </AuthContextProvider>
     </>
   );
 }

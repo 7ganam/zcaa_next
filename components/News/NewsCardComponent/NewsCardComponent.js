@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import "./NewsCardComponenet.css"
+// import "./NewsCardComponent.css"
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
@@ -11,16 +11,16 @@ import { Alert } from "reactstrap";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 import { useContext } from "react";
-import { LoginContext } from "../../../contexts/loginContext";
+import { AuthContext } from "../../../contexts/AuthContext";
 
-function NewsCardComponenet(props) {
+function NewsCardComponent(props) {
   const [IsDeleting, setIsDeleting] = useState(false);
   const [DeletedSuccess, setDeletedSuccess] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState(null);
 
   const [modal, setModal] = useState(false);
 
-  const { Token } = useContext(LoginContext);
+  const { User } = useContext(AuthContext);
   const toggle = () => setModal(!modal);
 
   const delete_this_post = () => {
@@ -125,7 +125,7 @@ function NewsCardComponenet(props) {
               <div>{thumbnailText}</div>
             </div>
             <div id="news_card_footer">
-              {!!Token && Token.admin && (
+              {!!User && User.admin && (
                 <div style={{}}>
                   <Button color="danger" onClick={toggle}>
                     {" "}
@@ -176,4 +176,4 @@ function NewsCardComponenet(props) {
   );
 }
 
-export default NewsCardComponenet;
+export default NewsCardComponent;

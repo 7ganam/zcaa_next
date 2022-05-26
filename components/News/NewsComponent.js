@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row, Col } from "reactstrap";
 import ReactLoading from "react-loading";
-import NewsCardComponenet from "./NewsCardComponenet/NewsCardComponenet";
+import NewsCardComponent from "./NewsCardComponent/NewsCardComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import styles from "./NewsComponent.module.css";
@@ -19,7 +19,7 @@ export default class NewsComponent extends Component {
 
   render_news() {
     let posts = this.props.news.map((post, index) => (
-      <NewsCardComponenet key={post._id} post={post} />
+      <NewsCardComponent key={post._id} post={post} />
     ));
 
     return posts;

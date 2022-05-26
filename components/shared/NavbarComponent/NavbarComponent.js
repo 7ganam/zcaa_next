@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { LoginContext } from "../../../contexts/loginContext";
+import { AuthContext } from "../../../contexts/AuthContext";
 import React, { useState } from "react";
 import {
   Collapse,
@@ -14,17 +14,14 @@ import Link from "next/link";
 import styles from "./NavbarComponent.module.css";
 const NavbarComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { IsLoggedIn, User, Token, ToggleLoginModal, logout } =
-    useContext(LoginContext);
-
-  // let Token = false;
-  // let IsLoggedIn = false;
+  const { IsLoggedIn, ToggleLoginModal, actions, state } =
+    useContext(AuthContext);
 
   const toggle = () => setIsOpen(!isOpen);
 
   return (
     <div className={styles.navwrapper}>
-      {!!Token && Token.admin && (
+      {!!state.user && state.user.admin && (
         <Container
           fluid
           className="d-flex justify-content-left"
@@ -155,7 +152,7 @@ const NavbarComponent = () => {
                     <>
                       <NavItem
                         className={styles.nav_item}
-                        onClick={logout}
+                        onClick={actions.logout}
                         style={{
                           cursor: "pointer",
                           borderRightStyle: "solid",
@@ -167,10 +164,6 @@ const NavbarComponent = () => {
                       </NavItem>
                       <NavItem className={styles.nav_item}>
                         <div className={styles.nav_link}>
-                          {/* <img
-                                                        style={{ width: "40px", height: "40", borderRadius: "100%", }}
-                                                        src={Token.g_picture ? Token.g_picture : '/user.png'}
-                                                        alt="logo" /> */}
                           <img
                             referrerpolicy="no-referrer"
                             style={{
@@ -178,7 +171,11 @@ const NavbarComponent = () => {
                               height: "40",
                               borderRadius: "100%",
                             }}
-                            src={User.g_picture ? User.g_picture : "/user.png"}
+                            src={
+                              state.user.g_picture
+                                ? state.user.g_picture
+                                : "/user.png"
+                            }
                             alt="logo"
                           />
                         </div>

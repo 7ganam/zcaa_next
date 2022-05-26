@@ -1,5 +1,5 @@
-import type {NextApiResponse, NextApiRequestExtended} from '../types/Type';
-import {fetch_user_by_zc_email} from '../services/user.services';
+import type { NextApiResponse, NextApiRequestExtended } from "../types/Type";
+import { fetch_user_by_zc_email } from "../services/user.services";
 
 async function BreakIfUserExistsMW(
   req: NextApiRequestExtended,
@@ -8,9 +8,13 @@ async function BreakIfUserExistsMW(
 ) {
   try {
     let existingUser = await fetch_user_by_zc_email(req.user.zc_email);
-    if (existingUser && existingUser.length > 0) {
+
+    if (existingUser) {
       return res.status(401).json({
-        message: 'already_applied_before',
+        success: false,
+        error: "already_applied_before",
+        data: null,
+        message: "already_applied_before",
       });
     }
 

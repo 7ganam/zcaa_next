@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { useContext } from "react";
-import { LoginContext } from "../../../contexts/loginContext";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 export default function News_form() {
   const [Sending_data, setSending_data] = useState(false);
@@ -27,8 +27,7 @@ export default function News_form() {
   const [SubmitSuccessed, setSubmitSuccessed] = useState(false);
   const [EditorData, setEditorData] = useState();
 
-  const { login, IsLoggedIn, Token, ToggleLoginModal, logout } =
-    useContext(LoginContext);
+  const { User } = useContext(AuthContext);
 
   const news_post_submit_handler = async (data) => {
     try {
@@ -59,7 +58,6 @@ export default function News_form() {
       setSubmitFailed(false);
       setSubmitSuccessed(true);
     } catch (err) {
-      console.log("err", err);
       setSending_data(false);
       setFetchError(err.message || "something went wrong");
     }
@@ -82,12 +80,11 @@ export default function News_form() {
     }),
     onSubmit: (values) => {
       const news_data = { meta_values: values, EditorData: EditorData };
-      console.log({ news_data });
       news_post_submit_handler(news_data);
     },
   });
 
-  if (!!Token && Token.admin) {
+  if (!!User && User.admin) {
     return (
       <Fragment Fragment>
         {Sending_data ? (
@@ -213,7 +210,6 @@ export default function News_form() {
                         {...field}
                         selected={value}
                         onChange={(val) => {
-                          console.log("value", val);
                           setFieldValue(`Date`, val);
                         }}
                       />

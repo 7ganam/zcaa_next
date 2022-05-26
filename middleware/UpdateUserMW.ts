@@ -1,10 +1,10 @@
-const {Users} = require('../models/users');
-var _ = require('lodash');
-const {OAuth2Client} = require('google-auth-library');
+const { Users } = require("../models/users");
+var _ = require("lodash");
+const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.OAUTH2ClIENT);
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
-import type {NextApiResponse, NextApiRequestExtended} from '../types/Type';
+import type { NextApiResponse, NextApiRequestExtended } from "../types/Type";
 
 //@Expects: req.user.zc_email
 //@Does   :
@@ -14,7 +14,7 @@ const UpdateUserMW = async (
   next: Function
 ) => {
   let verified_user_with_form_data = req.user;
-  let new_user_data = req.body.form_state;
+  let new_user_data = req.body.formData;
 
   // -------------------- LOOK DATABASE FOR THE USER ------------------------
   let user_search_result;
@@ -26,14 +26,14 @@ const UpdateUserMW = async (
     console.log(`dev_err`, dev_err);
     res.status(500).json({
       success: false,
-      message: 'Logging in failed, please try again later.',
+      message: "Logging in failed, please try again later.",
     });
   }
 
   if (!user_search_result) {
     res
       .status(403)
-      .json({success: false, message: 'this zc_email is not registered'});
+      .json({ success: false, message: "this zc_email is not registered" });
   } else {
   }
 
@@ -41,7 +41,7 @@ const UpdateUserMW = async (
     let updated_user = await Users.findByIdAndUpdate(
       verified_user_with_form_data._id,
       verified_user_with_form_data,
-      {new: false}
+      { new: false }
     );
     updated_user.save();
     req.user = updated_user;
@@ -51,7 +51,7 @@ const UpdateUserMW = async (
     console.log(`dev_err`, dev_err);
     res.status(500).json({
       success: false,
-      message: 'update in failed, please try again later.',
+      message: "update in failed, please try again later.",
     });
   }
 };

@@ -1,8 +1,8 @@
-import {OAuth2Client} from 'google-auth-library';
-import {has} from 'lodash';
-import ErrorResponse from '../utils/errorResponse';
+import { OAuth2Client } from "google-auth-library";
+import { has } from "lodash";
+import ErrorResponse from "../utils/errorResponse";
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 interface UserData {
   g_userid: string;
@@ -22,12 +22,10 @@ const validateGoogleUser = async (
   error_message: string;
   userData: UserData | null;
 }> => {
-  console.log('333333333333');
-
   let payload = {} as any;
-  let userid = '';
-  let g_picture = '';
-  let zc_email = '';
+  let userid = "";
+  let g_picture = "";
+  let zc_email = "";
   if (use_google_oauth) {
     // ------------ get user data verified from google if use_google_oauth is true ---------------
     let ticket;
@@ -47,17 +45,16 @@ const validateGoogleUser = async (
       new ErrorResponse(`failed to validate email`, 500);
       throw ErrorResponse;
     }
-    console.log('444444444444');
 
     payload = ticket.getPayload();
-    userid = payload['sub'];
+    userid = payload["sub"];
     g_picture = payload.picture;
     zc_email = payload.email;
 
     // ----------------------------ask google servers ---------------------------------------
     if (
-      !has(payload, 'hd') &&
-      process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === 'TRUE'
+      !has(payload, "hd") &&
+      process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE"
     ) {
       return {
         success: false,
@@ -65,27 +62,27 @@ const validateGoogleUser = async (
         userData: null,
       };
     } else if (
-      has(payload, 'hd') &&
-      process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === 'TRUE' &&
+      has(payload, "hd") &&
+      process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE" &&
       payload.hd != process.env.NEXT_PUBLIC_ALLOWED_EMAILS
     ) {
       return {
         success: false,
         error_message:
-          'google recognize this email as not a zewail city email.',
+          "google recognize this email as not a zewail city email.",
         userData: null,
       };
     } else if (!payload.email_verified) {
       return {
         success: false,
-        error_message: 'google recognize this email as not verified.',
+        error_message: "google recognize this email as not verified.",
         userData: null,
       };
     }
 
     return {
       success: true,
-      error_message: '',
+      error_message: "",
       userData: {
         g_userid: userid,
         g_picture: g_picture,
@@ -102,7 +99,7 @@ const validateGoogleUser = async (
 
     return {
       success: true,
-      error_message: '',
+      error_message: "",
       userData: {
         g_userid: userid,
         g_picture: g_picture,
@@ -116,11 +113,11 @@ const validateGoogleUser = async (
 async function fetchInfo(googleAccessToken) {
   //get user info from google apis ... it requires the access token
   const data = await fetch(
-    'https://www.googleapis.com/oauth2/v1/userinfo?alt=json',
+    "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
     {
-      method: 'GET',
+      method: "GET",
       headers: new Headers({
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${googleAccessToken}`,
       }),
     }
@@ -138,9 +135,9 @@ const validateGoogleUser2 = async (
   userData: UserData | null;
 }> => {
   let payload = {} as any;
-  let userid = '';
-  let g_picture = '';
-  let zc_email = '';
+  let userid = "";
+  let g_picture = "";
+  let zc_email = "";
   // ------------use the access token to get the user data from google ---------------
   let google_data;
   try {
@@ -154,7 +151,7 @@ const validateGoogleUser2 = async (
       };
     }
   } catch (error) {
-    console.log('error', error);
+    console.log("error", error);
     new ErrorResponse(`failed to validate email`, 500);
     throw ErrorResponse;
   }
@@ -166,8 +163,8 @@ const validateGoogleUser2 = async (
 
   // ----------------------------ask google servers ---------------------------------------
   if (
-    !has(google_data, 'hd') &&
-    process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === 'TRUE'
+    !has(google_data, "hd") &&
+    process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE"
   ) {
     return {
       success: false,
@@ -175,26 +172,26 @@ const validateGoogleUser2 = async (
       userData: null,
     };
   } else if (
-    has(google_data, 'hd') &&
-    process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === 'TRUE' &&
+    has(google_data, "hd") &&
+    process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE" &&
     google_data.hd != process.env.NEXT_PUBLIC_ALLOWED_EMAILS
   ) {
     return {
       success: false,
-      error_message: 'google recognize this email as not a zewail city email.',
+      error_message: "google recognize this email as not a zewail city email.",
       userData: null,
     };
   } else if (!google_data.verified_email) {
     return {
       success: false,
-      error_message: 'google recognize this email as not verified.',
+      error_message: "google recognize this email as not verified.",
       userData: null,
     };
   }
 
   return {
     success: true,
-    error_message: '',
+    error_message: "",
     userData: {
       g_userid: userid,
       g_picture: g_picture,
@@ -207,20 +204,17 @@ const validateGoogleUser2 = async (
 const createToken = async (user) => {
   let token;
   let expiration_time_in_hours = 500; //TODO: make the token expiration in the front end  ... i will leave this huge number as is now
-  let expiration_date = new Date(
-    new Date().getTime() + expiration_time_in_hours * 60 * 60 * 1000
-  );
-  let expirateion_date_string = expiration_date.toISOString();
   try {
-    token = jwt.sign({user: user}, TOKEN_SECRET_KEY, {
-      expiresIn: expiration_time_in_hours + 'h',
+    token = jwt.sign({ user: user }, TOKEN_SECRET_KEY, {
+      expiresIn: expiration_time_in_hours + "h",
     });
-    return {expirateion_date_string, token};
+    return { token };
   } catch (dev_err) {
-    console.log('token error', dev_err);
+    // eslint-disable-next-line no-console
+    console.log("token error", dev_err);
     new ErrorResponse(`failed to create token`, 500);
     throw ErrorResponse;
   }
 };
 
-export {validateGoogleUser, validateGoogleUser2, createToken};
+export { validateGoogleUser, validateGoogleUser2, createToken };
