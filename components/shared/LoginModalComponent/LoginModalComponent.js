@@ -4,7 +4,7 @@ import { Container } from "reactstrap";
 import GooglebtnComponent from "components/shared/GooglebtnComponent/GooglebtnComponent";
 
 import { useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import { Alert } from "reactstrap";
 import ReactLoading from "react-loading";
 

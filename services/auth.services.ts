@@ -1,4 +1,3 @@
-import { OAuth2Client } from "google-auth-library";
 import { has } from "lodash";
 import ErrorResponse from "../utils/errorResponse";
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
@@ -10,105 +9,6 @@ interface UserData {
   zc_email: string;
   g_name: string;
 }
-
-const client = new OAuth2Client(process.env.OAUTH2ClIENT);
-const audience = process.env.OAUTH2ClIENTAUDIENCE;
-
-const validateGoogleUser = async (
-  google_data: any,
-  use_google_oauth: boolean
-): Promise<{
-  success: boolean;
-  error_message: string;
-  userData: UserData | null;
-}> => {
-  let payload = {} as any;
-  let userid = "";
-  let g_picture = "";
-  let zc_email = "";
-  if (use_google_oauth) {
-    // ------------ get user data verified from google if use_google_oauth is true ---------------
-    let ticket;
-    try {
-      ticket = await client.verifyIdToken({
-        idToken: google_data.tokenObj.id_token,
-        audience,
-      });
-      if (!ticket) {
-        return {
-          success: false,
-          error_message: "Something went wrong, can't log in.",
-          userData: null,
-        };
-      }
-    } catch (error) {
-      new ErrorResponse(`failed to validate email`, 500);
-      throw ErrorResponse;
-    }
-
-    payload = ticket.getPayload();
-    userid = payload["sub"];
-    g_picture = payload.picture;
-    zc_email = payload.email;
-
-    // ----------------------------ask google servers ---------------------------------------
-    if (
-      !has(payload, "hd") &&
-      process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE"
-    ) {
-      return {
-        success: false,
-        error_message: "This emails doesn't belong to the organization",
-        userData: null,
-      };
-    } else if (
-      has(payload, "hd") &&
-      process.env.NEXT_PUBLIC_APPLY_EMAIL_CHECK === "TRUE" &&
-      payload.hd != process.env.NEXT_PUBLIC_ALLOWED_EMAILS
-    ) {
-      return {
-        success: false,
-        error_message:
-          "google recognize this email as not a zewail city email.",
-        userData: null,
-      };
-    } else if (!payload.email_verified) {
-      return {
-        success: false,
-        error_message: "google recognize this email as not verified.",
-        userData: null,
-      };
-    }
-
-    return {
-      success: true,
-      error_message: "",
-      userData: {
-        g_userid: userid,
-        g_picture: g_picture,
-        zc_email: zc_email,
-        g_name: payload.name,
-      },
-    };
-  } else {
-    //-------------- if use_google_oauth not set ... use the user data sent from the front end directly -----------------
-    payload = google_data;
-    userid = google_data.profileObj.googleId;
-    g_picture = google_data.profileObj.imageUrl;
-    zc_email = google_data.profileObj.email;
-
-    return {
-      success: true,
-      error_message: "",
-      userData: {
-        g_userid: userid,
-        g_picture: g_picture,
-        zc_email: zc_email,
-        g_name: google_data.name,
-      },
-    };
-  }
-};
 
 async function fetchInfo(googleAccessToken) {
   //get user info from google apis ... it requires the access token
@@ -126,8 +26,8 @@ async function fetchInfo(googleAccessToken) {
   return data2;
 }
 
-const validateGoogleUser2 = async (
-  // validateGoogleUser2 depends on access token not idtoken..access token doesn't have user info but it can be used to access the user info
+const validateGoogleUser = async (
+  // validateGoogleUser depends on access token not id_token..access token doesn't have user info but it can be used to access the user info
   googleAccessToken: string
 ): Promise<{
   success: boolean;
@@ -218,4 +118,4 @@ const createToken = async (user) => {
   }
 };
 
-export { validateGoogleUser, validateGoogleUser2, createToken };
+export { validateGoogleUser, createToken };

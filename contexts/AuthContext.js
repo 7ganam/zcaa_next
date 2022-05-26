@@ -110,7 +110,7 @@ export const AuthContextProvider = ({ children }) => {
       dispatch({ type: types.SIGNUP_REQUEST });
       try {
         const response = await axios.post(
-          `api/auth/signup2`,
+          `api/auth/signup`,
           { formData },
           {
             headers: {
@@ -147,7 +147,7 @@ export const AuthContextProvider = ({ children }) => {
       dispatch({ type: types.LOGIN_REQUEST });
       try {
         const response = await axios.post(
-          `api/auth/login2`,
+          `api/auth/login`,
           {},
           {
             headers: {

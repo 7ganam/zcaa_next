@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Modal, ModalBody } from "reactstrap";
 import GooglebtnComponent from "components/shared/GooglebtnComponent/GooglebtnComponent";
 import { Container } from "reactstrap";
+import ReactLoading from "react-loading";
+import { AuthContext } from "contexts/AuthContext";
 
 function SubmitModalComponent(props) {
+  const { state } = useContext(AuthContext);
   return (
     <>
       <div id="google_modal">
@@ -49,7 +52,40 @@ function SubmitModalComponent(props) {
                     <span className="font1">to apply </span>
                   </div>
                   <div style={{ marginTop: "10px" }}>
-                    <GooglebtnComponent onclick={props.submit_applicant} />
+                    <div style={{ position: "relative" }}>
+                      <GooglebtnComponent onclick={props.submit_applicant} />
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "15px",
+                          left: "45%",
+                          zIndex: "0",
+                        }}
+                      >
+                        <ReactLoading
+                          type={"spin"}
+                          color={"#00D2F9"}
+                          width={"20px"}
+                        />
+                      </div>
+                    </div>
+                    {state.isLoggingIn && (
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginTop: "20px",
+                        }}
+                      >
+                        <ReactLoading
+                          type={"spin"}
+                          color={"#00D2F9"}
+                          width={"20px"}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </Container>
