@@ -171,7 +171,6 @@ export default function DonatePageComponent(props) {
                                       className="form_text"
                                     >
                                       {"address (optional)"}
-                                      address
                                     </label>
                                     <Field
                                       name="address"
