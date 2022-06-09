@@ -297,29 +297,36 @@ export default function DonatePageComponent(props) {
                                 </Col>
                               </Row>
                               <label>
-                                <Field type="checkbox" name="terms" />
-                                <div>
-                                  <div>
-                                    {"By donation to ZCAA you agree to the "}
-                                    <a
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      href="https://drive.google.com/file/d/1VzPfOtbirgdhxu6qA1nkC22OlM5yfzwV/view?usp=sharing"
-                                    >
-                                      terms and conditions
-                                    </a>
-                                  </div>
-                                  <div>
-                                    For more information about the program and
-                                    awards,
-                                    <a
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      href="https://drive.google.com/file/d/1AftEQv8wGfTzpZFMHn5rmOCXRoJbI7ey/view?usp=sharing"
-                                    >
-                                      {" "}
-                                      visit this document
-                                    </a>
+                                <div style={{ display: "flex" }}>
+                                  <Field type="checkbox" name="terms" />
+                                  <div
+                                    style={{
+                                      marginLeft: "5px",
+                                      marginTop: "-5px",
+                                    }}
+                                  >
+                                    <div>
+                                      {"By donation to ZCAA you agree to the "}
+                                      <a
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        href="https://drive.google.com/file/d/1VzPfOtbirgdhxu6qA1nkC22OlM5yfzwV/view?usp=sharing"
+                                      >
+                                        terms and conditions.
+                                      </a>
+                                    </div>
+                                    <div>
+                                      For more information about the program and
+                                      awards,
+                                      <a
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        href="https://drive.google.com/file/d/1AftEQv8wGfTzpZFMHn5rmOCXRoJbI7ey/view?usp=sharing"
+                                      >
+                                        {" "}
+                                        visit this document.
+                                      </a>
+                                    </div>
                                   </div>
                                 </div>
                               </label>
