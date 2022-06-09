@@ -23,6 +23,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "@stripe/stripe-js": "^1.31.0",
     "aws-sdk": "^2.923.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
@@ -52,6 +53,7 @@
     "react-window": "^1.8.6",
     "reactstrap": "^8.9.0",
     "stream": "^0.0.2",
+    "stripe": "^9.7.0",
     "swr": "^0.5.5",
     "yup": "^0.32.9"
   }
