@@ -18,23 +18,23 @@ function AmountComponent(props) {
         console.log(1);
         break;
       case "2":
-        props.setFieldValue("amount", 200);
+        props.setFieldValue("amount", 5);
         props.setAmountIsOther(false);
         console.log(2);
 
         break;
       case "3":
-        props.setFieldValue("amount", 500);
+        props.setFieldValue("amount", 10);
         props.setAmountIsOther(false);
         console.log(3);
 
         break;
       case "4":
-        props.setFieldValue("amount", 1000);
+        props.setFieldValue("amount", 50);
         props.setAmountIsOther(false);
         break;
       case "5":
-        props.setFieldValue("amount", 2000);
+        props.setFieldValue("amount", 100);
         props.setAmountIsOther(false);
         break;
       default:
@@ -63,7 +63,7 @@ function AmountComponent(props) {
           selected == 2 ? styles.selected_button : styles.amonunt_button
         }
       >
-        200
+        5
       </div>
       <div
         onClick={handleClick}
@@ -72,7 +72,7 @@ function AmountComponent(props) {
           selected == 3 ? styles.selected_button : styles.amonunt_button
         }
       >
-        500
+        10
       </div>
       <div
         onClick={handleClick}
@@ -81,7 +81,7 @@ function AmountComponent(props) {
           selected == 4 ? styles.selected_button : styles.amonunt_button
         }
       >
-        1000
+        50
       </div>
       <div
         onClick={handleClick}
@@ -90,7 +90,7 @@ function AmountComponent(props) {
           selected == 5 ? styles.selected_button : styles.amonunt_button
         }
       >
-        2000
+        100
       </div>
     </div>
   );

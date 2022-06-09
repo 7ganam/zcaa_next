@@ -1,92 +1,102 @@
-.copystring_wrapper{
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-    width: 80%;
-    height: 40px;
-    margin-top: 30px;
-    display: flex;
-    flex-direction: row 
+.copystring_wrapper {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  width: 80%;
+  height: 40px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
 }
 
-.copystring_field{
-    width: 85%;
-    height: 100%;
-    border: 1px solid rgba(128, 128, 128, 0.397);
-    border-radius: 5px 0 0 5px ;
-    display:flex ;
-    justify-content: center;
-    align-items: center;
-    color: grey;
-    overflow: hidden;
-    padding: 5px;
-
+.copystring_field {
+  width: 85%;
+  height: 100%;
+  border: 1px solid rgba(128, 128, 128, 0.397);
+  border-radius: 5px 0 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: grey;
+  overflow: hidden;
+  padding: 5px;
 }
-.copystring_button{
-    width: 15%;
-    height: 100%;
-    border: 1px solid rgba(128, 128, 128, 0.212);
-    border-radius: 0px 5px 5px 0px; 
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
-    font-family: Cairo;
-    color: white;
-    background-color: #26ADCB ;
+.copystring_button {
+  width: 15%;
+  height: 100%;
+  border: 1px solid rgba(128, 128, 128, 0.212);
+  border-radius: 0px 5px 5px 0px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  font-family: Cairo;
+  color: white;
+  background-color: #26adcb;
 
-    user-select: none; /* supported by Chrome and Opera */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-
-
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 }
-.copystring_button:hover{
-    cursor: pointer;
-
+.copystring_button:hover {
+  cursor: pointer;
 }
 
-.copystring_button:active{
-background-color: rgb(84, 212, 25);
-
+.copystring_button:active {
+  background-color: rgb(84, 212, 25);
 }
 
-.redirect_button{
-font-size: 20px;
-background-color: white;
-border-color: white;
-color: grey;
--webkit-box-sizing: border-box;
-box-sizing: border-box;
--webkit-box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-border: 2px solid rgba(192, 192, 192, 0.212);
-
+.redirect_button {
+  font-size: 20px;
+  background-color: white;
+  border-color: white;
+  color: grey;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  border: 2px solid rgba(192, 192, 192, 0.212);
 }
 
-
-
-.redirect_button:hover{
-    background-color: #26ADCB ;
-    border-color: #26ADCB;
-
+.redirect_button:hover {
+  background-color: #26adcb;
+  border-color: #26adcb;
 }
 
-.button_text{
-    margin-right: 10px;
-
+.button_text {
+  margin-right: 10px;
 }
 
-@media (max-width: 992px) { 
-    .button_text{
-        display: none;
-    }
-    .copystring_field{
-        justify-content: start ;
-        white-space: nowrap;
-    }
+@media (max-width: 992px) {
+  .button_text {
+    display: none;
   }
- 
+  .copystring_field {
+    justify-content: start;
+    white-space: nowrap;
+  }
+}
+
+.donate_modal_subfield {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  font-size: 15px;
+  text-align: left;
+  overflow: hidden;
+}
+
+@media (max-width: 500px) {
+  .donate_modal_subfield {
+    font-size: 11px;
+  }
+}
+/* .donate_modal_subtitle {
+display;
+}
+.donate_modal_text {
+display;
+} */

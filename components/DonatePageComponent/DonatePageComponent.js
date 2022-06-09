@@ -23,17 +23,8 @@ const DonateSchema = Yup.object().shape({
     .required("Required")
     .typeError("A number is required"),
   dontatedTo: Yup.string().required("Required"),
+  terms: Yup.boolean().oneOf([true], "Required"),
 });
-
-const projects = [
-  "Community_development_and_sustainability_award_honoring_Omar-El_Daghar",
-  "Biomedical_science_research_Award_honoring_Ghada_Ragab",
-  "Physics_of_Earth_and_universe_award_honoring_Ahmed_Thabet",
-  "Green_energy_solutions_Award_honoring_Ahmed_Soliman",
-  "Financial_aid_Award_honoring_Mahmoud_Ogaina_and_Mohamed_Nour_El-din",
-  "Leadership_and_community_engagement_award_honoring_Noor_El-din_Mahmoud",
-  "General_Donation_to_any_project",
-];
 
 export default function DonatePageComponent(props) {
   const formRef = useRef();
@@ -45,41 +36,10 @@ export default function DonatePageComponent(props) {
     setModalIsShown(!ModalIsShown);
   };
 
-  const handlePayment = (values) => {
-    let cause = projects[values.dontatedTo - 1];
-    fetch("/api/stripe/checkout-sessions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: values.amount * 100,
-        cause: cause,
-      }),
-    })
-      .then((response) => response.json())
-      .then((session) => {
-        console.log("session", session);
-        window.location.href = session.url;
-
-        // stripe.redirectToCheckout({
-        //   sessionId: session.id,
-        // });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
   return (
     <React.Fragment>
       {
         <div>
-          <DonateModalComponenet
-            toggle={ToggleModal}
-            isShown={ModalIsShown}
-            DonationString={DonationString}
-          />
           <Container
             fluid
             style={{
@@ -112,18 +72,24 @@ export default function DonatePageComponent(props) {
                         address: "",
                         amount: "",
                         dontatedTo: "",
+                        terms: false,
                       }}
                       onSubmit={
-                        // (values) => {
-                        //   console.log(values);
-                        //   ToggleModal();
-                        // }
-                        handlePayment
+                        (values) => {
+                          console.log(values);
+                          ToggleModal();
+                        }
+                        // handlePayment
                       }
                     >
                       {(formik_object) => {
                         return (
                           <Container>
+                            <DonateModalComponenet
+                              toggle={ToggleModal}
+                              isShown={ModalIsShown}
+                              values={formik_object.values}
+                            />
                             {/* <div>{JSON.stringify(formik_object.values)}</div> */}
                             <Form>
                               <Row className="justify-content-around">
@@ -331,7 +297,37 @@ export default function DonatePageComponent(props) {
                                   </div>
                                 </Col>
                               </Row>
-
+                              <label>
+                                <Field type="checkbox" name="terms" />
+                                <div>
+                                  <div>
+                                    {"By donation to ZCAA you agree to the "}
+                                    <a
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      href="https://drive.google.com/file/d/1VzPfOtbirgdhxu6qA1nkC22OlM5yfzwV/view?usp=sharing"
+                                    >
+                                      terms and conditions
+                                    </a>
+                                  </div>
+                                  <div>
+                                    For more information about the program and
+                                    awards,
+                                    <a
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      href="https://drive.google.com/file/d/1AftEQv8wGfTzpZFMHn5rmOCXRoJbI7ey/view?usp=sharing"
+                                    >
+                                      {" "}
+                                      visit this document
+                                    </a>
+                                  </div>
+                                </div>
+                              </label>
+                              <ErrorMessage
+                                name="terms"
+                                component={TextError}
+                              />
                               <div
                                 className=""
                                 style={{
