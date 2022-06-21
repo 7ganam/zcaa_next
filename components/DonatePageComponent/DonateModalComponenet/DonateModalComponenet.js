@@ -194,9 +194,9 @@ function DonateModalComponenet(props) {
                       <button
                         style={{ marginBottom: "100px" }}
                         className={`btn btn-primary ${styles.redirect_button}`}
-                        onClick={() => {
-                          handlePayment(props.values);
-                        }}
+                        // onClick={() => {
+                        //   handlePayment(props.values);
+                        // }}
                       >
                         <span style={{ marginRight: "5px" }}>
                           Go to payment webstie

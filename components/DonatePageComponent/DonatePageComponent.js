@@ -249,7 +249,7 @@ export default function DonatePageComponent(props) {
                                       )}
                                       <div className={` ${styles.price_tag}`}>
                                         {" "}
-                                        EUR
+                                        EGP
                                       </div>
                                     </div>
                                     <ErrorMessage
