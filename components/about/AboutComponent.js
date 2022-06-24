@@ -55,7 +55,7 @@ export default function AboutComponent() {
         },
 
         {
-          name: "Hamad Shokr",
+          name: "Mostafa Ellebody",
           image:
             "https://zcaa-bucket2.s3.eu-central-1.amazonaws.com/hamad+shokr.png",
           role: "Communication  Head",
