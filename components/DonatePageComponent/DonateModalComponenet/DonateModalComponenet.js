@@ -33,7 +33,6 @@ const handlePayment = (values) => {
   })
     .then((response) => response.json())
     .then((session) => {
-      console.log("session", session);
       window.location.href = session.url;
     })
     .catch((error) => {
@@ -42,59 +41,7 @@ const handlePayment = (values) => {
 };
 
 function DonateModalComponenet(props) {
-  const { login, IsLoggedIn, Token, ToggleLoginModal, IsLogInModalShown } =
-    useContext(LoginContext);
-
-  const [modal, setModal] = useState(false);
-  const [Response_json_content, setResponse_json_content] = useState({});
-  const [Fetch_success, setFetch_success] = useState(false);
-  const [Sending_data, setSending_data] = useState(false);
-  const [Fetch_error, setFetch_error] = useState(false);
-  const [Error_message, setError_message] = useState(null);
   const toggle = props.toggle;
-
-  const submit_applicant = async (google_data) => {
-    try {
-      // toggle();
-      setSending_data(true);
-      let id_token = google_data.tokenObj.id_token;
-      const body_data = { google_data };
-      console.log("google_data", google_data);
-      const response = await fetch(`api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body_data),
-      });
-      const response_json_content = await response.json();
-      if (!response.ok) {
-        setFetch_error(true);
-        throw new Error(response_json_content.message || "can't login");
-      }
-      setSending_data(false);
-      setResponse_json_content(response_json_content);
-
-      if (response_json_content.message === "success") {
-        setFetch_success(true);
-        console.log({ response_json_content });
-        console.log("test");
-
-        login(
-          response_json_content.user,
-          response_json_content.token,
-          response_json_content.expirateion_date_string,
-          true
-        );
-        toggle();
-      }
-      console.log("google_data2", google_data);
-    } catch (err) {
-      setSending_data(false);
-      setError_message(err.message);
-      console.log(err);
-    }
-  };
 
   return (
     <div>
