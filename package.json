@@ -27,6 +27,7 @@
     "aws-sdk": "^2.923.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "editorjs-inline-font-size-tool": "^1.0.1",
     "editorjs-paragraph-with-alignment": "^2.0.0",
