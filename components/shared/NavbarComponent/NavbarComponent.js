@@ -2,13 +2,16 @@ import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import React, { useState } from "react";
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   Nav,
   NavItem,
-  Container,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
+
+import { Collapse, NavbarToggler, Container } from "reactstrap";
 // import { Link } from "react-router-dom";
 import Link from "next/link";
 import styles from "./NavbarComponent.module.css";
@@ -163,22 +166,49 @@ const NavbarComponent = () => {
                         <div className={styles.nav_link}>Logout</div>
                       </NavItem>
                       <NavItem className={styles.nav_item}>
-                        <div className={styles.nav_link}>
-                          <img
-                            referrerpolicy="no-referrer"
-                            style={{
-                              width: "40px",
-                              height: "40",
-                              borderRadius: "100%",
-                            }}
-                            src={
-                              state.user.g_picture
-                                ? state.user.g_picture
-                                : "/user.png"
-                            }
-                            alt="logo"
-                          />
-                        </div>
+                        <UncontrolledDropdown
+                        // isOpen={this.state.dropdownOpen}
+                        // toggle={this.toggle}
+                        >
+                          <DropdownToggle
+                            tag="span"
+                            // onClick={this.toggle}
+                            data-toggle="dropdown"
+                            // aria-expanded={this.state.dropdownOpen}
+                          >
+                            <div className={styles.nav_link}>
+                              <img
+                                referrerpolicy="no-referrer"
+                                style={{
+                                  width: "40px",
+                                  height: "40",
+                                  borderRadius: "100%",
+                                }}
+                                src={
+                                  state.user.g_picture
+                                    ? state.user.g_picture
+                                    : "/user.png"
+                                }
+                                alt="logo"
+                              />
+                            </div>
+                          </DropdownToggle>
+                          <DropdownMenu right>
+                            <DropdownItem>
+                              {" "}
+                              <Link href="/CHANGEPROFILE">
+                                <a
+                                  style={{
+                                    textDecoration: "none",
+                                    color: "grey",
+                                  }}
+                                >
+                                  <div>Edit your profile</div>
+                                </a>
+                              </Link>
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>
                       </NavItem>
                     </>
                   )}

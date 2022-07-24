@@ -32,6 +32,8 @@ async function VerifyTokenMW2(
     7,
     req.headers.authorization.length
   );
+  console.log("decoded.user", token);
+
   if (!token) {
     return res.status(403).send("A token is required for authentication");
   }
@@ -39,7 +41,6 @@ async function VerifyTokenMW2(
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
     req.verified_user = decoded.user;
     req.user = decoded.user;
-
     next();
     // return res.status(200).json({ user: decoded.user });
   } catch (err) {

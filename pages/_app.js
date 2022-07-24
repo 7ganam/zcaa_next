@@ -35,11 +35,21 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <AuthContextProvider>
         <Layout>
-          <LoginModalComponent />
-          <NavbarComponent />
-          <Network_diagramComponent />
-          <Component {...pageProps} />
-          <FooterComponent />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "100vh",
+            }}
+          >
+            <LoginModalComponent />
+            <NavbarComponent />
+            <div style={{ flexGrow: "1" }}>
+              <Network_diagramComponent />
+              <Component {...pageProps} />
+            </div>
+            <FooterComponent />
+          </div>
         </Layout>
       </AuthContextProvider>
     </>

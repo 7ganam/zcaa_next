@@ -1,3 +1,7 @@
+.remove-after:after {
+  content: none;
+}
+
 .navwrapper {
   width: 100%;
   /* background-color: blueviolet; */

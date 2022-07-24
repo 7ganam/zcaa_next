@@ -1,76 +1,63 @@
 import React from "react";
-import { Container } from "reactstrap";
+import { Container, Button, Toast, ToastHeader, ToastBody } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormComponent from "./FormComponent/FormComponent";
 import { useHttpClient } from "../../hooks/simple-http-hook";
 import { useState, useCallback, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useContext } from "react";
-import ReactLoading from "react-loading";
-import styles from "./ChangeProfileComponent.module.css";
 import axios from "axios";
+import styles from "./ChangeProfileComponent.module.css";
+import { Modal, ModalBody } from "reactstrap";
 
 export default function ChangeProfileComponent(props) {
-  //LOGIN CONTEXT
-  const {
-    User: loggedInUser,
-    loginByZcaaToken,
-    IsLoggedIn,
-    Token,
-  } = useContext(AuthContext);
+  const { actions, state: authState } = useContext(AuthContext);
+  const { user, zcaaToken } = authState;
 
   // GOOGLE submit variables , states , and handler
   const [FormData, setFormData] = useState(null); // form data will be saved here once submitted
   const [Sending_newdata, setSending_newdata] = useState(false);
   const [Fetch_success, setFetch_success] = useState(false);
-  const [Form_response, setForm_response] = useState({});
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const submit_applicant = async (form_data) => {
-    console.log(form_data);
-
     try {
       setSending_newdata(true); // to show rotating spinner
 
       let formData = form_data;
 
       const response = await axios.put(
-        `/api/users/${loggedInUser._id}`,
+        `/api/users/${user._id}`,
         {
           formData,
-          token: Token,
+          token: zcaaToken,
         },
         {
           headers: {
             "Content-Type": "application/json",
-            authorization: `bearer ${Token}`,
+            authorization: `bearer ${zcaaToken}`,
           },
         }
       );
-      console.log("response", response);
 
       setSending_newdata(false);
-      // setForm_response(response.data)
-
-      // if success log in the user again
-      if (response.data.success) {
-        setFetch_success(true);
-        loginByZcaaToken(response.data.token);
-        alert("data updated");
+      if (response.data.message === "success") {
+        setShowSuccessModal(true);
+        actions.fetchUser(zcaaToken);
       }
     } catch (error) {
-      setSending_data(false);
+      setSending_newdata(false);
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   };
 
   //FORM submit handler
   let submit_form = (form_data) => {
-    console.log(form_data);
     setFormData(form_data);
     submit_applicant(form_data);
   };
 
-  //FETCH FORM INIT DATA , helper-functions and hooks -> for setting Form init values
   let init_values = {
     birth_date: "",
     first_name: "",
@@ -89,19 +76,11 @@ export default function ChangeProfileComponent(props) {
     universities: [{}],
     entities: [{}],
   }; // empty initial values to compensate for any unfilled data in the user profile
-  const {
-    isLoading: UserIsLoading,
-    error: UserError,
-    sendRequest: sendUserRequest,
-    clearError: clearUserError,
-  } = useHttpClient();
-  const [LoadedUser, setLoadedUser] = useState(null); //define a new state
+
   const map_fetched_data_to_form_data = (Fetched_user_data) => {
-    console.log("fixed_Fetched_user_data_2", Fetched_user_data);
     if (Fetched_user_data.birth_date) {
       Fetched_user_data.birth_date = new Date(Fetched_user_data.birth_date);
     }
-    console.log("1", 1);
     if (Fetched_user_data.universities) {
       Fetched_user_data.universities.map((uni) => {
         let new_uni = {};
@@ -118,11 +97,9 @@ export default function ChangeProfileComponent(props) {
         return new_uni;
       });
     }
-    console.log("2", 2);
 
     if (Fetched_user_data.entities) {
       Fetched_user_data.entities.map((entity, i) => {
-        console.log(i, entity, entity.entity_ref);
         if (entity.start_date) {
           entity.start_date = new Date(entity.start_date);
         }
@@ -139,7 +116,6 @@ export default function ChangeProfileComponent(props) {
         return entity;
       });
     }
-    console.log("3", 3);
 
     if (Fetched_user_data.experience_field) {
       Fetched_user_data.exp_field = Fetched_user_data.experience_field; // it's called exp_field in the front end and experience_field in the backend
@@ -148,49 +124,28 @@ export default function ChangeProfileComponent(props) {
         return field;
       });
     }
-    console.log("4", 4);
 
     return Fetched_user_data;
   }; //helper function to map backend data format to the format used in the front-end form
-  const fetchUser = useCallback(
-    async (id) => {
-      try {
-        const responseData = await sendUserRequest(`/api/users/${id}`);
-        let Fetched_user_data = responseData.user;
-        console.log("Fetched_user_data", Fetched_user_data);
-        let fixed_Fetched_user_data =
-          map_fetched_data_to_form_data(Fetched_user_data);
-        console.log("fixed_Fetched_user_data", fixed_Fetched_user_data);
-
-        let form_init_data = Object.assign(
-          init_values,
-          fixed_Fetched_user_data
-        );
-        console.log(`form_init_data`, form_init_data);
-        setLoadedUser(form_init_data);
-      } catch (err) {
-        console.log({ err });
-      }
-    },
-    [sendUserRequest]
-  );
-  useEffect(() => {
-    if (!!loggedInUser) {
-      console.log("LoadedUser", loggedInUser);
-      fetchUser(loggedInUser._id);
-    }
-  }, [loggedInUser]);
 
   // MAIN VIEW CONDITIONS
-  const conditional_view = () => {
-    if (!IsLoggedIn) {
+  const conditional_view = (user) => {
+    if (!user) {
       return (
-        <div>
-          you are not logged in{" "}
-          {`${Fetch_success}+ ${LoadedUser} +${IsLoggedIn} `}
+        <div
+          style={{
+            width: "100%",
+            height: "500px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          className={styles.message_text}
+        >
+          loading...
         </div>
       );
-    } else if (LoadedUser && !Fetch_success) {
+    } else {
       return (
         <>
           <Container
@@ -203,27 +158,24 @@ export default function ChangeProfileComponent(props) {
           >
             <FormComponent
               {...props}
-              init_values={LoadedUser}
+              init_values={map_fetched_data_to_form_data(user)}
               submit_form={submit_form}
             />
+            <Toast className={styles.toast} isOpen={showSuccessModal}>
+              <ToastHeader
+                toggle={() => {
+                  setShowSuccessModal((old) => false);
+                }}
+              >
+                Success
+              </ToastHeader>
+              <ToastBody>User updated successfully</ToastBody>
+            </Toast>
           </Container>
         </>
-      );
-    } else if (Fetch_success) {
-      return <div>updated successfully</div>;
-    } else {
-      return (
-        // <div id='loading_spinner' className={styles.loading_spinner}>
-        //   <div style={{marginTop: '100px', minHeight: '100vh'}}>
-        //     <ReactLoading type={'spin'} color={'#00D2F9'} width={'20vw'} />
-        //   </div>
-        // </div>
-        <div style={{ height: "100px" }}>
-          {`${Fetch_success}+ ${LoadedUser} +${IsLoggedIn} `}
-        </div>
       );
     }
   };
 
-  return <React.Fragment>{conditional_view()}</React.Fragment>;
+  return <React.Fragment>{conditional_view(user)}</React.Fragment>;
 }

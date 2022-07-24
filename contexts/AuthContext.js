@@ -86,6 +86,7 @@ export const AuthContextProvider = ({ children }) => {
         return {
           ...state,
           user: action.payload.user,
+          zcaaToken: action.payload.zcaaToken,
           isFetching: false,
           FetchError: null,
         };
@@ -189,6 +190,7 @@ export const AuthContextProvider = ({ children }) => {
           type: types.FETCHUSER_SUCCESS,
           payload: {
             user: response.data.data,
+            zcaaToken: zcaaToken,
           },
         });
       } catch (error) {

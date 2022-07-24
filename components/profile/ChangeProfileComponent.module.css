@@ -4,3 +4,27 @@
   align-items: center;
   height: 400px;
 }
+
+.message_text {
+  font-family: "Mulish", sans-serif;
+  text-transform: uppercase;
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 25px;
+  /* identical to box height */
+
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.toast {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  min-width: 300px;
+  background-color: white;
+}
