@@ -84,7 +84,7 @@ export default function AboutComponent() {
           card_color = "rgb(127 216 233 / 33%)";
         }
         return (
-          <Col md="3" className="">
+          <Col md="3" className="" key={index}>
             <MemberCardComponent
               background_color={card_color}
               img={member.image}

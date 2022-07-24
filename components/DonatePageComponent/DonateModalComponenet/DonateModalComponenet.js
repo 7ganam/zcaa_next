@@ -3,10 +3,6 @@ import { Modal, ModalBody } from "reactstrap";
 import { Container } from "reactstrap";
 // import zc_logo from './zc_logo.png'
 
-import { useContext } from "react";
-import { LoginContext } from "../../../contexts/loginContext";
-import { Alert } from "reactstrap";
-import ReactLoading from "react-loading";
 import styles from "./DonateModalComponenet.module.css";
 
 const projects = [
