@@ -1,0 +1,6 @@
+[] - add dev and staging environments + CI/CD + seeding for each database
+[] - build postman collection for the api
+[] - add eslint
+[x] - add cspell.json file
+[] - revise how to connect mongodb (currently a connection is created on every controller function)
+[] - research a better way to handle middleware.

@@ -1,13 +1,16 @@
-.news_wrapper a, .news_wrapper a:hover, .news_wrapper a:focus, .news_wrapper a:active {
-    text-decoration: none;
-    color: inherit;
-    text-decoration: none;
-    color: inherit;
+.news_wrapper a,
+.news_wrapper a:hover,
+.news_wrapper a:focus,
+.news_wrapper a:active {
+  text-decoration: none;
+  color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
-.category_head{
-    text-transform: uppercase;
-    font-family: 'Philosopher', sans-serif;
-    font-size: 30px;
-    color: #00505F;
+.category_head {
+  text-transform: uppercase;
+  font-family: "Philosopher", sans-serif;
+  font-size: 30px;
+  color: #00505f;
 }

@@ -1,0 +1,28 @@
+{
+  "version": "0.2",
+  "ignorePaths": [],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "editorjs",
+    "FETCHUSER",
+    "fontawesome",
+    "formik",
+    "fortawesome",
+    "fshpvp",
+    "gdata",
+    "Googlebtn",
+    "googleusercontent",
+    "jvectormap",
+    "nanoscience",
+    "oblkk",
+    "referrerpolicy",
+    "SIGNIN",
+    "unies",
+    "UPDATEUSER",
+    "zcaa",
+    "zewailcity"
+  ],
+  "ignoreWords": [],
+  "import": []
+}

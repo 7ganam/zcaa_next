@@ -1,114 +1,106 @@
-.navwrapper{
-    width: 100%;
-    /* background-color: blueviolet; */
+.remove-after:after {
+  content: none;
+}
+
+.navwrapper {
+  width: 100%;
+  /* background-color: blueviolet; */
 }
 .intro_text {
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-size: 27px;
-    /* font-weight: 600; */
-    width: 250px;
-    /* color: #7FD8E9; */
-    color:#009FC3;
-    margin-top:10px;
-    margin-bottom:14px;
-    text-align: center;
-    line-height: 37px;
-
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 27px;
+  /* font-weight: 600; */
+  width: 250px;
+  /* color: #7FD8E9; */
+  color: #009fc3;
+  margin-top: 10px;
+  margin-bottom: 14px;
+  text-align: center;
+  line-height: 37px;
 }
 
-
-.nav_bar_container{
-    padding: 0px;
-    border-top-style: solid;
-    border-top-width: 0.5px;
-    border-top-color: #C5BCBC;
-    border-bottom-style: solid;
-    border-bottom-width: 0.5px;
-    border-bottom-color: #C5BCBC;
+.nav_bar_container {
+  padding: 0px;
+  border-top-style: solid;
+  border-top-width: 0.5px;
+  border-top-color: #c5bcbc;
+  border-bottom-style: solid;
+  border-bottom-width: 0.5px;
+  border-bottom-color: #c5bcbc;
 }
 
-.nav_list{
-    display: flex;
-    width: 100%;
+.nav_list {
+  display: flex;
+  width: 100%;
 }
-
 
 .navbar-collapsed {
-    /* background-color: white; */
+  /* background-color: white; */
 }
 
-.brand_title
-{
-    font-family: 'Noto Sans', sans-serif;
-    font-family: Cairo;
-    position: relative;
-    top: 7px;
-    color: black;
-    font-size: 30px;
-    margin-top: 200px;
+.brand_title {
+  font-family: "Noto Sans", sans-serif;
+  font-family: Cairo;
+  position: relative;
+  top: 7px;
+  color: black;
+  font-size: 30px;
+  margin-top: 200px;
 }
 
-.nav_link{
-    font-family: 'Noto Sans', sans-serif;
-    /* font-family: Cairo; */
+.nav_link {
+  font-family: "Noto Sans", sans-serif;
+  /* font-family: Cairo; */
 
-    font-size: 20px;
-    margin-right: 10px;
-    margin-left: 10px;
-    text-transform: uppercase;
-
+  font-size: 20px;
+  margin-right: 10px;
+  margin-left: 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: black;
 }
 
-
-.contnet_centered{
-    justify-content: center;
+.contnet_centered {
+  justify-content: center;
 }
 
-.navbar{
-    /* background-color:whitesmoke; */
-
+.navbar {
+  /* background-color:whitesmoke; */
 }
-
-
-
-
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-    
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-    .nav_item{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .nav_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-    
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-    .nav_item{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .navbar_nav{
-        text-align: center;
-    }
+  .nav_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .navbar_nav {
+    text-align: center;
+  }
 }

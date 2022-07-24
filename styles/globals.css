@@ -1,18 +1,13 @@
-
 @import "Network_diagramComponent.css";
-@import "NewsCardComponenet.css";
-@import "LoginComponent.css";
+@import "NewsCardComponent.css";
+@import "ApplicationComponent.css";
 @import "FormComponent.css";
 @import "CollapsingEntityCardComponent.css";
 @import "date-picker.css";
-@import 'GooglebtnComponent.css';
-@import 'AdminComponent.css';
-@import 'News_form.css';
-@import 'EditorComponent.css';
-
-
-
-
+@import "GooglebtnComponent.css";
+@import "AdminComponent.css";
+@import "News_form.css";
+@import "EditorComponent.css";
 
 html,
 body {
@@ -36,7 +31,6 @@ body {
   font-display: swap;
 }
 
-
 @font-face {
   font-family: "Noto Sans";
   src: url("/fonts/Noto_Sans/NotoSans-Regular.ttf");
@@ -51,7 +45,6 @@ body {
   font-weight: 500;
   font-display: swap;
 }
-
 
 @font-face {
   font-family: "Mulish";
@@ -69,8 +62,6 @@ body {
   font-display: swap;
 }
 
-
-
 a {
   color: inherit;
   text-decoration: none;
@@ -80,56 +71,45 @@ a {
   box-sizing: border-box;
 }
 
-
-.section_title{
+.section_title {
   text-transform: uppercase;
-  font-family: 'Philosopher', sans-serif;
+  font-family: "Philosopher", sans-serif;
   /* font-weight: bold; */
   font-size: 30px;
-  color: #00505F;
+  color: #00505f;
 }
 
-
 .header_font {
-  font-family: 'Philosopher', sans-serif;
+  font-family: "Philosopher", sans-serif;
   font-size: large;
 }
 
-
-#main_component{
+#main_component {
   position: relative;
   min-height: 100vh;
 }
 
 #content_wrap {
   /* padding-bottom: 280px;   */
-    /* Footer height */
+  /* Footer height */
 }
 
-
-
-
-
-
 .header_font {
-  font-family: 'Philosopher', sans-serif;
+  font-family: "Philosopher", sans-serif;
   font-size: large;
 }
 
-.section_title{
+.section_title {
   text-transform: uppercase;
-  font-family: 'Philosopher', sans-serif;
+  font-family: "Philosopher", sans-serif;
   font-size: 30px;
-  color: #00505F;
+  color: #00505f;
 }
-
 
 /* unvisited link */
 .zcaa_link {
-  color: #0091AC;
+  color: #0091ac;
 }
-
-
 
 #page-container {
   position: relative;
@@ -144,21 +124,18 @@ a {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 2.5rem;            /* Footer height */
+  height: 2.5rem; /* Footer height */
 }
-
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
-
-
 
 /* width */
 ::-webkit-scrollbar {
@@ -173,25 +150,23 @@ a {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #26ADCB;
+  background: #26adcb;
   border-radius: 10px;
 }
 
-
-
-.codex-editor__redactor{
-  padding:20px !important;
-  margin:0 !important;
+.codex-editor__redactor {
+  padding: 20px !important;
+  margin: 0 !important;
   min-height: 500px;
- 
+
   /* border: 1px solid #BDD7DB; */
   box-sizing: border-box;
   box-shadow: 0px 4px 4px 4px rgb(0 0 0 / 25%);
   border-radius: 4px;
 }
 
-#side_div{
-  background: #FFFFFF;
+#side_div {
+  background: #ffffff;
   margin-bottom: 20px;
   /* primary200 */
   padding: 20px;
@@ -199,5 +174,4 @@ a {
   box-sizing: border-box;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-
 }

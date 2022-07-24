@@ -1,6 +1,3 @@
-import VectorMap from './components/VectorMap';
+import VectorMap from "./components/VectorMap";
 
-export {
-    VectorMap
-};
-
+export { VectorMap };
