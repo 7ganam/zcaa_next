@@ -29,7 +29,7 @@ const register_entities = async (entities) => {
       entity.entity_ref = fetched_entity;
     }
 
-    return entities;
+    return cleaned_entities2;
   } catch (error) {
     new ErrorResponse(`failed to register experience entities`, 500);
     throw ErrorResponse;

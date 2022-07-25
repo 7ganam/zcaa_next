@@ -107,10 +107,10 @@ export default function ChangeProfileComponent(props) {
           entity.end_date = new Date(entity.end_date);
         }
         entity.entity_name = {
-          _id: entity.entity_ref[0]._id,
-          name: entity.entity_ref[0].name,
-          value: entity.entity_ref[0]._id,
-          label: entity.entity_ref[0].name,
+          _id: entity.entity_ref[0]?._id,
+          name: entity.entity_ref[0]?.name,
+          value: entity.entity_ref[0]?._id,
+          label: entity.entity_ref[0]?.name,
           __v: entity.entity_ref[0]?.__v,
         };
         return entity;
