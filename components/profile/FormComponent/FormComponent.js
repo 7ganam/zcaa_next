@@ -12,6 +12,7 @@ import TextError from "./TextError";
 import DateView from "react-datepicker";
 import CreatableSelect from "react-select/creatable";
 import styles from "./FormComponent.module.css";
+import * as Yup from "yup";
 
 // HELPER FUNCTION: remap static props provided by next.js to a form suitable for react select library
 const map_selections_to_react_select_object = (exp_fields, unies, entities) => {
@@ -32,6 +33,45 @@ const map_selections_to_react_select_object = (exp_fields, unies, entities) => {
 
   return [mapped_exp_fields, mapped_unies, mapped_entities];
 };
+
+const SignupSchema = Yup.object().shape({
+  first_name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  last_name: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  email: Yup.string().email("Invalid email"),
+  // exp_field: Yup.string().required('Required'),
+  phone: Yup.number("must be a number")
+    .positive("positive numbers only ")
+    .integer("integers only"),
+  birth_date: Yup.string().required("Required"),
+  // address: Yup.string().required('Required'),
+  zc_id: Yup.number("must be a number")
+    .min(201300000, "201300000 min")
+    .required("Required"),
+  grad_year: Yup.number("must be a number")
+    .min(2017, "2017 min")
+    .required("Required"),
+  major: Yup.string().required("Required"),
+  residency: Yup.object().shape({
+    country: Yup.string().min(2, "error").required("Required"),
+    region: Yup.string().min(2, "error"),
+    // Rest of your amenities object properties
+  }),
+  exp_field: Yup.array()
+    .min(1, "Pick at least 1 field")
+    .max(3, "Pick  max 3 fields")
+    .of(
+      Yup.object().shape({
+        label: Yup.string().required(),
+        value: Yup.string().required(),
+      })
+    ),
+});
 
 const FormComponent = (props) => {
   let [mapped_exp_fields, mapped_unies, mapped_entities] =
@@ -56,7 +96,7 @@ const FormComponent = (props) => {
       </Container>
 
       <Formik
-        // validationSchema={SignupSchema}
+        validationSchema={SignupSchema}
         innerRef={formRef}
         initialValues={props.init_values}
         onSubmit={(values) => props.submit_form(values)}
