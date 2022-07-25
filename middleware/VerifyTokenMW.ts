@@ -32,7 +32,6 @@ async function VerifyTokenMW2(
     7,
     req.headers.authorization.length
   );
-  console.log("decoded.user", token);
 
   if (!token) {
     return res.status(403).send("A token is required for authentication");
