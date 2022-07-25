@@ -121,8 +121,8 @@ function CollapsingEntityCardComponent(props) {
                                 ignoreAccents: false,
                               })} // this makes all the difference!
                               defaultInputValue={
-                                form.values.entities[index].entity_ref &&
-                                form.values.entities[index].entity_ref[0].name
+                                form.values.entities[index].name &&
+                                form.values.entities[index].name
                               }
                               onChange={(newValue, actionMeta) => {
                                 setFieldValue(

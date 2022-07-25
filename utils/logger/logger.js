@@ -9,9 +9,9 @@ const log = console.log;
 chalk.level = 1;
 
 const logger = {
-  error: (text) => log(error("ERROR: "), error(text)),
-  warning: (text) => log(warning("WARNING: "), warning(text)),
-  info: (text) => log(info("INFO: "), info(text)),
+  error: (...input) => log(error("ERROR: "), error(...input)),
+  warning: (...input) => log(warning("WARNING: "), warning(...input)),
+  info: (...input) => log(info("INFO: "), info(...input)),
 };
 
 export default logger;

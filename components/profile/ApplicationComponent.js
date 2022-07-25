@@ -20,7 +20,7 @@ export default function ApplicationComponent(props) {
     first_name: "",
     last_name: "",
     email: "",
-    exp_field: "",
+    exp_field: [],
     residency: { country: "", region: "" },
     content: "",
     phone: "",

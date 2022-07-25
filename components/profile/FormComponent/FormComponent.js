@@ -13,6 +13,7 @@ import DateView from "react-datepicker";
 import CreatableSelect from "react-select/creatable";
 import styles from "./FormComponent.module.css";
 import * as Yup from "yup";
+import { Alert } from "reactstrap";
 
 // HELPER FUNCTION: remap static props provided by next.js to a form suitable for react select library
 const map_selections_to_react_select_object = (exp_fields, unies, entities) => {
@@ -47,15 +48,18 @@ const SignupSchema = Yup.object().shape({
   // exp_field: Yup.string().required('Required'),
   phone: Yup.number("must be a number")
     .positive("positive numbers only ")
-    .integer("integers only"),
+    .integer("integers only")
+    .typeError(" must be number"),
   birth_date: Yup.string().required("Required"),
   // address: Yup.string().required('Required'),
   zc_id: Yup.number("must be a number")
     .min(201300000, "201300000 min")
-    .required("Required"),
+    .required("Required")
+    .typeError(" must be number"),
   grad_year: Yup.number("must be a number")
     .min(2017, "2017 min")
-    .required("Required"),
+    .required("Required")
+    .typeError(" must be number"),
   major: Yup.string().required("Required"),
   residency: Yup.object().shape({
     country: Yup.string().min(2, "error").required("Required"),
@@ -63,14 +67,20 @@ const SignupSchema = Yup.object().shape({
     // Rest of your amenities object properties
   }),
   exp_field: Yup.array()
-    .min(1, "Pick at least 1 field")
-    .max(3, "Pick  max 3 fields")
     .of(
       Yup.object().shape({
         label: Yup.string().required(),
         value: Yup.string().required(),
       })
-    ),
+    )
+    .test({
+      message: "Pick at least 1 field",
+      test: (arr) => arr?.length > 0,
+    })
+    .test({
+      message: "Pick max 4 fields",
+      test: (arr) => arr?.length <= 3,
+    }),
 });
 
 const FormComponent = (props) => {
@@ -104,694 +114,704 @@ const FormComponent = (props) => {
         {(formik_object) => {
           return (
             <Container>
-              {
-                <div id="form_and_modal">
-                  {/* print the form state for debugging */}
-                  {/* <div>{JSON.stringify(formik_object.values.exp_field, null, 2)}</div> */}
+              <div id="form_and_modal">
+                {/* print the form state for debugging */}
+                {/* <div>{JSON.stringify(formik_object.values.exp_field, null, 2)}</div> */}
 
-                  <Form>
-                    <div id="personal_info_section ">
-                      <Row>
-                        <Col xs="12" className="">
-                          <div className={styles.form_section_title}>
-                            Personal info
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-end">
-                        <Col lg="4">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label htmlFor="first_name" className="form_text">
-                              first name{" "}
-                            </label>
-                            <Field
-                              name="first_name"
-                              className="form-control in_field"
-                              type="text"
-                            />
-                            <ErrorMessage
-                              name="first_name"
-                              component={TextError}
-                            />
-                          </div>
-                        </Col>
-                        <Col lg="4">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label htmlFor="last_name" className="form_text">
-                              Last name
-                            </label>
-                            <Field
-                              name="last_name"
-                              className="form-control in_field"
-                              type="text"
-                            />
-                            <ErrorMessage
-                              name="last_name"
-                              component={TextError}
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-end">
-                        <Col lg="8">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label
-                              htmlFor="email"
-                              className="form_text"
-                              style={{ letterSpacing: "0.2em" }}
-                            >
-                              preferred email for communication
-                              <span
-                                style={{
-                                  color: "gray",
-                                  fontWeight: "bolder",
-                                  fontSize: "11",
-                                }}
-                              >
-                                {" (Optional)"}
-                              </span>
-                            </label>
-                            <Field
-                              name="email"
-                              className="form-control in_field "
-                              type="email"
-                            />
-                            <ErrorMessage name="email" component={TextError} />
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-end">
-                        <Col lg="8">
-                          <label className="form_text">Birth date</label>
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-end">
-                        <Col lg="8">
+                <Form>
+                  <div id="personal_info_section ">
+                    <Row>
+                      <Col xs="12" className="">
+                        <div className={styles.form_section_title}>
+                          Personal info
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="justify-content-end">
+                      <Col lg="4">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label htmlFor="first_name" className="form_text">
+                            first name{" "}
+                          </label>
                           <Field
-                            name={`birth_date`}
+                            name="first_name"
+                            className="form-control in_field"
+                            type="text"
+                          />
+                          <ErrorMessage
+                            name="first_name"
+                            component={TextError}
+                          />
+                        </div>
+                      </Col>
+                      <Col lg="4">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label htmlFor="last_name" className="form_text">
+                            Last name
+                          </label>
+                          <Field
+                            name="last_name"
+                            className="form-control in_field"
+                            type="text"
+                          />
+                          <ErrorMessage
+                            name="last_name"
+                            component={TextError}
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="justify-content-end">
+                      <Col lg="8">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label
+                            htmlFor="email"
+                            className="form_text"
+                            style={{ letterSpacing: "0.2em" }}
+                          >
+                            preferred email for communication
+                            <span
+                              style={{
+                                color: "gray",
+                                fontWeight: "bolder",
+                                fontSize: "11",
+                              }}
+                            >
+                              {" (Optional)"}
+                            </span>
+                          </label>
+                          <Field
+                            name="email"
+                            className="form-control in_field "
+                            type="email"
+                          />
+                          <ErrorMessage name="email" component={TextError} />
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="justify-content-end">
+                      <Col lg="8">
+                        <label className="form_text">Birth date</label>
+                      </Col>
+                    </Row>
+                    <Row className="justify-content-end">
+                      <Col lg="8">
+                        <Field
+                          name={`birth_date`}
+                          className="form-control in_field"
+                        >
+                          {({ form, field }) => {
+                            const { setFieldValue } = form;
+                            const { value } = field;
+                            return (
+                              <DateView
+                                className="form-control in_field"
+                                style={{
+                                  textAlign: "end",
+                                }}
+                                id={`birth_date`}
+                                {...field}
+                                selected={value}
+                                peekNextMonth
+                                showMonthDropdown
+                                showYearDropdown
+                                dropdownMode="select"
+                                onChange={(val) =>
+                                  setFieldValue(`birth_date`, val)
+                                }
+                              />
+                            );
+                          }}
+                        </Field>
+                        <ErrorMessage name="birth_date" component={TextError} />
+                      </Col>
+                    </Row>
+                    <Row className="justify-content-end mt-3">
+                      <Col lg="8">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label htmlFor="phone" className="form_text">
+                            phone
+                            <span
+                              style={{
+                                color: "gray",
+                                fontWeight: "bolder",
+                                fontSize: "11",
+                              }}
+                            >
+                              {" (Optional)"}
+                            </span>
+                          </label>
+                          <Field
+                            name="phone"
+                            className="form-control in_field"
+                            type="text"
+                          />
+                          <ErrorMessage name="phone" component={TextError} />
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="justify-content-end">
+                      <Col lg="4">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label
+                            htmlFor="residency.country"
+                            className="form_text"
+                          >
+                            {" "}
+                            country of residence{" "}
+                          </label>
+                          <Field
+                            name="residency.country"
+                            className="form-control in_field"
+                          >
+                            {({ form, field }) => {
+                              const { setFieldValue } = form;
+                              const { setFieldTouched } = form;
+
+                              const value = field.value;
+                              return (
+                                <CountryDropdown
+                                  valueType="short"
+                                  style={{ width: "100%" }}
+                                  className="in_field form-control"
+                                  value={value}
+                                  onClick={() => {
+                                    // console.log(formik_object);
+                                  }}
+                                  onBlur={() =>
+                                    setFieldTouched(`residency.country`)
+                                  }
+                                  onChange={(val) => {
+                                    // console.log(formik_object);
+                                    setFieldValue(`residency.country`, val);
+                                  }}
+                                />
+                              );
+                            }}
+                          </Field>
+                          <ErrorMessage
+                            name="residency.country"
+                            component={TextError}
+                          />
+                        </div>
+                      </Col>
+
+                      <Col lg="4">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label
+                            htmlFor="residency.region"
+                            className="form_text"
+                          >
+                            region/city{" "}
+                          </label>
+                          <Field
+                            name="residency.region"
+                            className="form-control in_field"
+                          >
+                            {({ form, field }) => {
+                              const { setFieldValue } = form;
+                              const value = field.value;
+                              return (
+                                <RegionDropdown
+                                  country={
+                                    formik_object.values?.residency?.country
+                                  }
+                                  style={{ width: "100%" }}
+                                  className="in_field form-control"
+                                  value={value}
+                                  countryValueType="short"
+                                  onChange={(val) =>
+                                    setFieldValue(`residency.region`, val)
+                                  }
+                                />
+                              );
+                            }}
+                          </Field>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+
+                  <div id="undergrad_info_section ">
+                    <Row>
+                      <Col xs="12" className="">
+                        <div className={styles.form_section_title}>
+                          undergrad info
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="justify-content-end">
+                      <Col lg="8">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label htmlFor="zc_id" className="form_text">
+                            Your ZC ID
+                            <div
+                              style={{
+                                color: "gray",
+                                fontWeight: "bolder",
+                                fontSize: "12px",
+                                letterSpacing: ".1em",
+                                textTransform: "lowercase",
+                              }}
+                            >
+                              {"[Note, ID is available in grad certificate]"}
+                            </div>
+                          </label>
+
+                          <Field
+                            name="zc_id"
+                            className="form-control in_field"
+                            type="text"
+                          />
+                          <ErrorMessage name="zc_id" component={TextError} />
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="justify-content-end">
+                      <Col lg="8">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label htmlFor="grad_year" className="form_text">
+                            graduation year{" "}
+                          </label>
+                          <Field
+                            name="grad_year"
+                            className="form-control in_field"
+                            type="text"
+                          />
+                          <ErrorMessage
+                            name="grad_year"
+                            component={TextError}
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="justify-content-end">
+                      <Col lg="4">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label htmlFor="major" className="form_text">
+                            Major{" "}
+                          </label>
+                          <Field
+                            name="major"
+                            as="select"
+                            className="form-control in_field"
+                          >
+                            <option value="">Select major</option>
+                            <option value="environmental engineering">
+                              Environmental engineering
+                            </option>
+                            <option value="nanotechnology engineering">
+                              Nanotechnology engineering
+                            </option>
+                            <option value="renewable energy engineering">
+                              Renewable energy engineering
+                            </option>
+                            <option value="Aerospace engineering">
+                              Aerospace engineering
+                            </option>
+                            <option value="communications engineering">
+                              Communications engineering
+                            </option>
+                            <option value="biomedical science">
+                              Biomedical science
+                            </option>
+                            <option value="materials science">
+                              Materials science
+                            </option>
+                            <option value="nanoscience">Nanoscience</option>
+                            <option value="physics of the earth and universe">
+                              Physics of the earth and universe
+                            </option>
+                          </Field>
+                          <ErrorMessage name="major" component={TextError} />
+                        </div>
+                      </Col>
+                      <Col lg="4">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label htmlFor="minor" className="form_text">
+                            minor
+                            <span
+                              style={{
+                                color: "gray",
+                                fontWeight: "bolder",
+                                fontSize: "11",
+                              }}
+                            >
+                              {" (Optional)"}
+                            </span>
+                          </label>
+                          <Field
+                            name="minor"
+                            as="select"
+                            className="form-control in_field"
+                          >
+                            <option value="">Select minor</option>
+                            <option value="environmental engineering">
+                              Environmental engineering
+                            </option>
+                            <option value="nanotechnology engineering">
+                              Nanotechnology engineering
+                            </option>
+                            <option value="renewable energy engineering">
+                              Renewable energy engineering
+                            </option>
+                            <option value="Aerospace engineering">
+                              Aerospace engineering
+                            </option>
+                            <option value="communications engineering">
+                              Communications engineering
+                            </option>
+                            <option value="biomedical science">
+                              Biomedical science
+                            </option>
+                            <option value="materials science">
+                              Materials science
+                            </option>
+                            <option value="nanoscience">Nanoscience</option>
+                            <option value="physics of the earth and universe">
+                              Physics of the earth and universe
+                            </option>
+                          </Field>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="justify-content-end">
+                      <Col lg="8">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label
+                            htmlFor="other_undergraduate_data"
+                            className="form_text"
+                          >
+                            Others
+                            <span
+                              style={{
+                                color: "gray",
+                                fontWeight: "bolder",
+                                fontSize: "11",
+                              }}
+                            >
+                              {" (Optional)"}
+                            </span>
+                          </label>
+                          <Field
+                            name="other_undergraduate_data"
+                            className="form-control in_field"
+                            type="text"
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+
+                  <div id="career_info_section ">
+                    <Row className="section_title_row">
+                      <Col xs="12" className="">
+                        <div className={styles.form_section_title}>
+                          career info
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="field_of_exp_row justify-content-end ">
+                      <Col lg="8">
+                        <div className="form-group" style={{ width: "100%" }}>
+                          <label
+                            // onClick={() => console.log(`clicked`)}
+                            htmlFor="exp_field"
+                            className="form_text"
+                          >
+                            field of experience
+                            <div
+                              style={{
+                                color: "gray",
+                                fontWeight: "bolder",
+                                fontSize: "12px",
+                                letterSpacing: ".1em",
+                                textTransform: "lowercase",
+                              }}
+                            >
+                              {
+                                ' If you can\'t find your choice Type it then press "ENTER" to be added to our list '
+                              }
+                            </div>
+                          </label>
+
+                          <Field
+                            name="exp_field"
+                            as="select"
                             className="form-control in_field"
                           >
                             {({ form, field }) => {
                               const { setFieldValue } = form;
                               const { value } = field;
                               return (
-                                <DateView
-                                  className="form-control in_field"
-                                  style={{
-                                    textAlign: "end",
-                                  }}
-                                  id={`birth_date`}
+                                <CreatableSelect
+                                  id="exp_field"
                                   {...field}
-                                  selected={value}
-                                  peekNextMonth
-                                  showMonthDropdown
-                                  showYearDropdown
-                                  dropdownMode="select"
-                                  onChange={(val) =>
-                                    setFieldValue(`birth_date`, val)
+                                  isClearable
+                                  isMulti
+                                  onChange={(newValue) => {
+                                    setFieldValue(`exp_field`, newValue);
+                                    if (!value || value.length < 1) {
+                                      formik_object.setFieldError(
+                                        "exp_field",
+                                        "Pick at least 1 field"
+                                      );
+                                    }
+                                  }}
+                                  options={
+                                    (value && value.length) === 3
+                                      ? []
+                                      : mapped_exp_fields
                                   }
+                                  noOptionsMessage={() => {
+                                    return (value && value.length) === 3
+                                      ? "you can select max of 3 fields of experiences"
+                                      : "No options available";
+                                  }}
                                 />
                               );
                             }}
                           </Field>
-                          <ErrorMessage
-                            name="birth_date"
-                            component={TextError}
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-end mt-3">
-                        <Col lg="8">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label htmlFor="phone" className="form_text">
-                              phone
-                              <span
-                                style={{
-                                  color: "gray",
-                                  fontWeight: "bolder",
-                                  fontSize: "11",
-                                }}
-                              >
-                                {" (Optional)"}
-                              </span>
-                            </label>
-                            <Field
-                              name="phone"
-                              className="form-control in_field"
-                              type="text"
-                            />
-                            <ErrorMessage name="phone" component={TextError} />
+                          <div style={{ color: "red" }}>
+                            {formik_object.errors.exp_field}
                           </div>
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-end">
-                        <Col lg="4">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label
-                              htmlFor="residency.country"
-                              className="form_text"
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      id="universities_card"
+                      className="justify-content-end"
+                      style={{ marginTop: "50px" }}
+                    >
+                      <Col lg="8">
+                        <div className=" from_group_box">
+                          <div className="form_text3 ">
+                            Universities
+                            <div
+                              style={{
+                                color: "#ADE3ED",
+                                fontWeight: "bolder",
+                                fontSize: "15px",
+                                letterSpacing: ".1em",
+                              }}
                             >
+                              {" (Optional)"}
+                            </div>
+                          </div>
+                          <div className="form_text4 ">
+                            Which universities or institutes other than ZC have
+                            you visited?
+                          </div>
+                          <div className="d-flex ">
+                            <div
+                              className="form-group mx-3  ml-lg-4 "
+                              style={{ width: "100%" }}
+                            >
+                              <FieldArray name="universities">
+                                {(fieldArrayProps) => {
+                                  const { push, remove, form } =
+                                    fieldArrayProps;
+                                  const { values } = form;
+                                  const universities = values?.universities;
+                                  return (
+                                    <div>
+                                      {universities.map((phNumber, index) => (
+                                        <div
+                                          key={index}
+                                          className="d-flex mt-5  mt-lg-4 mx-lg-0"
+                                        >
+                                          <div
+                                            key={index}
+                                            style={{ width: "100%" }}
+                                          >
+                                            <CollapsingUniCardComponent
+                                              unies={mapped_unies}
+                                              index={index}
+                                              remove={remove}
+                                            />
+                                          </div>
+                                          <div
+                                            className="form-group  my-0 d-none d-lg-flex"
+                                            style={{
+                                              width: "70px",
+                                              color: "grey",
+                                              fontSize: "30px",
+                                              display: "flex",
+                                              justifyContent: "center",
+                                              alignItems: "center",
+                                            }}
+                                          >
+                                            {
+                                              // index > 0 &&
+                                              <div
+                                                className="trash_icon"
+                                                title={`delete university ${
+                                                  index + 1
+                                                }`}
+                                                style={{}}
+                                                onClick={() => remove(index)}
+                                              >
+                                                <FontAwesomeIcon
+                                                  icon={faTrashAlt}
+                                                  className="pt-1"
+                                                />
+                                              </div>
+                                            }
+                                          </div>
+                                        </div>
+                                      ))}
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          justifyContent: "center",
+                                          fontSize: "40px",
+                                          flexDirection: "column",
+                                          justifyItems: "center",
+                                          alignItems: "center",
+                                        }}
+                                      >
+                                        <div
+                                          onClick={() => push("")}
+                                          type="button"
+                                          className=" plus_button "
+                                        >
+                                          <FontAwesomeIcon icon={faPlus} />
+                                        </div>
+                                        <div className="plus_button_text">
+                                          Add more universities
+                                        </div>
+                                      </div>
+                                    </div>
+                                  );
+                                }}
+                              </FieldArray>
+                            </div>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      id="entities_card"
+                      className="justify-content-end"
+                      style={{ marginTop: "50px" }}
+                    >
+                      <Col lg="8">
+                        <div className=" from_group_box">
+                          <div className="form_text3 ">
+                            {"companies & organizations "}
+                            <div className={styles.optional_text}>
                               {" "}
-                              country of residence{" "}
-                            </label>
-                            <Field
-                              name="residency.country"
-                              className="form-control in_field"
-                            >
-                              {({ form, field }) => {
-                                const { setFieldValue } = form;
-                                const { setFieldTouched } = form;
-
-                                const value = field.value;
-                                return (
-                                  <CountryDropdown
-                                    valueType="short"
-                                    style={{ width: "100%" }}
-                                    className="in_field form-control"
-                                    value={value}
-                                    onClick={() => {
-                                      // console.log(formik_object);
-                                    }}
-                                    onBlur={() =>
-                                      setFieldTouched(`residency.country`)
-                                    }
-                                    onChange={(val) => {
-                                      // console.log(formik_object);
-                                      setFieldValue(`residency.country`, val);
-                                    }}
-                                  />
-                                );
-                              }}
-                            </Field>
-                            <ErrorMessage
-                              name="residency.country"
-                              component={TextError}
-                            />
-                          </div>
-                        </Col>
-
-                        <Col lg="4">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label
-                              htmlFor="residency.region"
-                              className="form_text"
-                            >
-                              region/city{" "}
-                            </label>
-                            <Field
-                              name="residency.region"
-                              className="form-control in_field"
-                            >
-                              {({ form, field }) => {
-                                const { setFieldValue } = form;
-                                const value = field.value;
-                                return (
-                                  <RegionDropdown
-                                    country={
-                                      formik_object.values?.residency?.country
-                                    }
-                                    style={{ width: "100%" }}
-                                    className="in_field form-control"
-                                    value={value}
-                                    countryValueType="short"
-                                    onChange={(val) =>
-                                      setFieldValue(`residency.region`, val)
-                                    }
-                                  />
-                                );
-                              }}
-                            </Field>
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-
-                    <div id="undergrad_info_section ">
-                      <Row>
-                        <Col xs="12" className="">
-                          <div className={styles.form_section_title}>
-                            undergrad info
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-end">
-                        <Col lg="8">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label htmlFor="zc_id" className="form_text">
-                              Your ZC ID
-                              <div
-                                style={{
-                                  color: "gray",
-                                  fontWeight: "bolder",
-                                  fontSize: "12px",
-                                  letterSpacing: ".1em",
-                                  textTransform: "lowercase",
-                                }}
-                              >
-                                {"[Note, ID is available in grad certificate]"}
-                              </div>
-                            </label>
-
-                            <Field
-                              name="zc_id"
-                              className="form-control in_field"
-                              type="text"
-                            />
-                            <ErrorMessage name="zc_id" component={TextError} />
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-end">
-                        <Col lg="8">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label htmlFor="grad_year" className="form_text">
-                              graduation year{" "}
-                            </label>
-                            <Field
-                              name="grad_year"
-                              className="form-control in_field"
-                              type="text"
-                            />
-                            <ErrorMessage
-                              name="grad_year"
-                              component={TextError}
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-end">
-                        <Col lg="4">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label htmlFor="major" className="form_text">
-                              Major{" "}
-                            </label>
-                            <Field
-                              name="major"
-                              as="select"
-                              className="form-control in_field"
-                            >
-                              <option value="">Select major</option>
-                              <option value="environmental engineering">
-                                Environmental engineering
-                              </option>
-                              <option value="nanotechnology engineering">
-                                Nanotechnology engineering
-                              </option>
-                              <option value="renewable energy engineering">
-                                Renewable energy engineering
-                              </option>
-                              <option value="Aerospace engineering">
-                                Aerospace engineering
-                              </option>
-                              <option value="communications engineering">
-                                Communications engineering
-                              </option>
-                              <option value="biomedical science">
-                                Biomedical science
-                              </option>
-                              <option value="materials science">
-                                Materials science
-                              </option>
-                              <option value="nanoscience">Nanoscience</option>
-                              <option value="physics of the earth and universe">
-                                Physics of the earth and universe
-                              </option>
-                            </Field>
-                            <ErrorMessage name="major" component={TextError} />
-                          </div>
-                        </Col>
-                        <Col lg="4">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label htmlFor="minor" className="form_text">
-                              minor
-                              <span
-                                style={{
-                                  color: "gray",
-                                  fontWeight: "bolder",
-                                  fontSize: "11",
-                                }}
-                              >
-                                {" (Optional)"}
-                              </span>
-                            </label>
-                            <Field
-                              name="minor"
-                              as="select"
-                              className="form-control in_field"
-                            >
-                              <option value="">Select minor</option>
-                              <option value="environmental engineering">
-                                Environmental engineering
-                              </option>
-                              <option value="nanotechnology engineering">
-                                Nanotechnology engineering
-                              </option>
-                              <option value="renewable energy engineering">
-                                Renewable energy engineering
-                              </option>
-                              <option value="Aerospace engineering">
-                                Aerospace engineering
-                              </option>
-                              <option value="communications engineering">
-                                Communications engineering
-                              </option>
-                              <option value="biomedical science">
-                                Biomedical science
-                              </option>
-                              <option value="materials science">
-                                Materials science
-                              </option>
-                              <option value="nanoscience">Nanoscience</option>
-                              <option value="physics of the earth and universe">
-                                Physics of the earth and universe
-                              </option>
-                            </Field>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-end">
-                        <Col lg="8">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label
-                              htmlFor="other_undergraduate_data"
-                              className="form_text"
-                            >
-                              Others
-                              <span
-                                style={{
-                                  color: "gray",
-                                  fontWeight: "bolder",
-                                  fontSize: "11",
-                                }}
-                              >
-                                {" (Optional)"}
-                              </span>
-                            </label>
-                            <Field
-                              name="other_undergraduate_data"
-                              className="form-control in_field"
-                              type="text"
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                    </div>
-
-                    <div id="career_info_section ">
-                      <Row className="section_title_row">
-                        <Col xs="12" className="">
-                          <div className={styles.form_section_title}>
-                            career info
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row className="field_of_exp_row justify-content-end ">
-                        <Col lg="8">
-                          <div className="form-group" style={{ width: "100%" }}>
-                            <label
-                              // onClick={() => console.log(`clicked`)}
-                              htmlFor="exp_field"
-                              className="form_text"
-                            >
-                              field of experience
-                              <div
-                                style={{
-                                  color: "gray",
-                                  fontWeight: "bolder",
-                                  fontSize: "12px",
-                                  letterSpacing: ".1em",
-                                  textTransform: "lowercase",
-                                }}
-                              >
-                                {
-                                  ' If you can\'t find your choice Type it then press "ENTER" to be added to our list '
-                                }
-                              </div>
-                            </label>
-
-                            <Field
-                              name="exp_field"
-                              as="select"
-                              className="form-control in_field"
-                            >
-                              {({ form, field }) => {
-                                const { setFieldValue } = form;
-                                const { value } = field;
-                                return (
-                                  <CreatableSelect
-                                    id="exp_field"
-                                    {...field}
-                                    isClearable
-                                    isMulti
-                                    onChange={(newValue) => {
-                                      setFieldValue(`exp_field`, newValue);
-                                    }}
-                                    options={
-                                      (value && value.length) === 3
-                                        ? []
-                                        : mapped_exp_fields
-                                    }
-                                    noOptionsMessage={() => {
-                                      return (value && value.length) === 3
-                                        ? "you can select max of 3 fields of experiences"
-                                        : "No options available";
-                                    }}
-                                  />
-                                );
-                              }}
-                            </Field>
-                            <ErrorMessage
-                              name="exp_field"
-                              component={TextError}
-                            />
-                            <div style={{ color: "red" }}>
-                              {formRef.current
-                                ? formRef.current.errors.exp_field
-                                : ""}
+                              {" (Optional)"}{" "}
                             </div>
                           </div>
-                        </Col>
-                      </Row>
-                      <Row
-                        id="universities_card"
-                        className="justify-content-end"
-                        style={{ marginTop: "50px" }}
-                      >
-                        <Col lg="8">
-                          <div className=" from_group_box">
-                            <div className="form_text3 ">
-                              Universities
-                              <div
-                                style={{
-                                  color: "#ADE3ED",
-                                  fontWeight: "bolder",
-                                  fontSize: "15px",
-                                  letterSpacing: ".1em",
-                                }}
-                              >
-                                {" (Optional)"}
-                              </div>
-                            </div>
-                            <div className="form_text4 ">
-                              Which universities or institutes other than ZC
-                              have you visited?
-                            </div>
-                            <div className="d-flex ">
-                              <div
-                                className="form-group mx-3  ml-lg-4 "
-                                style={{ width: "100%" }}
-                              >
-                                <FieldArray name="universities">
-                                  {(fieldArrayProps) => {
-                                    const { push, remove, form } =
-                                      fieldArrayProps;
-                                    const { values } = form;
-                                    const universities = values?.universities;
-                                    return (
-                                      <div>
-                                        {universities.map((phNumber, index) => (
-                                          <div
-                                            key={index}
-                                            className="d-flex mt-5  mt-lg-4 mx-lg-0"
-                                          >
-                                            <div
-                                              key={index}
-                                              style={{ width: "100%" }}
-                                            >
-                                              <CollapsingUniCardComponent
-                                                unies={mapped_unies}
-                                                index={index}
-                                                remove={remove}
-                                              />
-                                            </div>
-                                            <div
-                                              className="form-group  my-0 d-none d-lg-flex"
-                                              style={{
-                                                width: "70px",
-                                                color: "grey",
-                                                fontSize: "30px",
-                                                display: "flex",
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                              }}
-                                            >
-                                              {
-                                                // index > 0 &&
-                                                <div
-                                                  className="trash_icon"
-                                                  title={`delete university ${
-                                                    index + 1
-                                                  }`}
-                                                  style={{}}
-                                                  onClick={() => remove(index)}
-                                                >
-                                                  <FontAwesomeIcon
-                                                    icon={faTrashAlt}
-                                                    className="pt-1"
-                                                  />
-                                                </div>
-                                              }
-                                            </div>
-                                          </div>
-                                        ))}
+                          <div className="form_text4 ">
+                            Which entities did you visit during your career?
+                          </div>
+                          <div className="d-flex ">
+                            <div
+                              className="form-group mx-3  ml-lg-4 "
+                              style={{ width: "100%" }}
+                            >
+                              <FieldArray name="entities">
+                                {(fieldArrayProps) => {
+                                  const { push, remove, form } =
+                                    fieldArrayProps;
+                                  const { values } = form;
+                                  const { entities } = values;
+
+                                  return (
+                                    <div>
+                                      {entities.map((phNumber, index) => (
                                         <div
-                                          style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            fontSize: "40px",
-                                            flexDirection: "column",
-                                            justifyItems: "center",
-                                            alignItems: "center",
-                                          }}
+                                          className="d-flex mt-4"
+                                          key={index}
                                         >
                                           <div
-                                            onClick={() => push("")}
-                                            type="button"
-                                            className=" plus_button "
-                                          >
-                                            <FontAwesomeIcon icon={faPlus} />
-                                          </div>
-                                          <div className="plus_button_text">
-                                            Add more universities
-                                          </div>
-                                        </div>
-                                      </div>
-                                    );
-                                  }}
-                                </FieldArray>
-                              </div>
-                            </div>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row
-                        id="entities_card"
-                        className="justify-content-end"
-                        style={{ marginTop: "50px" }}
-                      >
-                        <Col lg="8">
-                          <div className=" from_group_box">
-                            <div className="form_text3 ">
-                              {"companies & organizations "}
-                              <div className={styles.optional_text}>
-                                {" "}
-                                {" (Optional)"}{" "}
-                              </div>
-                            </div>
-                            <div className="form_text4 ">
-                              Which entities did you visit during your career?
-                            </div>
-                            <div className="d-flex ">
-                              <div
-                                className="form-group mx-3  ml-lg-4 "
-                                style={{ width: "100%" }}
-                              >
-                                <FieldArray name="entities">
-                                  {(fieldArrayProps) => {
-                                    const { push, remove, form } =
-                                      fieldArrayProps;
-                                    const { values } = form;
-                                    const { entities } = values;
-
-                                    return (
-                                      <div>
-                                        {entities.map((phNumber, index) => (
-                                          <div
-                                            className="d-flex mt-4"
                                             key={index}
+                                            style={{ width: "100%" }}
                                           >
-                                            <div
-                                              key={index}
-                                              style={{ width: "100%" }}
-                                            >
-                                              <CollapsingEntityCardComponent
-                                                entities={mapped_entities}
-                                                index={index}
-                                                remove={remove}
-                                                formik_object={formik_object}
-                                              />
-                                            </div>
+                                            <CollapsingEntityCardComponent
+                                              entities={mapped_entities}
+                                              index={index}
+                                              remove={remove}
+                                              formik_object={formik_object}
+                                            />
+                                          </div>
 
-                                            <div
-                                              className={`form-group  my-0 d-none d-lg-flex ${styles.trash_icon_container}`}
-                                            >
-                                              {
-                                                <div
-                                                  className="trash_icon"
-                                                  title={`delete entity ${
-                                                    index + 1
-                                                  }`}
-                                                  onClick={() => remove(index)}
-                                                >
-                                                  <FontAwesomeIcon
-                                                    icon={faTrashAlt}
-                                                    className="pt-1"
-                                                  />
-                                                </div>
-                                              }
-                                            </div>
-                                          </div>
-                                        ))}
-                                        <div
-                                          className={styles.plus_button_button}
-                                        >
                                           <div
-                                            onClick={() => push({})}
-                                            type="button"
-                                            className="  plus_button "
+                                            className={`form-group  my-0 d-none d-lg-flex ${styles.trash_icon_container}`}
                                           >
-                                            <FontAwesomeIcon icon={faPlus} />
-                                          </div>
-                                          <div className="plus_button_text">
-                                            Add more entities
+                                            {
+                                              <div
+                                                className="trash_icon"
+                                                title={`delete entity ${
+                                                  index + 1
+                                                }`}
+                                                onClick={() => remove(index)}
+                                              >
+                                                <FontAwesomeIcon
+                                                  icon={faTrashAlt}
+                                                  className="pt-1"
+                                                />
+                                              </div>
+                                            }
                                           </div>
                                         </div>
+                                      ))}
+                                      <div
+                                        className={styles.plus_button_button}
+                                      >
+                                        <div
+                                          onClick={() => push({})}
+                                          type="button"
+                                          className="  plus_button "
+                                        >
+                                          <FontAwesomeIcon icon={faPlus} />
+                                        </div>
+                                        <div className="plus_button_text">
+                                          Add more entities
+                                        </div>
                                       </div>
-                                    );
-                                  }}
-                                </FieldArray>
-                              </div>
+                                    </div>
+                                  );
+                                }}
+                              </FieldArray>
                             </div>
                           </div>
-                        </Col>
-                      </Row>
-                    </div>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
 
-                    <div className={styles.form_submit_section}>
+                  <div className={styles.form_submit_section}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: "100px",
+                      }}
+                    >
+                      {!formik_object.isValid && (
+                        <Alert
+                          color="danger"
+                          className="mt-3 mr-4"
+                          // style={{ width: "100px" }}
+                        >
+                          {"form data not valid"}
+                        </Alert>
+                      )}
                       <button
-                        style={{ marginBottom: "100px" }}
+                        style={{ height: "50px" }}
                         type="submit"
                         className="btn btn-primary"
-                        disabled={!formik_object.isValid}
+                        // disabled={!formik_object.isValid}
                       >
-                        {!formik_object.isValid
-                          ? "form data not valid"
-                          : "Submit"}
+                        {"Submit"}
                       </button>
                     </div>
-                  </Form>
-                </div>
-              }
+                  </div>
+                </Form>
+              </div>
             </Container>
           );
         }}
