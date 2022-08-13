@@ -5,6 +5,10 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import { AuthContextProvider } from "../contexts/AuthContext";
 import LoginModalComponent from "components/shared/LoginModalComponent/LoginModalComponent";
+import FooterComponent from "components/shared/FooterComponent/FooterComponent";
+import NavbarComponent from "components/shared/NavbarComponent/NavbarComponent";
+import Layout from "components/Layout";
+import { useEffect, useState } from "react";
 
 const Network_diagramComponent = dynamic(
   () =>
@@ -15,9 +19,7 @@ const Network_diagramComponent = dynamic(
     ssr: false,
   }
 );
-import FooterComponent from "components/shared/FooterComponent/FooterComponent";
-import NavbarComponent from "components/shared/NavbarComponent/NavbarComponent";
-import Layout from "components/Layout";
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 

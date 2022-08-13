@@ -15,13 +15,37 @@ const handleClick = (e, countryCode) => {
   // console.log(data.ref_country_codes)
 };
 
-const Map = () => {
+function is_browser() {
+  return (
+    typeof window != "undefined" &&
+    window.document &&
+    typeof VectorMap != "undefined"
+  );
+}
+
+const generateMapData = (countriesWithUsers) => {
+  const markers = countriesWithUsers?.map((entry) => {
+    // console.log(data)
+    let obj = data.ref_country_codes?.find((obj) => obj.alpha2 === entry.code);
+    let marker = {
+      latLng: [obj.latitude, obj.longitude],
+      name: `${entry.count} Alumni in ${obj.country}  `,
+    };
+    return marker;
+  });
+
+  const countArray = countriesWithUsers?.map((entry) => {
+    // return array of the Alumni count in each entry of the markers
+    return entry.count;
+  });
+  return [markers, countArray, countriesWithUsers];
+};
+
+const Map = (props) => {
   const [markers, setMarkers] = useState([]);
-  const [count_array, setcount_array] = useState([]);
-  const [countries, setCountries] = useState([]);
+  const [countArray, setCountArray] = useState([]);
+
   let mapRef = useRef(null);
-  // let setmapRef = element => { mapRef = element; console.log(`mapRef`, element) };
-  // const mapRef = React.createRef()
   if (typeof window != "undefined") {
     window.jQuery = $;
   }
@@ -32,60 +56,23 @@ const Map = () => {
   };
 
   useEffect(() => {
-    // fetch countries data here .. only runs when the component mounts
-
-    setTimeout(() => {
-      const fetched_countries = [
-        { code: "DE", country: "Germany", count: 5 },
-        { code: "RU", country: "Russia", count: 7 },
-        { code: "US", country: "United States", count: 13 },
-        { code: "FR", country: "France", count: 4 },
-        { code: "IT", country: "Italy", count: 3 },
-        { code: "AU", country: "Austria", count: 2 },
-        { code: "EG", country: "Egypt", count: 50 },
-      ];
-      setCountries(fetched_countries);
-      const [markers, count_array] = produce_markers(
-        fetched_countries,
-        data.ref_country_codes
-      );
-      setMarkers(markers);
-      setcount_array(count_array);
-    }, 1000);
-  }, []);
-
-  const produce_markers = (countries, data) => {
-    const markers = countries.map((entry) => {
-      // console.log(data)
-      let obj = data.find((obj) => obj.country === entry.country);
-      let marker = {
-        latLng: [obj.latitude, obj.longitude],
-        name: `${entry.count} Alumni in ${obj.country}  `,
-      };
-      return marker;
-    });
-
-    const count_array = countries.map((entry) => {
-      // return array of the Alumnis count in each entry of the markers
-      return entry.count;
-    });
-    return [markers, count_array];
-  };
+    const [markers, countArray] = generateMapData(props.countriesWithUsers);
+    setMarkers(markers);
+    setCountArray(countArray);
+  }, [props.countriesWithUsers]);
 
   const tip_handler = (e, el, code) => {
     // console.log(el)
-    let country_data = countries.find((country) => {
+    let country_data = props.countriesWithUsers.find((country) => {
       return country.code == code;
     }); // if the country hovered dont' have Alumni this will be undefined
     // console.log({ country_data })
-    // let number_of_alum = countries[code]
+    // let number_of_alum = countriesWithUsers[code]
     let hoverd_country_name = el.html();
     if (el.html() === "Israel") {
       hoverd_country_name = "Palestine";
     }
 
-    let hovered_country = countries.find((c) => c.code == code);
-    //  el.html(el.html()+' (GDP - '+countries[code]+')');
     if (country_data) {
       el.html(country_data.count + " Alumni in " + hoverd_country_name);
     } else {
@@ -93,35 +80,18 @@ const Map = () => {
     }
   };
 
-  let change_scale = () => {
-    if (window.innerWidth < 900) {
-      var zoomSettings = {
-        scale: 1.5,
-        lat: 41.91572,
-        lng: 12.43812,
-        animate: true,
-      };
-      // if (map_ref) { mapRef.current.$mapObject.setFocus(zoomSettings); }
-      if (map_ref) {
-        map_ref.setFocus(zoomSettings);
-      }
-    }
-  };
-  function is_browser() {
-    return (
-      typeof window != "undefined" &&
-      window.document &&
-      typeof VectorMap != "undefined"
-    );
-  }
-
   return (
     <>
       {is_browser() && (
         <>
           <VectorMap
+            onRegionSelected={(e, code, isSelected, selectedRegions) => {
+              props.setSelectedCountries(selectedRegions);
+            }}
+            onMarkerSelected={(e, code, isSelected, selectedMarkers) => {
+              props.setSelectedMarkers(selectedMarkers);
+            }}
             set_map_ref={set_map_ref}
-            // myref={setmapRef}
             ref={mapRef}
             markersSelectable={true}
             markers={markers}
@@ -138,7 +108,7 @@ const Map = () => {
                 {
                   attribute: "r",
                   scale: [5, 8],
-                  values: count_array,
+                  values: countArray,
                 },
               ],
             }}
@@ -176,4 +146,4 @@ const Map = () => {
     </>
   );
 };
-export default Map;
+export default React.memo(Map);
