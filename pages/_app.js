@@ -9,15 +9,15 @@ import LoginModalComponent from "components/shared/LoginModalComponent/LoginModa
 const Network_diagramComponent = dynamic(
   () =>
     import(
-      "../components/shared/Network_diagramComponent/Network_diagramComponent"
+      "components/shared/Network_diagramComponent/Network_diagramComponent"
     ),
   {
     ssr: false,
   }
 );
-import FooterComponent from "../components/shared/FooterComponent/FooterComponent";
-import NavbarComponent from "../components/shared/NavbarComponent/NavbarComponent";
-import Layout from "../components/Layout";
+import FooterComponent from "components/shared/FooterComponent/FooterComponent";
+import NavbarComponent from "components/shared/NavbarComponent/NavbarComponent";
+import Layout from "components/Layout";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 

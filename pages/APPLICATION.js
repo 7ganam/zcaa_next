@@ -1,5 +1,5 @@
 import React from "react";
-import ApplicationComponent from "../components/profile/ApplicationComponent";
+import ApplicationComponent from "components/profile/ApplicationComponent";
 const {
   fetch_all_experience_fields,
 } = require("../controllers/experienceField_controller");

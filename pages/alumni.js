@@ -1,6 +1,6 @@
 import React from "react";
 import AboutComponent from "components/about/AboutComponent";
-function ABOUTUS() {
+function Alumni() {
   return (
     <div>
       <AboutComponent />
@@ -8,4 +8,4 @@ function ABOUTUS() {
   );
 }
 
-export default ABOUTUS;
+export default Alumni;

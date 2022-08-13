@@ -10,18 +10,6 @@ import $ from "jquery";
 const VectorMap = dynamic(() => import("./lib/components/VectorMap"));
 
 // console.log(`VectorMap`, VectorMap)
-const markers2 = [
-  { latLng: [52.5, 13.39], name: "Berlin" },
-  { latLng: [53.56, 10.0], name: "Hamburg" },
-  { latLng: [48.13, 11.56], name: "Munich" },
-  { latLng: [50.95, 6.96], name: "Cologne" },
-  { latLng: [50.11, 8.68], name: "Frankfurt am Main" },
-  { latLng: [48.77, 9.17], name: "Stuttgart" },
-  { latLng: [51.23, 6.78], name: "Düsseldorf" },
-  { latLng: [51.51, 7.46], name: "Dortmund" },
-  { latLng: [51.45, 7.01], name: "Essen" },
-  { latLng: [53.07, 8.8], name: "Bremen" },
-];
 
 const handleClick = (e, countryCode) => {
   // console.log(data.ref_country_codes)
@@ -42,7 +30,6 @@ const Map = () => {
   let set_map_ref = (map_input) => {
     map_ref = map_input;
   };
-  let test = 44;
 
   useEffect(() => {
     // fetch countries data here .. only runs when the component mounts
@@ -99,7 +86,7 @@ const Map = () => {
 
     let hovered_country = countries.find((c) => c.code == code);
     //  el.html(el.html()+' (GDP - '+countries[code]+')');
-    if (!!country_data) {
+    if (country_data) {
       el.html(country_data.count + " Alumni in " + hoverd_country_name);
     } else {
       el.html(hoverd_country_name);
@@ -107,8 +94,6 @@ const Map = () => {
   };
 
   let change_scale = () => {
-    console.log("map_ref", map_ref);
-    console.log(`this`, this);
     if (window.innerWidth < 900) {
       var zoomSettings = {
         scale: 1.5,
@@ -116,7 +101,6 @@ const Map = () => {
         lng: 12.43812,
         animate: true,
       };
-      console.log("map_ref", map_ref);
       // if (map_ref) { mapRef.current.$mapObject.setFocus(zoomSettings); }
       if (map_ref) {
         map_ref.setFocus(zoomSettings);

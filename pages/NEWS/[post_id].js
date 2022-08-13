@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NewsPostViewComponent from "../../components/News/NewsPostViewComponent/NewsPostViewComponent";
+import NewsPostViewComponent from "components/News/NewsPostViewComponent/NewsPostViewComponent";
 
 const {
   fetch_all_news,

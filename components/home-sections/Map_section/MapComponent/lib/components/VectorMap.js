@@ -1,7 +1,7 @@
 import React from "react";
 // import './VectorMap.scss';
 import PropTypes from "prop-types";
-import maps from "./../maps";
+import maps from "../maps";
 import jVectorMapNext from "jvectormap-next";
 import $ from "jquery";
 
@@ -19,6 +19,7 @@ class VectorMap extends React.PureComponent {
   /**
    * load required map
    */
+  // eslint-disable-next-line react/no-deprecated
   componentWillMount() {
     const { map } = this.props;
 

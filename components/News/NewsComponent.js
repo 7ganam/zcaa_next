@@ -28,18 +28,19 @@ export default class NewsComponent extends Component {
   render() {
     return (
       <div className={styles.news_wrapper}>
-        <img
+        {/* <img
           style={{
             width: "100%",
             height: "auto",
             position: "absolute",
             top: 0,
             zIndex: "-2",
+            overflow: "hidden",
           }}
           src={"/about/bg2.png"}
           id="c"
           alt="oval"
-        />
+        /> */}
         <Container>
           {Object.keys(this.props.news).length === 0 ? (
             <Row

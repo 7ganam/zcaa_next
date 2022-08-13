@@ -123,6 +123,13 @@ const NavbarComponent = () => {
                       </a>
                     </Link>
                   </NavItem>
+                  <NavItem className={styles.nav_item}>
+                    <Link href="/alumni">
+                      <a style={{ textDecoration: "none" }}>
+                        <div className={styles.nav_link}>Alumni</div>
+                      </a>
+                    </Link>
+                  </NavItem>
                   <div style={{ flexGrow: "1" }}></div>
                   {!IsLoggedIn && (
                     <>

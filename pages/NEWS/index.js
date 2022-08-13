@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row, Col } from "reactstrap";
 import ReactLoading from "react-loading";
-import NewsCardComponent from "../../components/News/NewsCardComponent/NewsCardComponent";
+import NewsCardComponent from "components/News/NewsCardComponent/NewsCardComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NewsComponent from "../../components/News/NewsComponent";
+import NewsComponent from "components/News/NewsComponent";
 // import { fetch_all_news } from '../../controllers/news_controller'
 const { fetch_all_news } = require("../../controllers/news_controller");
 
@@ -13,7 +13,7 @@ function NEWS(props) {
       {props && props.news ? (
         <NewsComponent news={JSON.parse(props.news)} />
       ) : (
-        <div>'loading'</div>
+        <div>loading</div>
       )}
     </>
   );

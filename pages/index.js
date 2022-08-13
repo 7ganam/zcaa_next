@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from "../components/home/home.module.css";
+import styles from "components/home-sections/home.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import React from "react";
@@ -7,13 +7,13 @@ import React from "react";
 import dynamic from "next/dynamic";
 const { fetch_all_news } = require("../controllers/news_controller");
 
-import About_section from "../components/home/About_section/About_section";
-import News_section from "../components/home/News_section/News_section";
-import Welcome_section from "../components/home/Welcom_section/Welcom_section";
-// import Map_section from '../components/home/Map_section/Map_section'
+import About_section from "components/home-sections/About_section/About_section";
+import News_section from "components/home-sections/News_section/News_section";
+import Welcome_section from "components/home-sections/Welcom_section/Welcom_section";
+// import Map_section from 'components/home/Map_section/Map_section'
 
 const Map_section = dynamic(
-  () => import("../components/home/Map_section/Map_section"),
+  () => import("components/home-sections/Map_section/Map_section"),
   {
     ssr: false,
   }

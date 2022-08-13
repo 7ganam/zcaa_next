@@ -1,5 +1,5 @@
 import React from "react";
-import ChangeProfileComponent from "../components/profile/ChangeProfileComponent";
+import ChangeProfileComponent from "components/profile/ChangeProfileComponent";
 const {
   fetch_all_experience_fields,
 } = require("../controllers/experienceField_controller");
