@@ -73,8 +73,8 @@ const createUser = async (user) => {
 
 const getAllUsers = async () => {
   try {
-    const courses = await Users.find();
-    return courses;
+    const users = await Users.find().populate("experience_field").exec();
+    return users;
   } catch (error) {
     console.log("getAllUsers error", error);
     new ErrorResponse(`failed to fetch users`, 500);

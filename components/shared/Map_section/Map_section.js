@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Container } from "reactstrap";
 import MapComponent from "./MapComponent/MapComponent";
 import UsersViewComponent from "./UsersViewComponent/UsersViewComponent";
-const generateCountriesWithStudents = (users) => {
+const generateCountriesWithUsers = (users) => {
   let countriesWithUsers = [];
   for (let i = 0; i < users.length; i++) {
     let user = users[i];
@@ -33,8 +33,7 @@ const generateCountriesWithStudents = (users) => {
   return countriesWithUsers;
 };
 
-function Map_section() {
-  const [users, setUsers] = useState([]);
+function Map_section({ users }) {
   const [countriesWithUsers, setCountriesWithUsers] = useState([]);
 
   const [selectedCountries, setSelectedCountries] = useState([]);
@@ -43,24 +42,17 @@ function Map_section() {
     useState([]);
 
   useEffect(() => {
-    const FetchUsers = async () => {
+    const formatUsers = async () => {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`
-        );
-        const fetchedUsers = await response.json();
-        setUsers(fetchedUsers.data);
-        let countriesWithUsers = generateCountriesWithStudents(
-          fetchedUsers.data
-        );
+        let countriesWithUsers = generateCountriesWithUsers(users);
         if (countriesWithUsers) setCountriesWithUsers(countriesWithUsers);
       } catch (error) {
         let err = error;
       }
     };
 
-    FetchUsers();
-  }, []);
+    formatUsers();
+  }, [users]);
 
   useEffect(() => {
     let selectedMarkersCountries = selectedMarkers.map(

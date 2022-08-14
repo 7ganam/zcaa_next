@@ -1,0 +1,22 @@
+.section_header {
+  font-family: Philosopher;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 48px;
+  line-height: 125.5%;
+  /* or 60px */
+  text-transform: uppercase;
+  /* primary400 */
+  color: #0091ac;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+@include media-breakpoint-up(md) {
+}
+@include media-breakpoint-up(lg) {
+}
+@include media-breakpoint-up(xl) {
+}
+@include media-breakpoint-up(xxl) {
+}

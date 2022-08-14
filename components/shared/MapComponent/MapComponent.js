@@ -85,7 +85,6 @@ const Map = () => {
     let country_data = countries.find((country) => {
       return country.code == code;
     }); // if the country hovered dont' have Alumni this will be undefined
-    console.log({ country_data });
     // let number_of_alum = countries[code]
     let hoverd_country_name = el.html();
     if (el.html() === "Israel") {
@@ -94,7 +93,7 @@ const Map = () => {
 
     let hovered_country = countries.find((c) => c.code == code);
     //  el.html(el.html()+' (GDP - '+countries[code]+')');
-    if (!!country_data) {
+    if (country_data) {
       el.html(country_data.count + " Alumni in " + hoverd_country_name);
     } else {
       el.html(hoverd_country_name);
@@ -110,7 +109,7 @@ const Map = () => {
         animate: true,
       };
       // console.log('mapRef', mapRef.current.$mapObject)
-      if (!!mapRef.current) {
+      if (mapRef.current) {
         mapRef.current.$mapObject.setFocus(zoomSettings);
       }
       // console.log({ mapRef })

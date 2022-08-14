@@ -13,7 +13,7 @@ import Welcome_section from "components/home-sections/Welcom_section/Welcom_sect
 // import Map_section from 'components/home/Map_section/Map_section'
 
 const Map_section = dynamic(
-  () => import("components/home-sections/Map_section/Map_section"),
+  () => import("components/shared/Map_section/Map_section"),
   {
     ssr: false,
   }
