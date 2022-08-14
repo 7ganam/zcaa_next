@@ -73,7 +73,10 @@ const createUser = async (user) => {
 
 const getAllUsers = async () => {
   try {
-    const users = await Users.find().populate("experience_field").exec();
+    const users = await Users.find()
+      .populate("experience_field")
+      .populate("universities.uni_ref")
+      .exec();
     return users;
   } catch (error) {
     console.log("getAllUsers error", error);

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import ExperienceFieldsSection from "components/alumni-sections/ExperienceFieldsSection/ExperienceFieldsSection";
+import UniversitiesSection from "components/alumni-sections/UniversitiesSection/UniversitiesSection";
+
 import dynamic from "next/dynamic";
 
 const Map_section = dynamic(
@@ -31,6 +33,7 @@ function Alumni() {
     <div>
       <Map_section users={users} />
       <ExperienceFieldsSection users={users} />
+      <UniversitiesSection users={users} />
     </div>
   );
 }
