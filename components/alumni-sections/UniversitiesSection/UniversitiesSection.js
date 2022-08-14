@@ -16,7 +16,6 @@ const generateUniversitiesWithUsers = (users) => {
     let user = users[i];
     for (let j = 0; j < user.universities.length; j++) {
       let uni = user.universities[j].uni_ref[0];
-      console.log("uni :>> ", uni);
       let title = uni.name;
       let id = uni._id;
       let ExFieldEntryIndex = universitiesWithUsers.findIndex(
@@ -42,7 +41,7 @@ const generateUniversitiesWithUsers = (users) => {
   return sortedUniversitiesWithUsers;
 };
 export default function UniversitiesSection({ users }) {
-  let step = 9;
+  let step = 12;
   const [limit, setLimit] = useState(step);
 
   let UniversitiesWithUsers = useMemo(
@@ -53,7 +52,7 @@ export default function UniversitiesSection({ users }) {
   let renderUniversitiesCards = (UniversitiesWithUsers) => {
     let view = UniversitiesWithUsers.map((entry) => {
       return (
-        <Col key={entry._id} sm={6} md={4}>
+        <Col key={entry._id} sm={6} md={3}>
           <UniversityCard
             title={entry.title}
             body={"Anim pariatur cliche reprehenderit, enim eiusmod high life"}

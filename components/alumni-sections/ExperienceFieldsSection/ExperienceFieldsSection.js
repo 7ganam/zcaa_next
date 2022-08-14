@@ -91,7 +91,7 @@ export default function ExperienceFieldsSection({ users }) {
               style={{ margin: "5px" }}
               onClick={() => {
                 setLimit((oldLimit) => {
-                  oldLimit + 30;
+                  return oldLimit + 30;
                 });
               }}
             >
