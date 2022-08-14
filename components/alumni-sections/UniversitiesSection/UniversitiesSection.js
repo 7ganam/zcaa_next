@@ -67,19 +67,26 @@ export default function UniversitiesSection({ users }) {
 
   return (
     <React.Fragment>
-      <img
+      <div
         style={{
           width: "100%",
-          height: "auto",
-          position: "absolute",
-          top: 0,
-          zIndex: "-2",
+          overflow: "hidden",
         }}
-        src={"/about/bg2.png"}
-        id="c"
-        alt="oval"
-      />
-      <Container id="mission_vision_container">
+      >
+        {/* <img
+          style={{
+            width: "100%",
+            height: "auto",
+            position: "absolute",
+            top: 0,
+            zIndex: "-2",
+          }}
+          src={"/about/bg2.png"}
+          id="c"
+          alt="oval"
+        /> */}
+      </div>
+      <Container id="mission_vision_container" className=" mb-5">
         <Row style={{ marginTop: "60px", marginBottom: "10px" }}>
           <Col md="12">
             <div id="mission_header" className={styles.section_header}>

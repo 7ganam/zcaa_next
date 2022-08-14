@@ -25,18 +25,20 @@ export default class NewsComponent extends Component {
   render() {
     return (
       <Fragment>
-        <img
-          style={{
-            width: "100%",
-            height: "auto",
-            position: "absolute",
-            top: 0,
-            zIndex: "-2",
-          }}
-          src={"/about/bg2.png"}
-          id="c"
-          alt="oval"
-        />
+        <div>
+          <img
+            style={{
+              width: "100%",
+              height: "auto",
+              position: "absolute",
+              top: 0,
+              zIndex: "-2",
+            }}
+            src={"/about/bg2.png"}
+            id="c"
+            alt="oval"
+          />
+        </div>
         <Container>
           {Object.keys(this.props.news_state.News).length === 0 ? (
             <Row

@@ -66,18 +66,20 @@ export default function ExperienceFieldsSection({ users }) {
 
   return (
     <React.Fragment>
-      <img
-        style={{
-          width: "100%",
-          height: "auto",
-          position: "absolute",
-          top: 0,
-          zIndex: "-2",
-        }}
-        src={"/about/bg2.png"}
-        id="c"
-        alt="oval"
-      />
+      <div>
+        <img
+          style={{
+            width: "100%",
+            height: "auto",
+            position: "absolute",
+            top: 0,
+            zIndex: "-2",
+          }}
+          src={"/about/bg2.png"}
+          id="c"
+          alt="oval"
+        />
+      </div>
       <Container id="mission_vision_container">
         <Row style={{ marginTop: "60px", marginBottom: "10px" }}>
           <Col md="12">

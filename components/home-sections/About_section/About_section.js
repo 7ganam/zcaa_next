@@ -9,20 +9,22 @@ import Link from "next/link";
 function About_section() {
   return (
     <Container fluid style={{ position: "relative", padding: "0" }}>
-      <img
-        style={{
-          width: "100%",
-          height: "auto",
-          position: "absolute",
-          top: "-100px",
-          zIndex: "-1",
-          transform: " scaleX(-1)",
-          opacity: ".5",
-        }}
-        src={"/about/bg2.png"}
-        id="c"
-        alt="oval"
-      />
+      <div>
+        <img
+          style={{
+            width: "100%",
+            height: "auto",
+            position: "absolute",
+            top: "-100px",
+            zIndex: "-1",
+            transform: " scaleX(-1)",
+            opacity: ".5",
+          }}
+          src={"/about/bg2.png"}
+          id="c"
+          alt="oval"
+        />
+      </div>
 
       <Container
         id="aboutus_container"
