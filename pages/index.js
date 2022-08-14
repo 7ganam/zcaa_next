@@ -2,7 +2,7 @@ import Head from "next/head";
 import styles from "components/home-sections/home.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import dynamic from "next/dynamic";
 const { fetch_all_news } = require("../controllers/news_controller");
@@ -20,6 +20,23 @@ const Map_section = dynamic(
 );
 
 export default function Home(props) {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const FetchUsers = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`
+        );
+        const fetchedUsers = await response.json();
+        setUsers(fetchedUsers.data);
+      } catch (error) {
+        let err = error;
+      }
+    };
+
+    FetchUsers();
+  }, []);
   return (
     <div className={`p-0 ${styles.home_page}`}>
       <About_section />
@@ -28,7 +45,7 @@ export default function Home(props) {
 
       <Welcome_section />
 
-      <Map_section />
+      <Map_section users={users} />
     </div>
   );
 }
