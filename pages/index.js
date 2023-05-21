@@ -20,23 +20,24 @@ const Map_section = dynamic(
 );
 
 export default function Home(props) {
-  const [users, setUsers] = useState([]);
+  let users = props.users;
+  // const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    const FetchUsers = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`
-        );
-        const fetchedUsers = await response.json();
-        setUsers(fetchedUsers.data);
-      } catch (error) {
-        let err = error;
-      }
-    };
+  // useEffect(() => {
+  //   const FetchUsers = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`
+  //       );
+  //       const fetchedUsers = await response.json();
+  //       setUsers(fetchedUsers.data);
+  //     } catch (error) {
+  //       let err = error;
+  //     }
+  //   };
 
-    FetchUsers();
-  }, []);
+  //   FetchUsers();
+  // }, []);
   return (
     <div className={`p-0 ${styles.home_page}`}>
       <About_section />

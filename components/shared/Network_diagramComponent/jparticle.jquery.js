@@ -1,7 +1,12 @@
 // import { $, jQuery } from 'jquery';
 
-export default function initJParticle($) {
+export default function initJParticle($, images) {
   "use strict";
+
+  console.log(images);
+  var img = new Image();
+  img.src =
+    "https://lh3.googleusercontent.com/a/AGNmyxaEwO2Kd1yTnm9yRybari5QsAKNYDf--XQltrfxhg=s96-c";
 
   var createParticlesSandbox, Utils;
 
@@ -411,6 +416,17 @@ export default function initJParticle($) {
         Particle.initSize();
         Particle.initPosition();
         Particle.initVectors();
+        Particle.initImage();
+      };
+
+      /*
+       * Initialize particle's image.
+       */
+      Particle.initImage = function initImage() {
+        var img2 = new Image();
+        let imageIndex = Utils.getRandNumber(0, images.length - 1, true);
+        img2.src = images[imageIndex];
+        Particle.image = img2;
       };
 
       /*
@@ -478,12 +494,35 @@ export default function initJParticle($) {
        */
       Particle.draw = function draw() {
         var context = Particle.canvas.context;
+        // console.log(Particle.image);
+        if (Particle.size <= 2) {
+          context.save();
 
-        context.beginPath();
-        context.arc(Particle.x, Particle.y, Particle.size / 2, 0, Math.PI * 2);
-        context.fillStyle = Particle.params.color;
-        context.fill();
-        context.closePath();
+          context.beginPath();
+          context.arc(Particle.x, Particle.y, 30 / 2, 0, Math.PI * 2);
+          context.clip();
+          context.filter = "grayscale(1)";
+          context.drawImage(
+            Particle.image,
+            Particle.x - 15,
+            Particle.y - 15,
+            30,
+            30
+          );
+          context.restore();
+        } else {
+          context.beginPath();
+          context.arc(
+            Particle.x,
+            Particle.y,
+            Particle.size / 2,
+            0,
+            Math.PI * 2
+          );
+          context.fillStyle = Particle.params.color;
+          context.fill();
+          context.closePath();
+        }
       };
 
       /*

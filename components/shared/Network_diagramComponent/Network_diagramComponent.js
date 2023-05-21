@@ -147,11 +147,12 @@ const draw_glope = (screen_width) => {
   }
 };
 
-function Network_diagramComponent(props) {
+function Network_diagramComponent({ images }) {
   const router = useRouter();
 
-  initJParticle($);
   useEffect(() => {
+    if (images.length === 0) return;
+    initJParticle($, images);
     var w = window,
       d = document,
       e = d.documentElement,
@@ -173,7 +174,7 @@ function Network_diagramComponent(props) {
 
     draw_glope(x);
     return function cleanup() {};
-  }, []);
+  }, [images]);
   return (
     <div
       id="network_div"

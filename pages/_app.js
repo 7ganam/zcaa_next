@@ -23,6 +23,30 @@ const Network_diagramComponent = dynamic(
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
+  const [users, setUsers] = useState([]);
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const FetchUsers = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`
+        );
+        const fetchedUsers = await response.json();
+        setUsers(fetchedUsers.data);
+        setImages(
+          fetchedUsers.data.map((user) => {
+            return user.g_picture;
+          })
+        );
+      } catch (error) {
+        let err = error;
+      }
+    };
+
+    FetchUsers();
+  }, []);
+
   return (
     <>
       <Head>
@@ -47,8 +71,8 @@ function MyApp({ Component, pageProps }) {
             <LoginModalComponent />
             <NavbarComponent />
             <div style={{ flexGrow: "1" }}>
-              <Network_diagramComponent />
-              <Component {...pageProps} />
+              <Network_diagramComponent images={images} />
+              <Component {...pageProps} users={users} />
             </div>
             <FooterComponent />
           </div>
