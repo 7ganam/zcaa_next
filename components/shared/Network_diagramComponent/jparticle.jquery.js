@@ -494,14 +494,28 @@ export default function initJParticle($, images) {
        */
       Particle.draw = function draw() {
         var context = Particle.canvas.context;
+
         // console.log(Particle.image);
-        if (Particle.size <= 2) {
-          context.save();
+        if (Particle.size > 3) {
           const imageSize = 25;
+
+          context.beginPath();
+          context.arc(
+            Particle.x,
+            Particle.y,
+            (imageSize + 4) / 2,
+            0,
+            Math.PI * 2
+          );
+          context.fillStyle = Particle.params.color;
+          context.fill();
+          context.closePath();
+
+          context.save();
           context.beginPath();
           context.arc(Particle.x, Particle.y, imageSize / 2, 0, Math.PI * 2);
           context.clip();
-          context.filter = "grayscale(1)";
+          context.filter = "grayscale(100%)";
           if (Particle.image.complete) {
             context.drawImage(
               Particle.image,
