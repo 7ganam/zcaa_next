@@ -264,8 +264,6 @@ export default function initJParticle($, images) {
           particle.update();
         }
 
-        particle.draw();
-
         if (
           !ParticlesSandbox.params.disableMouse &&
           ParticlesSandbox.mouse.hoverCanvas
@@ -290,6 +288,7 @@ export default function initJParticle($, images) {
             );
           }
         }
+        particle.draw();
       }
 
       ParticlesSandbox.requestID = window.requestAnimFrame(
