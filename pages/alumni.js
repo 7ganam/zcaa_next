@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+
 import ExperienceFieldsSection from "components/alumni-sections/ExperienceFieldsSection/ExperienceFieldsSection";
 import UniversitiesSection from "components/alumni-sections/UniversitiesSection/UniversitiesSection";
-
 import dynamic from "next/dynamic";
 
 const Map_section = dynamic(
@@ -10,24 +10,24 @@ const Map_section = dynamic(
     ssr: false,
   }
 );
-function Alumni() {
-  const [users, setUsers] = useState([]);
+function Alumni({ users }) {
+  // const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    const FetchUsers = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`
-        );
-        const fetchedUsers = await response.json();
-        setUsers(fetchedUsers.data);
-      } catch (error) {
-        let err = error;
-      }
-    };
+  // useEffect(() => {
+  //   const FetchUsers = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users`
+  //       );
+  //       const fetchedUsers = await response.json();
+  //       setUsers(fetchedUsers.data);
+  //     } catch (error) {
+  //       let err = error;
+  //     }
+  //   };
 
-    FetchUsers();
-  }, []);
+  //   FetchUsers();
+  // }, []);
 
   return (
     <div>

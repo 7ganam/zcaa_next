@@ -1,11 +1,11 @@
 import { React, useEffect } from "react";
+
+import $ from "jquery";
 // import { $, jQuery } from 'jquery';
 import initJParticle from "./jparticle.jquery";
-import $ from "jquery";
+import { useRouter } from "next/router";
 // import "./Network_diagramComponent.css"
 // import { withRouter } from 'react-router-dom';
-
-import { useRouter } from "next/router";
 
 const draw_glope = (screen_width) => {
   var globe = window.planetaryjs.planet();
@@ -172,9 +172,21 @@ function Network_diagramComponent({ images }) {
       });
     }
 
-    draw_glope(x);
     return function cleanup() {};
   }, [images]);
+
+  useEffect(() => {
+    var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.getElementsByTagName("body")[0],
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+    draw_glope(x);
+    return function cleanup() {};
+  }, []);
+
   return (
     <div
       id="network_div"
