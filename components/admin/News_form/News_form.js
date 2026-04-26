@@ -12,7 +12,7 @@ const EditorComponent = dynamic(
 );
 // import "./News_form.css"
 import DateView from "react-datepicker";
-import ReactLoading from "react-loading";
+import ReactLoading from "components/shared/LoadingSpinner";
 import { Alert } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";

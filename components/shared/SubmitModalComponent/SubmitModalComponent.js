@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Modal, ModalBody } from "reactstrap";
 import GooglebtnComponent from "components/shared/GooglebtnComponent/GooglebtnComponent";
 import { Container } from "reactstrap";
-import ReactLoading from "react-loading";
+import ReactLoading from "components/shared/LoadingSpinner";
 import { AuthContext } from "contexts/AuthContext";
 
 function SubmitModalComponent(props) {

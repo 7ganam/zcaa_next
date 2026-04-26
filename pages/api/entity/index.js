@@ -1,8 +1,6 @@
 import { fetch_all_entities } from "../../../controllers/entity_controller";
 var _ = require("lodash");
 
-import getConfig from "next/config";
-
 export default async function handler(req, res) {
   const { method } = req;
 

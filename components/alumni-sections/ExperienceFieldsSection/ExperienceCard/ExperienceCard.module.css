@@ -1,49 +1,62 @@
 .card {
   width: 100%;
-  background: #ffffff;
-  /* primary200 */
-
-  border: 1px solid #bdd7db;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 11px;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 80, 95, 0.12);
+  border-radius: 22px;
+  box-shadow: 0 18px 48px rgba(0, 80, 95, 0.1);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(38, 173, 203, 0.42);
+  box-shadow: 0 24px 58px rgba(0, 80, 95, 0.16);
 }
 
 .card_head {
   width: 100%;
-
-  border-radius: 11px 11px 0 0;
-  height: 50px;
+  min-height: 66px;
   display: flex;
   flex-direction: row;
   overflow: hidden;
   cursor: pointer;
 }
-.card_head_tip {
-  height: 50px;
-  width: 50px;
-  min-width: 50px;
 
-  background-color: #26adcb;
+.card_head_tip {
+  height: 66px;
+  width: 66px;
+  min-width: 66px;
+  background: #e9fbff;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-right: 1px solid rgba(38, 173, 203, 0.18);
 }
+
+.card_head_tip img {
+  width: 30px;
+  height: auto;
+}
+
 .card_head_text {
   width: 100%;
-
-  font-family: "Cairo";
+  padding: 0 16px;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 17px;
   font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 125.5%;
-  color: #bdd7db;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #06333a;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 10px;
   overflow: hidden;
 }
+
 .card_head_inner_text {
   overflow: hidden;
   white-space: nowrap;
@@ -54,10 +67,10 @@
 }
 .card_collapse {
   width: 100%;
-
-  background-color: #dfeaec;
+  background: #f6fbfc;
   display: flex;
   flex-wrap: wrap;
+  border-top: 1px solid rgba(0, 80, 95, 0.08);
 }
 
 .image_container {
@@ -66,5 +79,9 @@
 
 .user_image {
   width: 40px;
+  height: 40px;
+  object-fit: cover;
   border-radius: 100%;
+  border: 2px solid #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 80, 95, 0.14);
 }

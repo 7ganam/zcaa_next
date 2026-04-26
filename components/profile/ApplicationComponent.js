@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Container } from "reactstrap";
-import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import WelcomeMessageComponent from "./FormComponent/WelcomeMessageComponent/WelcomeMessageComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormComponent from "./FormComponent/FormComponent";
 import SubmitModalComponent from "components/shared/SubmitModalComponent/SubmitModalComponent";
 import styles from "./ApplicationComponent.module.css";
-import ReactLoading from "react-loading";
+import ReactLoading from "components/shared/LoadingSpinner";
 
 export default function ApplicationComponent(props) {
   // LOGIN CONTEXT
@@ -35,8 +34,8 @@ export default function ApplicationComponent(props) {
   };
 
   // GOOGLE MODAL states
-  const [ShowModal, setModal] = useState(false);
-  const toggle = () => setModal(!ShowModal);
+  const [showModal, setShowModal] = useState(false);
+  const toggle = () => setShowModal(!showModal);
 
   //FORM submit handler
   let submit_form = (form_data) => {
@@ -66,22 +65,31 @@ export default function ApplicationComponent(props) {
         <>
           <SubmitModalComponent
             submit_applicant={submit_applicant}
-            ShowModal={ShowModal}
+            ShowModal={showModal}
             toggle={toggle}
           />
-          <Container
-            fluid
-            style={{
-              background: "rgba(164, 223, 234, 0.15)",
-              minHeight: "80vh",
-              padding: "0",
-            }}
-          >
-            <FormComponent
-              {...props}
-              init_values={init_values}
-              submit_form={submit_form}
-            />
+          <Container fluid className={styles.application_page}>
+            <Container className={styles.application_hero}>
+              <div>
+                <div className={styles.eyebrow}>Membership</div>
+                <h1>Apply for ZCAA membership.</h1>
+                <p>
+                  Share your profile, studies, and career journey so the alumni
+                  network can stay connected and useful.
+                </p>
+              </div>
+              <div className={styles.hero_badge}>
+                <img src="/logo.png" alt="ZCAA logo" />
+              </div>
+            </Container>
+
+            <Container className={styles.form_surface}>
+              <FormComponent
+                {...props}
+                init_values={init_values}
+                submit_form={submit_form}
+              />
+            </Container>
           </Container>
         </>
       );

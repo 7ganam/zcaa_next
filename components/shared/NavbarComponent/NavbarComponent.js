@@ -56,11 +56,8 @@ const NavbarComponent = () => {
               alignItems: "center",
             }}
           >
-            <Link href="/ADMIN/CREATEPOST">
-              <a style={{ color: "white" }}>
-                {" "}
-                <div>CREATE NEW POST</div>
-              </a>
+            <Link href="/ADMIN/CREATEPOST" style={{ color: "white" }}>
+              <div>CREATE NEW POST</div>
             </Link>
           </div>
           <div
@@ -71,10 +68,8 @@ const NavbarComponent = () => {
               alignItems: "center",
             }}
           >
-            <Link href="/NEWS">
-              <a style={{ color: "white" }}>
-                <div>DELETE POSTS</div>
-              </a>
+            <Link href="/NEWS" style={{ color: "white" }}>
+              <div>DELETE POSTS</div>
             </Link>
           </div>
         </Container>
@@ -102,32 +97,23 @@ const NavbarComponent = () => {
                   navbar
                 >
                   <NavItem className={styles.nav_item}>
-                    <Link href="/">
-                      <a style={{ textDecoration: "none" }}>
-                        {" "}
-                        <div className={styles.nav_link}>Home</div>
-                      </a>
+                    <Link href="/" style={{ textDecoration: "none" }}>
+                      <div className={styles.nav_link}>Home</div>
                     </Link>
                   </NavItem>
                   <NavItem className={styles.nav_item}>
-                    <Link href="/ABOUTUS">
-                      <a style={{ textDecoration: "none" }}>
-                        <div className={styles.nav_link}>about us</div>
-                      </a>
+                    <Link href="/ABOUTUS" style={{ textDecoration: "none" }}>
+                      <div className={styles.nav_link}>about us</div>
                     </Link>
                   </NavItem>
                   <NavItem className={styles.nav_item}>
-                    <Link href="/NEWS">
-                      <a style={{ textDecoration: "none" }}>
-                        <div className={styles.nav_link}>news</div>
-                      </a>
+                    <Link href="/NEWS" style={{ textDecoration: "none" }}>
+                      <div className={styles.nav_link}>news</div>
                     </Link>
                   </NavItem>
                   <NavItem className={styles.nav_item}>
-                    <Link href="/alumni">
-                      <a style={{ textDecoration: "none" }}>
-                        <div className={styles.nav_link}>Alumni</div>
-                      </a>
+                    <Link href="/alumni" style={{ textDecoration: "none" }}>
+                      <div className={styles.nav_link}>Alumni</div>
                     </Link>
                   </NavItem>
                   <div style={{ flexGrow: "1" }}></div>
@@ -141,12 +127,13 @@ const NavbarComponent = () => {
                           borderRightColor: "grey",
                         }}
                       >
-                        <Link href="/APPLICATION">
-                          <a style={{ textDecoration: "none" }}>
-                            <div className={styles.nav_link}>
-                              apply for membership
-                            </div>
-                          </a>
+                        <Link
+                          href="/APPLICATION"
+                          style={{ textDecoration: "none" }}
+                        >
+                          <div className={styles.nav_link}>
+                            apply for membership
+                          </div>
                         </Link>
                       </NavItem>
                       <NavItem
@@ -204,15 +191,14 @@ const NavbarComponent = () => {
                           <DropdownMenu right>
                             <DropdownItem>
                               {" "}
-                              <Link href="/CHANGEPROFILE">
-                                <a
-                                  style={{
-                                    textDecoration: "none",
-                                    color: "grey",
-                                  }}
-                                >
-                                  <div>Edit your profile</div>
-                                </a>
+                              <Link
+                                href="/CHANGEPROFILE"
+                                style={{
+                                  textDecoration: "none",
+                                  color: "grey",
+                                }}
+                              >
+                                <div>Edit your profile</div>
                               </Link>
                             </DropdownItem>
                           </DropdownMenu>

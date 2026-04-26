@@ -1,12 +1,10 @@
-import React from "react";
-import { Modal, ModalBody } from "reactstrap";
-import { Container } from "reactstrap";
+import React, { useContext } from "react";
+import { Alert, Container, Modal, ModalBody } from "reactstrap";
 import GooglebtnComponent from "components/shared/GooglebtnComponent/GooglebtnComponent";
 
-import { useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
-import { Alert } from "reactstrap";
-import ReactLoading from "react-loading";
+import ReactLoading from "components/shared/LoadingSpinner";
+import styles from "./LoginModalComponent.module.css";
 
 function LoginModalComponent() {
   const { actions, state, ToggleLoginModal, IsLogInModalShown } =
@@ -26,9 +24,10 @@ function LoginModalComponent() {
       <div id="google_modal">
         <Modal
           size="lg"
+          className={styles.login_modal}
           style={{
-            maxWidth: "1600px",
-            width: "80%",
+            maxWidth: "980px",
+            width: "92%",
             marginRight: "auto",
             marginLeft: "auto",
             backgroundColor: "transparent",
@@ -37,30 +36,29 @@ function LoginModalComponent() {
           toggle={toggle}
         >
           <div style={{}}></div>
-          <ModalBody style={{ padding: "0px" }}>
-            <div style={{}}>
+          <ModalBody className={styles.modal_body}>
+            <div>
               {
                 <Container
                   fluid
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "0px",
-                  }}
+                  className={styles.login_container}
                 >
-                  <div id="login_card" style={{}}>
+                  <div id="login_card" className={styles.login_card}>
+                    <div className={styles.login_art}>
+                      <div className={styles.eyebrow}>Member Access</div>
+                      <h2>Welcome back to the ZCAA network.</h2>
+                      <p>
+                        Sign in with your Zewail City account to keep your
+                        profile and alumni connections up to date.
+                      </p>
+                    </div>
+                    <div className={styles.login_form}>
                     <img
-                      style={{
-                        width: "150px",
-                        height: "auto",
-                        opacity: "0.5",
-                        marginTop: "70px",
-                      }}
+                      className={styles.logo}
                       src={"/logo.png"}
                       alt="logo"
                     />
-                    <div id="login_disclaimer">
+                    <div id="login_disclaimer" className={styles.login_disclaimer}>
                       <span className="font1">Use your </span>
                       <span className="font2">zewailcity email </span>
                       <span className="font1">to Login </span>
@@ -94,15 +92,7 @@ function LoginModalComponent() {
                         </Alert>
                       )}
                       {state.isLoggingIn && (
-                        <div
-                          style={{
-                            width: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginTop: "20px",
-                          }}
-                        >
+                        <div className={styles.loading_row}>
                           <ReactLoading
                             type={"spin"}
                             color={"#00D2F9"}
@@ -110,6 +100,7 @@ function LoginModalComponent() {
                           />
                         </div>
                       )}
+                    </div>
                     </div>
                   </div>
                 </Container>

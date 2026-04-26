@@ -1,12 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 
 import { Container, Row, Col, Button } from "reactstrap";
 
 import ExperienceCard from "./ExperienceCard/ExperienceCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./ExperienceFieldsSection.module.css";
 
@@ -65,32 +64,20 @@ export default function ExperienceFieldsSection({ users }) {
   };
 
   return (
-    <React.Fragment>
-      <div>
-        <img
-          style={{
-            width: "100%",
-            height: "auto",
-            position: "absolute",
-            top: 0,
-            zIndex: "-2",
-          }}
-          src={"/about/bg2.png"}
-          id="c"
-          alt="oval"
-        />
-      </div>
+    <section className={styles.alumni_section}>
       <Container id="mission_vision_container">
-        <Row style={{ marginTop: "60px", marginBottom: "10px" }}>
+        <div className={styles.section_intro}>
+          <div className={styles.eyebrow}>Expertise</div>
+          <h2>ZC Alumni’s Experience Fields</h2>
+          <p>Browse the disciplines and industries represented in the alumni network.</p>
+        </div>
+        <Row className={styles.cards_row}>
           <Col md="12">
-            <div id="mission_header" className={styles.section_header}>
-              ZC Alumni’s Experience Fields:
-            </div>
           </Col>
           {renderExFieldsCards(ExFieldsWithUsers.slice(0, limit))}
-          <div style={{ margin: "auto", marginTop: "30px" }}>
+          <div className={styles.actions}>
             <Button
-              style={{ margin: "5px" }}
+              className={styles.action_button}
               onClick={() => {
                 setLimit((oldLimit) => {
                   return oldLimit + 30;
@@ -105,7 +92,7 @@ export default function ExperienceFieldsSection({ users }) {
               Show more
             </Button>
             <Button
-              style={{ margin: "5px" }}
+              className={styles.action_button}
               onClick={() => {
                 setLimit(30);
               }}
@@ -118,9 +105,8 @@ export default function ExperienceFieldsSection({ users }) {
               />
             </Button>
           </div>
-          {/* <img id='loading' src='/static/img/loading.gif' style='width: 50%' onload='startTimer("333"); alert(1)');' /> */}
         </Row>
       </Container>
-    </React.Fragment>
+    </section>
   );
 }

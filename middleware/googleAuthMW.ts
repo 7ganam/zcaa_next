@@ -7,10 +7,16 @@ async function googleAuthMW(
   next: Function
 ) {
   try {
-    let googleAccessToken = req.headers.authorization.substring(
-      7,
-      req.headers.authorization.length
-    );
+    const authorization = req.headers.authorization;
+
+    if (!authorization) {
+      return res.status(401).json({
+        success: false,
+        message: "Missing authorization header",
+      });
+    }
+
+    let googleAccessToken = authorization.substring(7, authorization.length);
 
     let { success, error_message, userData } = await validateGoogleUser(
       googleAccessToken

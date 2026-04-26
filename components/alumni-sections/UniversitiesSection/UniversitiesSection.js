@@ -1,12 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 
 import { Container, Row, Col, Button } from "reactstrap";
 
 import UniversityCard from "./UniversityCard/UniversityCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./UniversitiesSection.module.css";
 
@@ -66,48 +65,21 @@ export default function UniversitiesSection({ users }) {
   };
 
   return (
-    <React.Fragment>
-      <div
-        style={{
-          width: "100%",
-          overflow: "hidden",
-        }}
-      >
-        {/* <img
-          style={{
-            width: "100%",
-            height: "auto",
-            position: "absolute",
-            top: 0,
-            zIndex: "-2",
-          }}
-          src={"/about/bg2.png"}
-          id="c"
-          alt="oval"
-        /> */}
-      </div>
-      <Container id="mission_vision_container" className=" mb-5">
-        <Row style={{ marginTop: "60px", marginBottom: "10px" }}>
+    <section className={styles.alumni_section}>
+      <Container id="mission_vision_container" className="mb-5">
+        <div className={styles.section_intro}>
+          <div className={styles.eyebrow}>Academic Footprint</div>
+          <h2>ZC Alumni’s Visited Universities</h2>
+          <p>Institutions connected to Zewail City alumni study, research, and exchange.</p>
+        </div>
+        <Row className={styles.cards_row}>
           <Col md="12">
-            <div id="mission_header" className={styles.section_header}>
-              ZC Alumni’s Visited Universities:
-            </div>
           </Col>
           {renderUniversitiesCards(UniversitiesWithUsers.slice(0, limit))}
-
-          {/* <img id='loading' src='/static/img/loading.gif' style='width: 50%' onload='startTimer("333"); alert(1)');' /> */}
         </Row>
-        <div
-          style={{
-            margin: "auto",
-            marginTop: "30px",
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
+        <div className={styles.actions}>
           <Button
-            style={{ margin: "5px" }}
+            className={styles.action_button}
             onClick={() => {
               setLimit((oldLimit) => {
                 return oldLimit + step;
@@ -122,7 +94,7 @@ export default function UniversitiesSection({ users }) {
             Show more
           </Button>
           <Button
-            style={{ margin: "5px" }}
+            className={styles.action_button}
             onClick={() => {
               setLimit(step);
             }}
@@ -136,6 +108,6 @@ export default function UniversitiesSection({ users }) {
           </Button>
         </div>
       </Container>
-    </React.Fragment>
+    </section>
   );
 }

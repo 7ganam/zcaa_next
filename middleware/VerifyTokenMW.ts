@@ -28,10 +28,13 @@ async function VerifyTokenMW2(
   res: NextApiResponse,
   next: Function
 ) {
-  let token = req.headers.authorization.substring(
-    7,
-    req.headers.authorization.length
-  );
+  const authorization = req.headers.authorization;
+
+  if (!authorization) {
+    return res.status(403).send("A token is required for authentication");
+  }
+
+  let token = authorization.substring(7, authorization.length);
 
   if (!token) {
     return res.status(403).send("A token is required for authentication");

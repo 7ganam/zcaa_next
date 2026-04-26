@@ -19,8 +19,7 @@ class VectorMap extends React.PureComponent {
   /**
    * load required map
    */
-  // eslint-disable-next-line react/no-deprecated
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { map } = this.props;
 
     if (map && maps.indexOf(map) !== -1) {

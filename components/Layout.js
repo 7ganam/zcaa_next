@@ -25,12 +25,6 @@ function Layout(props) {
       <Head>
         <title>ZCAA</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <script type="text/javascript" src="/planetary/d3.v3.min.js"></script>
-        <script
-          type="text/javascript"
-          src="/planetary/topojson.v1.min.js"
-        ></script>
-        <script type="text/javascript" src="/planetary/planetaryjs.js"></script>
       </Head>
       <main>{props.children}</main>
     </>

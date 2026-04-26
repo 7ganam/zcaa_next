@@ -1,22 +1,65 @@
-.section_header {
-  font-family: Philosopher;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 38px;
-  line-height: 125.5%;
-  /* or 60px */
-  text-transform: uppercase;
-  /* primary400 */
-  color: #0091ac;
-  margin-bottom: 50px;
-  text-align: center;
+.alumni_section {
+  position: relative;
+  z-index: 1;
+  padding: 54px 0;
 }
 
-@include media-breakpoint-up(md) {
+.section_intro {
+  max-width: 720px;
+  margin-bottom: 28px;
 }
-@include media-breakpoint-up(lg) {
+
+.eyebrow {
+  margin-bottom: 10px;
+  font-family: "Mulish", sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  color: #26adcb;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
 }
-@include media-breakpoint-up(xl) {
+
+.section_intro h2 {
+  margin: 0;
+  font-family: "Philosopher", serif;
+  font-size: clamp(36px, 6vw, 64px);
+  line-height: 0.95;
+  color: #06333a;
 }
-@include media-breakpoint-up(xxl) {
+
+.section_intro p {
+  margin: 14px 0 0;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #63757a;
+}
+
+.cards_row {
+  row-gap: 18px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.action_button {
+  padding: 12px 16px !important;
+  font-family: "Mulish", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  color: #ffffff !important;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  background: #00505f !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+}
+
+.action_button:hover {
+  background: #157f95 !important;
 }

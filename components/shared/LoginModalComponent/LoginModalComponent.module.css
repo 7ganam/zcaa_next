@@ -1,0 +1,108 @@
+.login_modal :global(.modal-content) {
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-radius: 34px;
+}
+
+.modal_body {
+  padding: 0;
+}
+
+.login_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.login_card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  width: 100%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 34px;
+  box-shadow: 0 24px 70px rgba(0, 80, 95, 0.22);
+}
+
+.login_art {
+  min-height: 470px;
+  padding: 48px;
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, rgba(0, 80, 95, 0.94), rgba(38, 173, 203, 0.86)),
+    url("/about/bg2.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  font-family: "Mulish", sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.login_art h2 {
+  margin: 0;
+  font-family: "Philosopher", serif;
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 0.98;
+  color: #ffffff;
+}
+
+.login_art p {
+  margin: 18px 0 0;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.login_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 42px 34px;
+}
+
+.logo {
+  width: 138px;
+  height: auto;
+  margin-bottom: 22px;
+  filter: drop-shadow(0 14px 24px rgba(0, 80, 95, 0.12));
+}
+
+.login_disclaimer {
+  max-width: 320px;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #63757a;
+  text-align: center;
+}
+
+.loading_row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+@media (max-width: 767px) {
+  .login_card {
+    grid-template-columns: 1fr;
+  }
+
+  .login_art {
+    min-height: auto;
+    padding: 32px 24px;
+  }
+}

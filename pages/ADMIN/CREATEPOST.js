@@ -1,11 +1,18 @@
-import React, { Component, Fragment } from "react";
-import { Container, Row, Col } from "reactstrap";
-import ReactLoading from "react-loading";
-import NewsCardComponent from "components/News/NewsCardComponent/NewsCardComponent";
-import "bootstrap/dist/css/bootstrap.min.css";
-import AdminComponent from "components/admin/AdminComponent";
+import { useEffect, useState } from "react";
 
 function CREATEPOST() {
+  const [AdminComponent, setAdminComponent] = useState(null);
+
+  useEffect(() => {
+    import("components/admin/AdminComponent").then((module) => {
+      setAdminComponent(() => module.default);
+    });
+  }, []);
+
+  if (!AdminComponent) {
+    return null;
+  }
+
   return (
     <div>
       <AdminComponent />

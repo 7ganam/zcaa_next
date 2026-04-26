@@ -1,7 +1,18 @@
 import { has } from "lodash";
 import ErrorResponse from "../utils/errorResponse";
-const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
-import jwt from "jsonwebtoken";
+import jwt, { type Secret, type SignOptions } from "jsonwebtoken";
+
+function getRequiredTokenSecret(): Secret {
+  const tokenSecret = process.env.TOKEN_SECRET_KEY;
+
+  if (!tokenSecret) {
+    throw new Error("Please define the TOKEN_SECRET_KEY environment variable");
+  }
+
+  return tokenSecret;
+}
+
+const TOKEN_SECRET_KEY = getRequiredTokenSecret();
 
 interface UserData {
   g_userid: string;
@@ -106,10 +117,15 @@ const createToken = async (user) => {
   let token;
   let expiration_time_in_hours = 500; //TODO: make the token expiration in the front end  ... i will leave this huge number as is now
   try {
+    const expiresIn = `${expiration_time_in_hours}h` as SignOptions["expiresIn"];
+
     token = jwt.sign({ user: user }, TOKEN_SECRET_KEY, {
-      expiresIn: expiration_time_in_hours + "h",
+      expiresIn,
     });
-    return { token };
+    return {
+      token,
+      expirateion_date_string: expiresIn,
+    };
   } catch (dev_err) {
     // eslint-disable-next-line no-console
     console.log("token error", dev_err);

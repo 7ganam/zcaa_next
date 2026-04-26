@@ -1,5 +1,4 @@
-import React from "react";
-import ChangeProfileComponent from "components/profile/ChangeProfileComponent";
+import { useEffect, useState } from "react";
 const {
   fetch_all_experience_fields,
 } = require("../controllers/experienceField_controller");
@@ -7,6 +6,18 @@ const { fetch_all_entities } = require("../controllers/entity_controller");
 const { fetch_all_unies } = require("../controllers/university_controller");
 
 function CHANGEPROFILE(props) {
+  const [ChangeProfileComponent, setChangeProfileComponent] = useState(null);
+
+  useEffect(() => {
+    import("components/profile/ChangeProfileComponent").then((module) => {
+      setChangeProfileComponent(() => module.default);
+    });
+  }, []);
+
+  if (!ChangeProfileComponent) {
+    return null;
+  }
+
   return (
     <div>
       <ChangeProfileComponent
@@ -30,14 +41,14 @@ export async function getStaticProps(context) {
     entities = await fetch_all_entities();
     unies = await fetch_all_unies();
   } catch (dev_error) {
-    console.log(`error fetching`, dev_error);
+    console.error(`error fetching`, dev_error);
     // throw new Error('Something went wrong');
     // error = 'Something went wrong';
   }
 
-  let exp_fields_string = JSON.stringify(exp_fields.reverse());
-  let entities_string = JSON.stringify(entities.reverse());
-  let unies_string = JSON.stringify(unies.reverse());
+  let exp_fields_string = JSON.stringify((exp_fields || []).reverse());
+  let entities_string = JSON.stringify((entities || []).reverse());
+  let unies_string = JSON.stringify((unies || []).reverse());
 
   return {
     notFound: false, // draw the page even if the fetch failed

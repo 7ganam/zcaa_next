@@ -4,12 +4,16 @@ if (typeof window === "undefined") {
   var _ = require("lodash");
   const mongoose = require("mongoose");
 
-  const MONGODB_URI = process.env.MONGODB_URI;
+  function getRequiredMongoUri() {
+    const mongoUri = process.env.MONGODB_URI;
 
-  if (!MONGODB_URI) {
-    throw new Error(
-      "Please define the MONGODB_URI environment variable inside .env.local"
-    );
+    if (!mongoUri) {
+      throw new Error(
+        "Please define the MONGODB_URI environment variable inside .env.local"
+      );
+    }
+
+    return mongoUri;
   }
 
   /**
@@ -29,6 +33,7 @@ if (typeof window === "undefined") {
     }
 
     if (!cached.promise) {
+      const mongoUri = getRequiredMongoUri();
       const opts = {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -38,7 +43,7 @@ if (typeof window === "undefined") {
         useCreateIndex: true,
       };
 
-      cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      cached.promise = mongoose.connect(mongoUri, opts).then((mongoose) => {
         return mongoose;
       });
     }

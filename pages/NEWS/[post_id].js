@@ -29,13 +29,14 @@ export async function getStaticPaths() {
   try {
     data = await fetch_all_news();
   } catch (dev_error) {
-    console.log(error);
-    error = error || "something went wrong";
+    console.error(dev_error);
+    error = dev_error || "something went wrong";
   }
 
   if (!data) {
     return {
-      notFound: true,
+      paths: [],
+      fallback: true,
     };
   }
   const paths = data.map((post) => ({

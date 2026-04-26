@@ -1,22 +1,18 @@
-import React, { useState } from "react";
-// import "./NewsCardComponent.css"
+import React, { useContext, useState } from "react";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
-// import { Link } from "react-router-dom";
 import Link from "next/link";
 
-import { Button } from "reactstrap";
-import { Alert } from "reactstrap";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
+import styles from "./NewsCardComponent.module.css";
+
+const FALLBACK_NEWS_IMAGE = "/logo.png";
 
 function NewsCardComponent(props) {
-  const [IsDeleting, setIsDeleting] = useState(false);
   const [DeletedSuccess, setDeletedSuccess] = useState(false);
-  const [ErrorMessage, setErrorMessage] = useState(null);
 
   const [modal, setModal] = useState(false);
 
@@ -24,7 +20,6 @@ function NewsCardComponent(props) {
   const toggle = () => setModal(!modal);
 
   const delete_this_post = () => {
-    setIsDeleting(true);
     fetch(
       process.env.NEXT_PUBLIC_BACKEND_URL +
         "/api/news/news_posts/" +
@@ -37,24 +32,20 @@ function NewsCardComponent(props) {
         // check for error response
         if (!response.ok) {
           // get error message from body or default to response status
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
+          const error = data?.message || response.status;
+          throw error;
         }
 
-        // setStatus('Delete successful');
-        setIsDeleting(false);
         setDeletedSuccess(true);
       })
       .catch((error) => {
-        setIsDeleting(false);
-        setErrorMessage(error);
         console.error("There was an error!", error);
       });
   };
 
-  const blocks = props.post.EditorData.blocks;
+  const blocks = props.post?.EditorData?.blocks || [];
 
-  let thumbnailImage = process.env.NEXT_PUBLIC_BACKEND_URL + "/logo.png";
+  let thumbnailImage = FALLBACK_NEWS_IMAGE;
   for (const index in blocks) {
     if (blocks[index].type === "imageTool" && blocks[index].data.file) {
       thumbnailImage = blocks[index].data.file.url;
@@ -68,7 +59,14 @@ function NewsCardComponent(props) {
   const title = props.post.meta_values[0].Title;
   const thumbnailText = props.post.meta_values[0].thumbnail_text;
   const category = "general";
-  const Date = props.post.meta_values[0].Date;
+  const newsDate = props.post.meta_values[0].Date;
+  const handleThumbnailError = (event) => {
+    event.currentTarget.onerror = null;
+    event.currentTarget.src = FALLBACK_NEWS_IMAGE;
+    event.currentTarget.alt = "ZCAA logo";
+    event.currentTarget.style.objectFit = "contain";
+    event.currentTarget.style.padding = "24px";
+  };
 
   return (
     <div>
@@ -102,75 +100,50 @@ function NewsCardComponent(props) {
           Deleted post
         </Alert>
       ) : (
-        <div id="card_body">
-          <div id="card_meta_data">
-            <div id="news_card_title">{title}</div>
-            <div id="news_card_subData">
-              <div>
-                <span>Category: </span>
-                <span style={{ fontSize: "13px", color: "#0091AC" }}>
-                  {" "}
-                  {category}
-                </span>
-              </div>
-              <div>
-                <span>date: </span>
-                <span style={{ fontSize: "13px", color: "#0091AC" }}>
-                  {" "}
-                  {moment(Date).format("DD/MM/YYYY")}{" "}
-                </span>
-              </div>
-            </div>
-            <div id="news_card_thumbnailText">
-              <div>{thumbnailText}</div>
-            </div>
-            <div id="news_card_footer">
-              {!!User && User.admin && (
-                <div style={{}}>
-                  <Button color="danger" onClick={toggle}>
-                    {" "}
-                    Delete
-                  </Button>
-                  <span style={{ color: "red", marginLeft: "5px" }}>
-                    admin action
-                  </span>
-                </div>
-              )}
-              <div style={{ flexGrow: "1" }}></div>
-              <div className="d-flex ">
-                <Link
-                  href={`/NEWS/${props.post._id}`}
-                  style={{ marginBottom: "15px" }}
-                >
-                  <a>
-                    <button
-                      className="read_more_btn"
-                      style={{ width: "100%", height: "35px" }}
-                    >
-                      <div
-                        className="zcaa_news_link"
-                        style={{ marginLeft: "auto" }}
-                      >
-                        read more
-                        <FontAwesomeIcon
-                          icon={faLongArrowAltRight}
-                          className="ml-1 pt-1"
-                        />
-                      </div>
-                    </button>
-                  </a>
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div id="card_image">
+        <article className={styles.card}>
+          <Link href={`/NEWS/${props.post._id}`} className={styles.image_link}>
             <img
               src={thumbnailImage}
-              alt="card_image"
-              style={{ height: "100%", width: "100%", objectFit: "cover" }}
+              alt={title || "ZCAA news"}
+              onError={handleThumbnailError}
+              className={styles.card_image}
             />
+          </Link>
+
+          <div className={styles.card_body}>
+            <div className={styles.meta_row}>
+              <span>{category}</span>
+              <span>{moment(newsDate).format("DD MMM YYYY")}</span>
+            </div>
+
+            <Link href={`/NEWS/${props.post._id}`} className={styles.title_link}>
+              <h2>{title}</h2>
+            </Link>
+
+            {thumbnailText && (
+              <p className={styles.excerpt}>{thumbnailText}</p>
+            )}
+
+            <div className={styles.card_footer}>
+              {!!User && User.admin && (
+                <div className={styles.admin_actions}>
+                  <Button color="danger" size="sm" onClick={toggle}>
+                    Delete
+                  </Button>
+                  <span>admin action</span>
+                </div>
+              )}
+
+              <Link href={`/NEWS/${props.post._id}`} className={styles.read_more}>
+                <span>Read story</span>
+                <FontAwesomeIcon
+                  icon={faLongArrowAltRight}
+                  className={styles.read_more_icon}
+                />
+              </Link>
+            </div>
           </div>
-        </div>
+        </article>
       )}
     </div>
   );

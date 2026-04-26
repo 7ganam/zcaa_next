@@ -58,8 +58,8 @@ export async function getStaticProps(context) {
   try {
     data = await fetch_all_news();
   } catch (dev_error) {
-    console.log(`error fetching`, dev_error);
-    throw new Error("Something went wrong");
+    console.error(`error fetching`, dev_error);
+    data = [];
     error = "Something went wrong";
   }
 

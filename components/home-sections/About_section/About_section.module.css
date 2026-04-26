@@ -1,66 +1,128 @@
+.about_section {
+  position: relative;
+  padding: 52px 0 34px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 22%, rgba(38, 173, 203, 0.12), transparent 30%),
+    linear-gradient(180deg, #f6fbfc 0%, #ffffff 100%);
+}
+
+.decorative_bg {
+  position: absolute;
+  top: -140px;
+  right: -160px;
+  z-index: 0;
+  width: min(760px, 90vw);
+  height: auto;
+  opacity: 0.28;
+  transform: scaleX(-1);
+}
+
+.aboutus_container {
+  position: relative;
+  z-index: 1;
+}
+
+.copy_panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  text-align: left;
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+  font-family: "Mulish", sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  color: #26adcb;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.section_title {
+  margin: 0;
+  font-family: "Philosopher", serif;
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 0.98;
+  color: #06333a;
+  text-transform: capitalize;
+}
+
 .zewail_image_wrapper {
   position: relative;
-  height: 300px;
+  height: 330px;
   width: 100%;
   min-width: 300px;
   overflow: hidden;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(0, 80, 95, 0.1);
+  border-radius: 32px;
+  box-shadow: 0 22px 60px rgba(0, 80, 95, 0.12);
 }
+
 .zewail_image {
   width: 100%;
-  height: "auto";
+  height: auto;
   transform: scaleX(-1);
   position: absolute;
   right: 0;
   top: 0;
 }
-.zewail_image_gold {
-  display: none;
-}
 
 .zewail_image_gold {
   display: block;
 }
+
 .zewail_image_fader {
-  -webkit-transition: opacity 1s ease-in-out;
-  -moz-transition: opacity 1s ease-in-out;
-  -o-transition: opacity 1s ease-in-out;
   transition: opacity 1s ease-in-out;
 }
 
 .zewail_image_fader:hover {
   opacity: 0;
 }
-@media (min-width: 768px) {
-  .zewail_image {
-    width: 100%;
-    height: "auto";
-  }
-  .zewail_image_wrapper {
-    position: relative;
-    height: 400px;
-    width: 100%;
-  }
-}
-@media (min-width: 420px) {
-  .zewail_image_wrapper {
-    height: 450px;
-  }
-}
 
 .mission_text {
-  margin-top: 20px;
-  /* font-family: Roboto; */
+  margin-top: 18px;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 18px;
   font-style: normal;
   font-weight: normal;
-  font-size: 20px;
-  line-height: 151%;
-  color: #828282;
+  line-height: 1.75;
+  color: #63757a;
+}
+
+.story_link {
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  width: fit-content;
+  padding: 12px 16px;
+  margin-top: 24px;
+  font-family: "Mulish", sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  color: #ffffff !important;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  background: #00505f;
+  border-radius: 999px;
+  transition:
+    gap 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.story_link:hover {
+  gap: 13px;
+  transform: translateY(-2px);
+  background: #26adcb;
 }
 
 .mission_row {
-  margin-top: 100px;
   max-width: 95vw;
-  margin: 100px auto 0 auto;
+  margin: 90px auto 0;
 }
 
 .vision_row {
@@ -68,29 +130,49 @@
   margin: auto;
 }
 
-/*  Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {
+.media_panel {
+  display: flex;
+  align-items: center;
 }
 
-/*  Medium devices (tablets, 768px and up) */
+.mission_image {
+  width: 100%;
+  height: auto;
+  padding: 12px;
+  margin-bottom: 0;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 80, 95, 0.1);
+  border-radius: 32px;
+  box-shadow: 0 22px 60px rgba(0, 80, 95, 0.12);
+}
+
+@media (min-width: 420px) {
+  .zewail_image_wrapper {
+    height: 450px;
+  }
+}
+
 @media (min-width: 768px) {
   .aboutus_container {
-    margin-top: 100px;
+    margin-top: 48px;
+  }
+
+  .zewail_image_wrapper {
+    height: 400px;
   }
 
   .mission_row {
-    margin-top: 30px;
+    margin-top: 48px;
   }
 }
 
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
+@media (max-width: 767px) {
+  .copy_panel {
+    padding: 20px 12px;
+  }
+
+  .mission_row {
+    margin-top: 52px;
+  }
 }
 
-/* X-Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-}
-
-/* XX-Large devices (larger desktops, 1400px and up) */
-@media (min-width: 1400px) {
-}

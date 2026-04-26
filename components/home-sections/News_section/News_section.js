@@ -1,7 +1,9 @@
 import React from "react";
 import NewsCardComponent from "./NewsCardComponent/NewsCardComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Col, Row } from "reactstrap";
+import { Container } from "reactstrap";
+import Link from "next/link";
+import styles from "./News_section.module.css";
 
 const render_news_cards = (news_posts) => {
   let first_three_posts = [];
@@ -11,12 +13,12 @@ const render_news_cards = (news_posts) => {
     first_three_posts = news_posts;
   }
 
-  let cards_view = first_three_posts.map((post) => {
+  let cards_view = first_three_posts.map((post, index) => {
     if (!post.EditorData) {
       return;
     }
-    let thumbnailImage = process.env.NEXT_PUBLIC_BACKEND_URL + "/logo.png";
-    if (post.EditorData && post.EditorData.blocks) {
+    let thumbnailImage = "/logo.png";
+    if (post.EditorData?.blocks) {
       const blocks = post.EditorData.blocks;
       for (const index in blocks) {
         if (blocks[index].type === "imageTool" && blocks[index].data.file) {
@@ -30,19 +32,18 @@ const render_news_cards = (news_posts) => {
     }
 
     const Title = post.meta_values[0].Title;
-    const Date = post.meta_values[0].Date;
+    const newsDate = post.meta_values[0].Date;
     const thumbnail_text = post.meta_values[0].thumbnail_text;
 
     return (
-      <Col key={post._id} xs="9" md="4" className="mt-5">
-        <NewsCardComponent
-          img={thumbnailImage}
-          title={Title}
-          body_text={thumbnail_text}
-          Date={Date}
-          post_id={post._id}
-        />
-      </Col>
+      <NewsCardComponent
+        key={`${post._id}-${index}`}
+        img={thumbnailImage}
+        title={Title}
+        body_text={thumbnail_text}
+        Date={newsDate}
+        post_id={post._id}
+      />
     );
   });
 
@@ -50,31 +51,31 @@ const render_news_cards = (news_posts) => {
 };
 
 function News_section(props) {
+  const news = props.news ? [...props.news].reverse() : [];
+
   return (
     <Container
       id="featured_news_container"
-      className=""
-      style={{ marginTop: "10px" }}
+      className={styles.featured_news}
+      fluid
     >
-      <Row>
-        <Col xs="12" className="">
-          <div
-            style={{
-              textAlign: "left",
-              marginTop: "50px",
-              borderTopStyle: "solid",
-              borderTopWidth: "0.5px",
-              borderTopColor: " #C5BCBC",
-            }}
-            className={"section_title"}
-          >
-            featured news
+      <Container className={styles.featured_news_inner}>
+        <div className={styles.section_header}>
+          <div>
+            <div className={styles.eyebrow}>Latest Dispatches</div>
+            <h2>Featured news</h2>
+            <p>
+              A quick look at the newest stories and announcements from the
+              ZCAA community.
+            </p>
           </div>
-        </Col>
-      </Row>
-      <Row className="justify-content-center">
-        {props.news && render_news_cards(props.news.reverse())}
-      </Row>
+          <Link href="/NEWS" className={styles.view_all}>
+            View all news
+          </Link>
+        </div>
+
+        <div className={styles.cards_grid}>{render_news_cards(news)}</div>
+      </Container>
     </Container>
   );
 }

@@ -2,10 +2,7 @@ import React from "react";
 
 import styles from "./Welcom_section.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Col, Row } from "reactstrap";
-// import zewail_image from '/home/assets/zewail_image3.png'
-// import grads from '../public/home/assets/grads3.png'
-import { Card, CardHeader, CardBody, CardTitle } from "reactstrap";
+import { Card, CardHeader, CardBody, CardTitle, Container } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
@@ -13,22 +10,15 @@ import Link from "next/link";
 function Welcom_section() {
   return (
     <>
-      <Container
-        id="shadow_container_1"
-        className={styles.shadow_container_1}
-        fluid
-        style={{ marginTop: "100px" }}
-      >
+      <Container id="shadow_container_1" className={styles.shadow_container_1} fluid>
         {" "}
       </Container>
       <Container
         id="welcome_container"
-        className={styles.welcome_container + " mx-0"}
+        className={styles.welcome_container + " mx-0 px-0"}
         fluid
-        style={{ position: "relative" }}
       >
-        {/* <img id="welcome_illustration" src={welcome_illustration} alt="oval" /> */}
-
+        <div className={styles.eyebrow}>Membership</div>
         <div id="welcome_title" className={styles.welcome_title}>
           Zewail city graduate ?
         </div>
@@ -50,20 +40,26 @@ function Welcom_section() {
               apply for your membership in the associasion
             </CardTitle>
 
-            <Link href="/APPLICATION">
-              <a style={{ textDecoration: "none" }}>
-                <button
-                  className={styles.welcome_btn + " " + styles.welcome_btn2}
-                  style={{}}
-                >
-                  APPLY
-                </button>
-              </a>
+            <Link href="/APPLICATION" style={{ textDecoration: "none" }}>
+              <button
+                className={styles.welcome_btn + " " + styles.welcome_btn2}
+                style={{}}
+              >
+                Apply now
+                <FontAwesomeIcon
+                  icon={faLongArrowAltRight}
+                  className={styles.welcome_btn_icon}
+                />
+              </button>
             </Link>
           </CardBody>
         </Card>
 
-        <img className={styles.wal_image} src="/waleed3.png" />
+        <img
+          className={styles.wal_image}
+          src="/waleed3.png"
+          alt="Zewail City graduate"
+        />
       </Container>
     </>
   );

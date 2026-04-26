@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 import styles from "./Map_section.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useState } from "react";
 
 import { Container } from "reactstrap";
 import MapComponent from "./MapComponent/MapComponent";
 import UsersViewComponent from "./UsersViewComponent/UsersViewComponent";
 const generateCountriesWithUsers = (users) => {
   let countriesWithUsers = [];
-  for (let i = 0; i < users.length; i++) {
-    let user = users[i];
+  for (const user of users) {
     let countryCode = user?.residency?.country;
     if (!countryCode) continue;
     let countryEntryIndex = countriesWithUsers.findIndex(
@@ -47,7 +46,7 @@ function Map_section({ users }) {
         let countriesWithUsers = generateCountriesWithUsers(users);
         if (countriesWithUsers) setCountriesWithUsers(countriesWithUsers);
       } catch (error) {
-        let err = error;
+        console.error("Failed to format users for map", error);
       }
     };
 
@@ -65,31 +64,37 @@ function Map_section({ users }) {
   }, [selectedCountries, selectedMarkers]);
 
   return (
-    <>
-      (
-      <Container id="map_container" className={styles.map_container} fluid>
-        <div id="map_wrapper" className={styles.map_wrapper}>
-          <MapComponent
-            countriesWithUsers={countriesWithUsers}
-            setSelectedCountries={setSelectedCountries}
-            setSelectedMarkers={setSelectedMarkers}
-            users={users}
-          />
-        </div>
-        <div
-          style={{
-            display: selectedMarkersAndCountries?.length > 0 ? "block" : "none",
-          }}
-        >
-          <UsersViewComponent
-            countriesWithUsers={countriesWithUsers}
-            selectedCountries={selectedMarkersAndCountries}
-          ></UsersViewComponent>
-        </div>
-      </Container>
-      )
-    </>
+    <Container id="map_container" className={styles.map_container} fluid>
+      <div id="map_wrapper" className={styles.map_wrapper}>
+        <MapComponent
+          countriesWithUsers={countriesWithUsers}
+          setSelectedCountries={setSelectedCountries}
+          setSelectedMarkers={setSelectedMarkers}
+          users={users}
+        />
+      </div>
+      <div
+        style={{
+          display: selectedMarkersAndCountries?.length > 0 ? "block" : "none",
+        }}
+      >
+        <UsersViewComponent
+          countriesWithUsers={countriesWithUsers}
+          selectedCountries={selectedMarkersAndCountries}
+        ></UsersViewComponent>
+      </div>
+    </Container>
   );
 }
+
+Map_section.propTypes = {
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      residency: PropTypes.shape({
+        country: PropTypes.string,
+      }),
+    })
+  ),
+};
 
 export default Map_section;

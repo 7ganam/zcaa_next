@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row, Col } from "reactstrap";
-import ReactLoading from "react-loading";
 import NewsCardComponent from "components/News/NewsCardComponent/NewsCardComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NewsComponent from "components/News/NewsComponent";
@@ -28,8 +27,8 @@ export async function getStaticProps(context) {
   try {
     data = await fetch_all_news();
   } catch (dev_error) {
-    console.log(`error fetching`, dev_error);
-    throw new Error("Something went wrong");
+    console.error(`error fetching`, dev_error);
+    data = [];
     error = "Something went wrong";
   }
 

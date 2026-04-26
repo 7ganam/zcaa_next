@@ -1,6 +1,6 @@
 import React from "react";
 // import EditorComponent from "./EditorComponent/EditorComponent"
-import ReactLoading from "react-loading";
+import ReactLoading from "components/shared/LoadingSpinner";
 import { Container, Row, Col } from "reactstrap";
 import moment from "moment";
 // import "./NewsPostViewComponent.css"

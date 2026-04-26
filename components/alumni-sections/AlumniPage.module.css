@@ -1,13 +1,5 @@
-.loading_spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-}
-
-.application_page {
+.alumni_page {
   position: relative;
-  min-height: 80vh;
   padding: 34px 0 86px;
   overflow: hidden;
   background:
@@ -15,7 +7,7 @@
     linear-gradient(180deg, rgba(245, 253, 255, 0.96) 0%, #ffffff 44%, #f6fbfc 100%);
 }
 
-.application_page::before {
+.alumni_page::before {
   position: absolute;
   top: 180px;
   right: -140px;
@@ -26,7 +18,7 @@
   border-radius: 999px;
 }
 
-.application_hero {
+.alumni_hero {
   position: relative;
   z-index: 1;
   display: grid;
@@ -57,8 +49,8 @@
   text-transform: uppercase;
 }
 
-.application_hero h1 {
-  max-width: 760px;
+.alumni_hero h1 {
+  max-width: 800px;
   margin: 0;
   font-family: "Philosopher", serif;
   font-size: clamp(38px, 7vw, 76px);
@@ -66,7 +58,7 @@
   color: #ffffff;
 }
 
-.application_hero p {
+.alumni_hero p {
   max-width: 640px;
   margin: 18px 0 0;
   font-family: "Noto Sans", sans-serif;
@@ -76,40 +68,54 @@
 }
 
 .hero_badge {
-  display: grid;
-  place-items: center;
-  width: 156px;
-  height: 156px;
-  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 156px;
+  min-height: 156px;
+  padding: 18px;
+  color: #ffffff;
   background: rgba(0, 80, 95, 0.42);
   border: 1px solid rgba(255, 255, 255, 0.42);
   border-radius: 999px;
   backdrop-filter: blur(8px);
 }
 
-.hero_badge img {
-  width: 100%;
-  height: auto;
+.hero_badge span {
+  font-family: "Philosopher", serif;
+  font-size: 52px;
+  line-height: 1;
 }
 
-.form_surface {
+.hero_badge small {
+  max-width: 100px;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.3;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.map_section {
   position: relative;
   z-index: 1;
-  padding: 12px 0 0;
+  margin: 0 auto 40px;
 }
 
 @media (max-width: 991px) {
-  .application_hero {
+  .alumni_hero {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 767px) {
-  .application_page {
+  .alumni_page {
     padding-top: 18px;
   }
 
-  .application_hero {
+  .alumni_hero {
     padding: 30px 24px;
     border-radius: 24px;
   }

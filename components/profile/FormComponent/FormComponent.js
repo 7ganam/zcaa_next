@@ -96,7 +96,11 @@ const FormComponent = (props) => {
 
   return (
     <>
-      <Container fluid style={{ position: "relative", padding: "0" }}>
+      <Container
+        fluid
+        className={styles.form_background}
+        style={{ position: "relative", padding: "0" }}
+      >
         <img
           className={styles.background_image}
           src={"/about/bg2.png"}
@@ -113,7 +117,7 @@ const FormComponent = (props) => {
       >
         {(formik_object) => {
           return (
-            <Container>
+            <Container className={styles.form_container}>
               <div id="form_and_modal">
                 {/* print the form state for debugging */}
                 {/* <div>{JSON.stringify(formik_object.values.exp_field, null, 2)}</div> */}
@@ -660,24 +664,20 @@ const FormComponent = (props) => {
                                           </div>
                                         </div>
                                       ))}
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          justifyContent: "center",
-                                          fontSize: "40px",
-                                          flexDirection: "column",
-                                          justifyItems: "center",
-                                          alignItems: "center",
-                                        }}
-                                      >
+                                      <div className={styles.add_control}>
                                         <div
                                           onClick={() => push("")}
                                           type="button"
                                           className=" plus_button "
                                         >
-                                          <FontAwesomeIcon icon={faPlus} />
+                                          <FontAwesomeIcon
+                                            icon={faPlus}
+                                            className="pt-1"
+                                          />
                                         </div>
-                                        <div className="plus_button_text">
+                                        <div
+                                          className={`plus_button_text ${styles.add_control_text}`}
+                                        >
                                           Add more universities
                                         </div>
                                       </div>
@@ -758,17 +758,20 @@ const FormComponent = (props) => {
                                           </div>
                                         </div>
                                       ))}
-                                      <div
-                                        className={styles.plus_button_button}
-                                      >
+                                      <div className={styles.add_control}>
                                         <div
                                           onClick={() => push({})}
                                           type="button"
                                           className="  plus_button "
                                         >
-                                          <FontAwesomeIcon icon={faPlus} />
+                                          <FontAwesomeIcon
+                                            icon={faPlus}
+                                            className="pt-1"
+                                          />
                                         </div>
-                                        <div className="plus_button_text">
+                                        <div
+                                          className={`plus_button_text ${styles.add_control_text}`}
+                                        >
                                           Add more entities
                                         </div>
                                       </div>

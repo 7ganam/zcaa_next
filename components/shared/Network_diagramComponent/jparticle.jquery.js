@@ -422,6 +422,11 @@ export default function initJParticle($, images) {
        * Initialize particle's image.
        */
       Particle.initImage = function initImage() {
+        if (!images?.length) {
+          Particle.image = null;
+          return;
+        }
+
         var img2 = new Image();
         let imageIndex = Utils.getRandNumber(0, images.length - 1, true);
         img2.src = images[imageIndex];
@@ -515,9 +520,14 @@ export default function initJParticle($, images) {
           context.arc(Particle.x, Particle.y, imageSize / 2, 0, Math.PI * 2);
           context.clip();
           context.filter = "grayscale(100%)";
-          if (Particle.image.complete) {
+          const image = Particle.image;
+          if (
+            image?.complete &&
+            image.naturalWidth > 0 &&
+            image.naturalHeight > 0
+          ) {
             context.drawImage(
-              Particle.image,
+              image,
               Particle.x - imageSize / 2,
               Particle.y - imageSize / 2,
               imageSize,

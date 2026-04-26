@@ -17,12 +17,16 @@ const {NewsPosts} = require('../models/newsPosts');
 
 const globalAny: any = global; // node.js global object
 
-const MONGODB_URI = process.env.MONGODB_URI;
+function getRequiredMongoUri(): string {
+  const mongoUri = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
-  );
+  if (!mongoUri) {
+    throw new Error(
+      'Please define the MONGODB_URI environment variable inside .env.local'
+    );
+  }
+
+  return mongoUri;
 }
 
 /**
@@ -47,6 +51,7 @@ async function databaseMW(
   }
 
   if (!cachedMongoose.promise) {
+    const mongoUri = getRequiredMongoUri();
     const opts = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -58,7 +63,7 @@ async function databaseMW(
 
     //start a connection and save the returned promise into the global mongoose object
     cachedMongoose.promise = mongoose
-      .connect(MONGODB_URI, opts)
+      .connect(mongoUri, opts)
       .then((mongoose: any) => {
         return mongoose;
       });
